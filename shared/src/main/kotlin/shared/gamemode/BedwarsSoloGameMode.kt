@@ -14,9 +14,9 @@ object BedwarsSoloGameMode : CgsGameMode
     override fun getId() = "solo"
     override fun getName() = "Solo"
 
-    override fun getMaterial() = Pair(Material.GOLDEN_APPLE, 0)
+    override fun getMaterial() = Pair(Material.BED, 0)
 
-    override fun getDescription() = "${CC.GRAY}A solo game of UHC Meetup!"
+    override fun getDescription() = "${CC.GRAY}A solo game of Bedwars!"
 
     override fun getArenas() = listOf(
         BedwarsRandomArena

@@ -14,9 +14,9 @@ object BedwarsTriosGameMode : CgsGameMode
     override fun getId() = "trios"
     override fun getName() = "Trios"
 
-    override fun getMaterial() = Pair(Material.GOLDEN_APPLE, 0)
+    override fun getMaterial() = Pair(Material.BED, 0)
 
-    override fun getDescription() = "${CC.GRAY}A trios game of UHC Meetup!"
+    override fun getDescription() = "${CC.GRAY}A trios game of Bedwars!"
 
     override fun getArenas() = listOf(
         BedwarsRandomArena

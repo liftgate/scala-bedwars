@@ -16,7 +16,7 @@ object BedwarsRandomArena : CgsGameArena
     override fun getName() = "Random"
 
     override fun getMaterial() = Pair(Material.ENDER_PEARL, 0)
-    override fun getDescription() = "UHC Meetup games have randomly generated arenas!"
+    override fun getDescription() = "Bedwars games have randomly generated arenas!"
 
     override fun getDirectory(): Path? = null
 
