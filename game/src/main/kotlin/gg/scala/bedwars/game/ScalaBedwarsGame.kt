@@ -12,7 +12,7 @@ import me.lucko.helper.plugin.ap.PluginDependency
     name = "bedwars",
     depends = [
         PluginDependency("scala-commons"),
-        PluginDependency("Lemon"),
+        PluginDependency("Lemon")
     ]
 )
 class ScalaBedwarsGame : ExtendedScalaPlugin()

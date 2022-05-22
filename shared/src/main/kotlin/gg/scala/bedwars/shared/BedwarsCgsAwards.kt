@@ -1,4 +1,4 @@
-package shared
+package gg.scala.bedwars.shared
 
 import gg.scala.cgs.common.information.CgsGameAwardInfo
 

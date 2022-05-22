@@ -4,7 +4,7 @@ import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.flavor.service.Configure
 import gg.scala.flavor.service.Service
-import shared.gamemode.BedwarsSoloGameMode
+import gg.scala.bedwars.shared.gamemode.BedwarsSoloGameMode
 
 /**
  * @author GrowlyX
@@ -21,13 +21,13 @@ object ScalaBedwarsGameOrchestrator
                 BedwarsSoloGameMode
             )
 
-        ScalaBedwarsGameEngine
-            .initialResourceLoad()
+        CgsGameEngine.INSTANCE =
+            ScalaBedwarsGameEngine
 
         ScalaBedwarsGameEngine
             .initialLoad()
 
-        CgsGameEngine.INSTANCE =
-            ScalaBedwarsGameEngine
+        ScalaBedwarsGameEngine
+            .initialResourceLoad()
     }
 }
