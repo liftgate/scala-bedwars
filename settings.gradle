@@ -1,3 +1,4 @@
-rootProject.name = 'scala-bedwars'
-include 'shared'
-
+rootProject.name = "scala-bedwars"
+include(
+    "game", "shared", "lobby"
+)
