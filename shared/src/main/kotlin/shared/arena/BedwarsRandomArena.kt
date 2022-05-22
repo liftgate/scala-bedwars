@@ -24,7 +24,7 @@ object BedwarsRandomArena : CgsGameArena
 
     override fun getPreLobbyLocation() = Location(
         Bukkit.getWorld("world"),
-        0.5, 35.0, 0.5
+        0.5, 150.0, 0.5
     )
 
     override fun getSpectatorLocation() = Location(
