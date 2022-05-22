@@ -26,8 +26,5 @@ object ScalaBedwarsGameOrchestrator
 
         ScalaBedwarsGameEngine
             .initialLoad()
-
-        ScalaBedwarsGameEngine
-            .initialResourceLoad()
     }
 }
