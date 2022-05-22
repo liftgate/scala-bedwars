@@ -1,7 +1,7 @@
-package shared.gamemode
+package gg.scala.bedwars.shared.gamemode
 
 import gg.scala.cgs.common.information.mode.CgsGameMode
-import shared.arena.BedwarsRandomArena
+import gg.scala.bedwars.shared.arena.BedwarsRandomArena
 import net.evilblock.cubed.util.CC
 import org.bukkit.Material
 

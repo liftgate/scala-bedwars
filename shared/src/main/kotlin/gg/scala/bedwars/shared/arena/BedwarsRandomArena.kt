@@ -1,4 +1,4 @@
-package shared.arena
+package gg.scala.bedwars.shared.arena
 
 import gg.scala.cgs.common.information.arena.CgsGameArena
 import org.bukkit.Bukkit

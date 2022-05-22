@@ -6,9 +6,9 @@ import gg.scala.cgs.common.player.scoreboard.CgsGameScoreboardRenderer
 import gg.scala.cgs.common.player.visibility.CgsGameVisibilityAdapter
 import gg.scala.cgs.common.snapshot.CgsGameSnapshot
 import org.bukkit.plugin.java.JavaPlugin
-import shared.BedwarsCgsInfo
-import shared.BedwarsCgsStatistics
-import shared.gamemode.BedwarsSoloGameMode
+import gg.scala.bedwars.shared.BedwarsCgsInfo
+import gg.scala.bedwars.shared.BedwarsCgsStatistics
+import gg.scala.bedwars.shared.gamemode.BedwarsSoloGameMode
 
 /**
  * @author GrowlyX
