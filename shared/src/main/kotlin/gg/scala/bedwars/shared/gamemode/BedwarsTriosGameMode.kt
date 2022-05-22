@@ -23,5 +23,5 @@ object BedwarsTriosGameMode : CgsGameMode
     )
 
     override fun getTeamSize() = 3
-    override fun getMaxTeams() = 8
+    override fun getMaxTeams() = 4
 }

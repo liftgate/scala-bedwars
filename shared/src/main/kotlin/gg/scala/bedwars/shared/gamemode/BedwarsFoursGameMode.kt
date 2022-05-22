@@ -9,19 +9,19 @@ import org.bukkit.Material
  * @author GrowlyX
  * @since 12/3/2021
  */
-object BedwarsDuosGameMode : CgsGameMode
+object BedwarsFoursGameMode : CgsGameMode
 {
-    override fun getId() = "duos"
-    override fun getName() = "Duos"
+    override fun getId() = "fours"
+    override fun getName() = "fours"
 
     override fun getMaterial() = Pair(Material.BED, 0)
 
-    override fun getDescription() = "${CC.GRAY}A duos game of Bedwars!"
+    override fun getDescription() = "${CC.GRAY}A fours game of Bedwars!"
 
     override fun getArenas() = listOf(
         BedwarsRandomArena
     )
 
-    override fun getTeamSize() = 2
-    override fun getMaxTeams() = 8
+    override fun getTeamSize() = 4
+    override fun getMaxTeams() = 4
 }

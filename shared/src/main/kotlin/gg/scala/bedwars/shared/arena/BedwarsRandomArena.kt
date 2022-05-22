@@ -23,11 +23,11 @@ object BedwarsRandomArena : CgsGameArena
     override fun getBukkitWorldName() = "meetup"
 
     override fun getPreLobbyLocation() = Location(
-        Bukkit.getWorld("world"),
+        Bukkit.getWorld("bedwars"),
         0.5, 150.0, 0.5
     )
 
     override fun getSpectatorLocation() = Location(
-        Bukkit.getWorld("meetup"), 0.5, Bukkit.getWorld("meetup").getHighestBlockYAt(0, 0) + 15.0, 0.5
+        Bukkit.getWorld("bedwars"), 0.5, Bukkit.getWorld("bedwars").getHighestBlockYAt(0, 0) + 15.0, 0.5
     )
 }

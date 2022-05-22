@@ -23,5 +23,5 @@ object BedwarsSoloGameMode : CgsGameMode
     )
 
     override fun getTeamSize() = 1 // team size
-    override fun getMaxTeams() = 32 // max teams
+    override fun getMaxTeams() = 8 // max teams
 }
