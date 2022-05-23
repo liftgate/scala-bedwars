@@ -16,18 +16,8 @@ object ScalaBedwarsGameOrchestrator
     @Configure
     fun configure()
     {
-        CgsGameArenaHandler
-            .configure(
-                BedwarsSoloGameMode
-            )
-
-        CgsGameEngine.INSTANCE =
-            ScalaBedwarsGameEngine
-
-        ScalaBedwarsGameEngine
-            .initialLoad()
-
-        ScalaBedwarsGameEngine
-            .initialResourceLoad()
+        CgsGameEngine.INSTANCE = ScalaBedwarsGameEngine.INSTANCE
+        ScalaBedwarsGameEngine.INSTANCE.initialLoad()
+        ScalaBedwarsGameEngine.INSTANCE.initialResourceLoad()
     }
 }
