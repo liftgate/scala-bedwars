@@ -4,7 +4,7 @@ import gg.scala.bedwars.shared.arena.BedwarsArena
 import org.bukkit.Location
 import org.bukkit.Material
 
-class TestEightArena : BedwarsArena() {
+object TestEightArena : BedwarsArena() {
 
     override val teamSpawnPoints: MutableMap<Int, Location>
         get() = mutableMapOf(

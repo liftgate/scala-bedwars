@@ -21,10 +21,7 @@ object ScalaBedwarsGameOrchestrator
                 BedwarsSoloGameMode
             )
 
-        CgsGameEngine.INSTANCE =
-            ScalaBedwarsGameEngine
-
-        ScalaBedwarsGameEngine
-            .initialLoad()
+        CgsGameEngine.INSTANCE = ScalaBedwarsGameEngine.INSTANCE
+        ScalaBedwarsGameEngine.INSTANCE.initialLoad()
     }
 }

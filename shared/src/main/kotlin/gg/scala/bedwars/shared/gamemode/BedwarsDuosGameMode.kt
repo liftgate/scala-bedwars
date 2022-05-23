@@ -2,6 +2,7 @@ package gg.scala.bedwars.shared.gamemode
 
 import gg.scala.cgs.common.information.mode.CgsGameMode
 import gg.scala.bedwars.shared.arena.BedwarsArena
+import gg.scala.bedwars.shared.arena.eight.TestEightArena
 import net.evilblock.cubed.util.CC
 import org.bukkit.Material
 
@@ -19,7 +20,7 @@ object BedwarsDuosGameMode : CgsGameMode
     override fun getDescription() = "${CC.GRAY}A duos game of Bedwars!"
 
     override fun getArenas() = listOf(
-        BedwarsArena
+        TestEightArena
     )
 
     override fun getTeamSize() = 2
