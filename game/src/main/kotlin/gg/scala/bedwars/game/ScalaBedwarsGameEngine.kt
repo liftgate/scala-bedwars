@@ -1,6 +1,8 @@
 package gg.scala.bedwars.game
 
 import com.avaje.ebeaninternal.server.util.InternalAssert.notNull
+import gg.scala.bedwars.game.nametag.ScalaBedwarsNametagAdapter
+import gg.scala.bedwars.game.scoreboard.ScalaBedwarsScoreboard
 import gg.scala.bedwars.game.visibility.ScalaBedwarsVisibilityAdapter
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.nametag.CgsGameNametagAdapter
@@ -38,25 +40,31 @@ class ScalaBedwarsGameEngine(
         var INSTANCE by Delegates.notNull<ScalaBedwarsGameEngine>()
     }
 
-
+    override fun getScoreboardRenderer() = ScalaBedwarsScoreboard
+    override fun getVisibilityAdapter() = ScalaBedwarsVisibilityAdapter
+    override fun getNametagAdapter() = ScalaBedwarsNametagAdapter
     override fun getGameSnapshot(): CgsGameSnapshot
     {
-        TODO("Not yet implemented")
-    }
+        return object : CgsGameSnapshot
+        {
+            override fun getExtraInformation(): List<String>
+            {
+                val topKills = mutableListOf<String>()
+/*
 
-    override fun getNametagAdapter(): CgsGameNametagAdapter
-    {
-        TODO("Not yet implemented")
-    }
+                val sortedKills = UhcMeetupListener.killsTracker
+                    .entries.sortedByDescending { it.value }
 
-    override fun getScoreboardRenderer(): CgsGameScoreboardRenderer
-    {
-        TODO("Not yet implemented")
-    }
+                for (i in 0 until 3.coerceAtMost(sortedKills.size))
+                {
+                    val (key, value) = sortedKills[i]
+                    topKills.add("  ${CC.YELLOW}#${i + 1} ${CC.GRAY}- ${CC.WHITE}${CubedCacheUtil.fetchName(key)}${CC.GRAY} - ${CC.PRI}$value")
+                }
+*/
 
-    override fun getVisibilityAdapter(): CgsGameVisibilityAdapter
-    {
-        return ScalaBedwarsVisibilityAdapter
+                return topKills
+            }
+        }
     }
 
     override fun createTeam(id: Int) : CgsGameTeam {
