@@ -8,7 +8,7 @@ import org.bukkit.ChatColor
 import org.bukkit.DyeColor
 import org.bukkit.Location
 
-class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id) {
+open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id) {
 
     // diamond upgrades yes
     var bedDestroyed: Boolean = false
