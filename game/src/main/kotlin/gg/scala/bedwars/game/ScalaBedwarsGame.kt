@@ -16,8 +16,7 @@ import me.lucko.helper.plugin.ap.PluginDependency
     name = "bedwars",
     depends = [
         PluginDependency("scala-commons"),
-        PluginDependency("CGS-Engine"),
-        PluginDependency("Lemon")
+        PluginDependency("CGS-Engine")
     ]
 )
 class ScalaBedwarsGame : ExtendedScalaPlugin() {
@@ -28,7 +27,7 @@ class ScalaBedwarsGame : ExtendedScalaPlugin() {
             loadConfig("orchestration.yml")
 
         val mode = orchestration.getString("mode")
-            ?: "gg.scala.meetup.shared.gamemode.UhcMeetupSoloGameMode"
+            ?: "gg.scala.bedwars.shared.gamemode.BedwarsSoloGameMode"
 
         val modeClass = Class.forName(mode)
 

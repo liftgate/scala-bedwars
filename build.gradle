@@ -24,8 +24,6 @@ allprojects {
     version "development"
 
     repositories {
-        // sorry
-        mavenLocal()
         mavenCentral()
 
         maven {

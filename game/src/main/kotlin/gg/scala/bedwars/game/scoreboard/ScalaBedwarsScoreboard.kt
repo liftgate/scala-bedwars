@@ -26,13 +26,10 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
     {
         if (state == CgsGameState.WAITING || state == CgsGameState.STARTING)
         {
-            if (state == CgsGameState.WAITING)
-            {
-                lines.add("Waiting for players...")
-            } else if (state == CgsGameState.STARTING)
-            {
-                lines.add("Starting in ${CC.PRI}${TimeUtil.formatIntoAbbreviatedString(StartingStateRunnable.PRE_START_TIME)}")
-            }
+            lines.add(
+                if (state == CgsGameState.WAITING) "Waiting for players..."
+                else "Starting in ${CC.PRI}${TimeUtil.formatIntoAbbreviatedString(StartingStateRunnable.PRE_START_TIME)}"
+            )
 
             lines.add("")
             lines.add("Players: ${CC.PRI}${
@@ -67,8 +64,10 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                 }")
             }
 
-            lines.add("")
-            lines.add("Kills: " + CC.PRI + statistics.gameKills.value)
+            if (ScalaBedwarsGameEngine.INSTANCE.gameMode.getMaxTeams() <= 4) {
+                lines.add("")
+                lines.add("Kills: " + CC.PRI + statistics.gameKills.value)
+            }
         }
 
         lines.add("")
