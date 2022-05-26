@@ -112,6 +112,8 @@ object BedwarsGameListener : Listener
                     return
                 }
 
+                event.block.drops.clear()
+
                 BedwarsBedDestroyEvent(
                     CgsGameTeamService.teams[meta[0].asInt()] as BedwarsCgsGameTeam,
                     event.player
