@@ -2,7 +2,9 @@ package gg.scala.bedwars.game.generator
 
 import org.bukkit.Location
 
-abstract class BedwarsItemGenerator(val seconds: Int, var location: Location)
+abstract class BedwarsItemGenerator(
+    val seconds: Int, var location: Location
+)
 {
     var cooldown = seconds
 
@@ -11,6 +13,5 @@ abstract class BedwarsItemGenerator(val seconds: Int, var location: Location)
 
     init {
         location = location.add(0.5, 0.0, 0.5)
-        BedwarsItemGeneratorService.generators.add(this)
     }
 }

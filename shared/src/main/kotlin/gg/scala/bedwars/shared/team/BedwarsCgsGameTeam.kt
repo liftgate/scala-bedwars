@@ -10,30 +10,30 @@ import org.bukkit.ChatColor
 import org.bukkit.DyeColor
 import org.bukkit.Location
 
-open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id) {
-
-    // diamond upgrades yes
-    val name: String get() {
-        return color.toString() + color.name.lowercase().capitalize()
+open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id)
+{
+    val color = when (id)
+    {
+        1 -> ChatColor.RED
+        2 -> ChatColor.BLUE
+        3 -> ChatColor.GREEN
+        4 -> ChatColor.YELLOW
+        5 -> ChatColor.AQUA
+        6 -> ChatColor.WHITE
+        7 -> ChatColor.LIGHT_PURPLE
+        8 -> ChatColor.GRAY
+        else -> ChatColor.BLACK
     }
+
+    val name = "$color${
+        BedwarsCgsGameTeamColors.map(this.color)
+    }"
+
     var bedDestroyed: Boolean = false
-    val color: ChatColor
-        get() {
-        return when(id) {
-            1 -> ChatColor.RED
-            2 -> ChatColor.BLUE
-            3 -> ChatColor.GREEN
-            4 -> ChatColor.YELLOW
-            5 -> ChatColor.AQUA
-            6 -> ChatColor.WHITE
-            7 -> ChatColor.LIGHT_PURPLE
-            8 -> ChatColor.GRAY
-            else -> ChatColor.BLACK
-        }
-    }
-    val spawnPoint: Location? = (CgsGameArenaHandler.arena as BedwarsArena).getSpawnPoint(id)
+    val spawnPoint = (CgsGameArenaHandler.arena as BedwarsArena).getSpawnPoint(id)
 
-    fun broadcastElimination() {
+    fun broadcastElimination()
+    {
         CgsGameEngine.INSTANCE.sendMessage("")
         CgsGameEngine.INSTANCE.sendMessage("${CC.B_WHITE}Team Elimination")
         CgsGameEngine.INSTANCE.sendMessage("")

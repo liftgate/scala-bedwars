@@ -36,7 +36,9 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
             this.config<ScalaBedwarsOrchestration>().mode
         )
 
-        val modeClassObject = modeClass.kotlin.objectInstance!! as CgsGameMode
+        val modeClassObject =
+            modeClass.kotlin.objectInstance!! as CgsGameMode
+
         CgsGameArenaHandler.configure(modeClassObject)
 
         val engine = ScalaBedwarsGameEngine(

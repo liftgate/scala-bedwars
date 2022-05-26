@@ -13,14 +13,9 @@ import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import org.bukkit.Bukkit
 import org.bukkit.Material
-import org.bukkit.block.Block
-import org.bukkit.block.BlockFace
-import org.bukkit.block.BlockState
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
-import org.bukkit.material.Bed
 import org.bukkit.metadata.FixedMetadataValue
-
 
 @Listeners
 object BedwarsStartListener : Listener
@@ -29,28 +24,41 @@ object BedwarsStartListener : Listener
     lateinit var plugin: ScalaBedwarsGame
 
     @EventHandler
-    fun onStart(e: CgsGameEngine.CgsGameStartEvent) {
-        (CgsGameArenaHandler.arena as BedwarsArena).diamondGenerators.forEach {
+    fun onStart(event: CgsGameEngine.CgsGameStartEvent)
+    {
+        val arena = CgsGameArenaHandler.arena as BedwarsArena
+
+        arena.diamondGenerators.forEach {
             BedwarsDiamondItemGenerator(it)
         }
 
-        (CgsGameArenaHandler.arena as BedwarsArena).emeraldGenerators.forEach {
+        arena.emeraldGenerators.forEach {
             BedwarsEmeraldItemGenerator(it)
         }
 
-        CgsGameTeamService.teams.values.map { it as BedwarsCgsGameTeam }.forEach {
-            if (it.participants.size > 0) BedwarsTeamItemGenerator(it.spawnPoint!!)
-            if (it.participants.size <= 0) it.bedDestroyed = true
-            else
-            {
-                it.spawnPoint!!.block.type = Material.BED_BLOCK
-                it.spawnPoint!!.block.setMetadata("team", FixedMetadataValue(plugin, it.id))
-                it.participants.forEach { id ->
-                    val player = Bukkit.getPlayer(id)
-                    player.displayName = it.color.toString() + player.displayName
-                    player.teleport(it.spawnPoint)
+        CgsGameTeamService.teams.values
+            .map { it as BedwarsCgsGameTeam }
+            .forEach {
+                if (it.participants.size > 0)
+                {
+                    BedwarsTeamItemGenerator(it.spawnPoint!!)
+                }
+
+                if (it.participants.size <= 0)
+                {
+                    it.bedDestroyed = true
+                } else
+                {
+
+
+                    it.spawnPoint!!.block.type = Material.BED_BLOCK
+                    it.spawnPoint!!.block.setMetadata("team", FixedMetadataValue(plugin, it.id))
+                    it.participants.forEach { id ->
+                        val player = Bukkit.getPlayer(id)
+                        player.displayName = it.color.toString() + player.displayName
+                        player.teleport(it.spawnPoint)
+                    }
                 }
             }
-        }
     }
 }
