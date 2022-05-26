@@ -10,6 +10,7 @@ import gg.scala.commons.annotations.container.ContainerEnable
 import gg.scala.commons.config.annotations.ContainerConfig
 import me.lucko.helper.plugin.ap.Plugin
 import me.lucko.helper.plugin.ap.PluginDependency
+import org.bukkit.entity.Player
 
 /**
  * @author GrowlyX
@@ -45,6 +46,16 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
             this, BedwarsCgsInfo,
             modeClassObject
         )
+
+        this.server.worlds.forEach {
+            for (entity in it.entities)
+            {
+                if (entity is Player)
+                    return
+
+                entity.remove()
+            }
+        }
 
         CgsGameEngine.INSTANCE = engine
         engine.initialLoad()
