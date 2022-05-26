@@ -108,7 +108,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                 }
                 .forEach {
                     lines.add(
-                        " ${CC.BOLD}${it.color}${
+                        "${it.color}${CC.BOLD}${
                             if (it.color == ChatColor.LIGHT_PURPLE)
                                 "P" else it.color.name.substring(0, 1)
                         } ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
