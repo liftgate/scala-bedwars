@@ -20,6 +20,7 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.metadata.FixedMetadataValue
 
 @Listeners
@@ -88,7 +89,15 @@ object BedwarsGameListener : Listener
                     player = e.entity, broadcastNotification = true, setSpectator = true
                 )
                 if (team.alive.isEmpty()) team.broadcastElimination()
-            } else e.entity.teleport(team.spawnPoint)
+            }
         }
+    }
+
+    @EventHandler
+    fun onRespawn(e: PlayerRespawnEvent) {
+        if (e.player.hasMetadata("spectator")) return
+        val team = CgsGameTeamService.getTeamOf(e.player) as BedwarsCgsGameTeam?
+
+        if (team != null && !team.bedDestroyed) e.player.teleport(team.spawnPoint)
     }
 }
