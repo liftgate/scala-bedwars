@@ -92,7 +92,25 @@ object BedwarsGameListener : Listener
         {
             if (event.block.hasMetadata("team"))
             {
-                val meta = event.block.getMetadata("team")
+                val meta = event.block
+                    .getMetadata("team")
+
+                val teamId = meta[0].asInt()
+
+                val team = CgsGameTeamService.getTeamOf(event.player) as BedwarsCgsGameTeam?
+
+                if (team == null)
+                {
+                    event.isCancelled = true
+                    return
+                }
+
+                if (team.id == teamId)
+                {
+                    event.isCancelled = true
+                    event.player.sendMessage("${CC.RED}You cannot break your own team's bed!")
+                    return
+                }
 
                 BedwarsBedDestroyEvent(
                     CgsGameTeamService.teams[meta[0].asInt()] as BedwarsCgsGameTeam,

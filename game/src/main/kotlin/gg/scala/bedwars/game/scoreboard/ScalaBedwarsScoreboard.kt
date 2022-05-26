@@ -72,7 +72,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             val statistics = ScalaBedwarsGameEngine.INSTANCE
                 .getStatistics(cgsGamePlayer)
 
-            lines.add("Diamond I in ${CC.GREEN}5:00${CC.WHITE}.")
+            lines.add("Diamond I in ${CC.GREEN}5:00${CC.WHITE}")
             lines.add("")
 
             CgsGameTeamService.teams
