@@ -1,24 +1,16 @@
 package gg.scala.bedwars.game
 
-import com.avaje.ebeaninternal.server.util.InternalAssert.notNull
 import gg.scala.bedwars.game.nametag.ScalaBedwarsNametagAdapter
 import gg.scala.bedwars.game.scoreboard.ScalaBedwarsScoreboard
 import gg.scala.bedwars.game.visibility.ScalaBedwarsVisibilityAdapter
-import gg.scala.cgs.common.CgsGameEngine
-import gg.scala.cgs.common.player.nametag.CgsGameNametagAdapter
-import gg.scala.cgs.common.player.scoreboard.CgsGameScoreboardRenderer
-import gg.scala.cgs.common.player.visibility.CgsGameVisibilityAdapter
-import gg.scala.cgs.common.snapshot.CgsGameSnapshot
-import org.bukkit.plugin.java.JavaPlugin
-import gg.scala.bedwars.shared.BedwarsCgsInfo
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
-import gg.scala.bedwars.shared.gamemode.BedwarsSoloGameMode
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
+import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.CgsGameGeneralInfo
 import gg.scala.cgs.common.information.mode.CgsGameMode
+import gg.scala.cgs.common.snapshot.CgsGameSnapshot
 import gg.scala.cgs.common.teams.CgsGameTeam
 import gg.scala.commons.ExtendedScalaPlugin
-import kotlin.properties.Delegates
 
 /**
  * @author GrowlyX
@@ -40,7 +32,8 @@ class ScalaBedwarsGameEngine(
         lateinit var INSTANCE: ScalaBedwarsGameEngine
     }
 
-    init {
+    init
+    {
         INSTANCE = this
     }
 
@@ -71,7 +64,8 @@ class ScalaBedwarsGameEngine(
         }
     }
 
-    override fun createTeam(id: Int) : CgsGameTeam {
+    override fun createTeam(id: Int): CgsGameTeam
+    {
         return BedwarsCgsGameTeam(id)
     }
 }
