@@ -11,6 +11,7 @@ import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
+import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.block.BlockFace
@@ -83,6 +84,7 @@ object BedwarsStartListener : Listener
                     it.participants.forEach { id ->
                         val player = Bukkit.getPlayer(id)
                         player.displayName = it.color.toString() + player.displayName
+                        player.playerListName = (if (player.hasMetadata("spectator")) CC.GRAY else it.color.toString()) + player.displayName
                         player.teleport(it.spawnPoint)
                     }
                 }
