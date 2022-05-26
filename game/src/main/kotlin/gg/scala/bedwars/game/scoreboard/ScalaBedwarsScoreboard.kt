@@ -92,7 +92,8 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                 .getStatistics(cgsGamePlayer)
 
             lines.add("${
-                BedwarsItemGeneratorTierIncrementer.formatted()
+                BedwarsItemGeneratorTierIncrementer
+                    .formatted(colored = false)
             }${CC.WHITE} in ${CC.GREEN}${
                 TimeUtil.formatIntoMMSS(
                     BedwarsItemGeneratorTierIncrementer.countdown
@@ -107,7 +108,10 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                 }
                 .forEach {
                     lines.add(
-                        " ${CC.BOLD}${it.color}${it.name.substring(0, 1)} ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
+                        " ${CC.BOLD}${it.color}${
+                            if (it.color == ChatColor.LIGHT_PURPLE)
+                                "P" else it.color.name.substring(0, 1)
+                        } ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
                             if (it.bedDestroyed)
                             {
                                 if (it.alive.isEmpty()) CC.RED + "✘"
