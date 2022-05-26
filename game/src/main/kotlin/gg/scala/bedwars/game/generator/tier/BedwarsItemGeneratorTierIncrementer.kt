@@ -4,10 +4,10 @@ import gg.scala.bedwars.game.generator.BedwarsItemGeneratorService
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.cgs.common.CgsGameEngine
+import gg.scala.cgs.common.environment.editor.EnvironmentEditorService
 import gg.scala.cgs.common.states.CgsGameState
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.time.TimeUtil
-import org.apache.commons.lang.math.NumberUtils
 import org.bukkit.scheduler.BukkitRunnable
 
 /**
@@ -44,6 +44,12 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
         3 to "III",
         4 to "IV"
     )
+
+    init
+    {
+        EnvironmentEditorService
+            .registerAllEditables(this)
+    }
 
     // very stupid
     private val mappings = listOf(
