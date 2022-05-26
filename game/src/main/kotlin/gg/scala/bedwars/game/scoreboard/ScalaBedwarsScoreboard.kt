@@ -11,6 +11,7 @@ import gg.scala.cgs.common.teams.CgsGameTeamService
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.entity.Player
 import java.util.*
 
@@ -57,7 +58,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             CgsGameTeamService.teams.map {
                 it.value as BedwarsCgsGameTeam
             }.forEach {
-                lines.add(" ${it.color}${it.color.name.substring(0, 1)} ${CC.WHITE}${it.color.name.lowercase().capitalize()}: ${
+                lines.add(" ${it.color}${it.color.name.substring(0, 1)} ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
                     if (it.bedDestroyed) {
                         if (it.alive.isEmpty()) CC.RED + "✘"
                         else CC.GREEN + it.alive.size

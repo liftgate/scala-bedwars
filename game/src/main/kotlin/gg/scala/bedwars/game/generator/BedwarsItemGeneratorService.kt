@@ -1,6 +1,7 @@
 package gg.scala.bedwars.game.generator
 
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
+import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.flavor.service.Close
 import gg.scala.flavor.service.Service
 
@@ -13,6 +14,7 @@ object BedwarsItemGeneratorService
     fun close() {
         generators.forEach {
             if (it is BedwarsDiamondItemGenerator) it.stand.remove()
+            if (it is BedwarsEmeraldItemGenerator) it.stand.remove()
         }
     }
 }

@@ -5,6 +5,7 @@ import gg.scala.cgs.common.information.arena.slime.CgsSlimeGameArena
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
+import org.bukkit.block.BlockFace
 import java.nio.file.Path
 
 /**
