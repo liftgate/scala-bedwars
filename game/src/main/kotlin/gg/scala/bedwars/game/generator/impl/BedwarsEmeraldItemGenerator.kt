@@ -7,33 +7,12 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
+import org.bukkit.inventory.ItemStack
 
-class BedwarsEmeraldItemGenerator(location: Location) : BedwarsItemGenerator(60, location)
-{
-    var stand: ArmorStand
-
-    override fun drop()
-    {
-        location.world.dropItem(location, ItemBuilder(XMaterial.EMERALD).build())
-    }
-
-    override fun tick()
-    {
-        val loc = stand.location
-        if (loc.yaw == 360f) loc.yaw = 0f
-        else loc.yaw += 2f
-        stand.teleport(loc)
-        stand.customName = "Emerald in $cooldown"
-    }
-
-    init {
-        if (!location.world.isChunkLoaded(location.chunk)) location.world.loadChunk(location.chunk)
-        stand = location.world.spawnEntity(location, EntityType.ARMOR_STAND) as ArmorStand
-
-        stand.setGravity(false)
-        stand.isCustomNameVisible = true
-        stand.isVisible = false
-        //stand.addPotionEffect(PotionEffect(PotionEffectType.INVISIBILITY, Int.MAX_VALUE, 1))
-        stand.helmet = ItemBuilder(Material.EMERALD_BLOCK).build()
-    }
-}
+class BedwarsEmeraldItemGenerator(
+    location: Location,
+    override val itemMaterial: ItemStack =
+        ItemBuilder.of(XMaterial.EMERALD).build(),
+    override val itemBlock: ItemStack =
+        ItemBuilder.of(XMaterial.EMERALD_BLOCK).build()
+) : BedwarsItemGenerator(60, location)

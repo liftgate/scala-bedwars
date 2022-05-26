@@ -11,10 +11,14 @@ object BedwarsItemGeneratorService
     val generators: MutableList<BedwarsItemGenerator> = mutableListOf()
 
     @Close
-    fun close() {
+    fun close()
+    {
         generators.forEach {
-            if (it is BedwarsDiamondItemGenerator) it.stand.remove()
-            if (it is BedwarsEmeraldItemGenerator) it.stand.remove()
+            if (it is BedwarsDiamondItemGenerator)
+                it.stand.remove()
+
+            if (it is BedwarsEmeraldItemGenerator)
+                it.stand.remove()
         }
     }
 }

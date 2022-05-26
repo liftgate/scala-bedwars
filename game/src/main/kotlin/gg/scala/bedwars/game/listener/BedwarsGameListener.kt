@@ -9,10 +9,10 @@ import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import net.evilblock.cubed.util.CC
-import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
@@ -20,7 +20,6 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.metadata.FixedMetadataValue
 
 @Listeners
@@ -89,17 +88,7 @@ object BedwarsGameListener : Listener
                     player = e.entity, broadcastNotification = true, setSpectator = true
                 )
                 if (team.alive.isEmpty()) team.broadcastElimination()
-            }
-        }
-    }
-
-    @EventHandler
-    fun onRespawn(e: PlayerRespawnEvent) {
-        if (e.player.hasMetadata("spectator"))
-        Tasks.delayed(20L) {
-            val team = CgsGameTeamService.getTeamOf(e.player) as BedwarsCgsGameTeam?
-
-            if (team != null && !team.bedDestroyed) e.player.teleport(team.spawnPoint)
+            } else e.entity.teleport(team.spawnPoint)
         }
     }
 }
