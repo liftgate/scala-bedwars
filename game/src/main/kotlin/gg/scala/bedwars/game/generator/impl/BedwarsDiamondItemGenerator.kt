@@ -7,33 +7,12 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
+import org.bukkit.inventory.ItemStack
 
-class BedwarsDiamondItemGenerator(location: Location) : BedwarsItemGenerator(45, location)
-{
-    var stand: ArmorStand
-
-    override fun drop()
-    {
-        location.world.dropItem(location, ItemBuilder(XMaterial.DIAMOND).build())
-    }
-
-    override fun tick()
-    {
-        val loc = stand.location
-        if (loc.yaw == 360f) loc.yaw = 0f
-        else loc.yaw += 2f
-        stand.teleport(loc)
-        stand.customName = "Diamond in $cooldown"
-    }
-
-    init {
-        if (!location.world.isChunkLoaded(location.chunk)) location.world.loadChunk(location.chunk)
-        stand = location.world.spawnEntity(location, EntityType.ARMOR_STAND) as ArmorStand
-
-        stand.setGravity(false)
-        stand.isCustomNameVisible = true
-        stand.isVisible = false
-        //stand.addPotionEffect(PotionEffect(PotionEffectType.INVISIBILITY, Int.MAX_VALUE, 1))
-        stand.helmet = ItemBuilder(Material.DIAMOND_BLOCK).build()
-    }
-}
+class BedwarsDiamondItemGenerator(
+    location: Location,
+    override val itemMaterial: ItemStack =
+        ItemBuilder.of(XMaterial.DIAMOND).build(),
+    override val itemBlock: ItemStack =
+        ItemBuilder.of(XMaterial.DIAMOND_BLOCK).build()
+) : BedwarsItemGenerator(45, location)
