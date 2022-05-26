@@ -13,5 +13,6 @@ abstract class BedwarsItemGenerator(
 
     init {
         location = location.add(0.5, 0.0, 0.5)
+        BedwarsItemGeneratorService.generators.add(this)
     }
 }
