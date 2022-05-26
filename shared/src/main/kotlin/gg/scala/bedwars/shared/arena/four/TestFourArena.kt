@@ -5,7 +5,10 @@ import org.bukkit.Location
 import org.bukkit.Material
 
 object TestFourArena : BedwarsArena() {
-
+    override val diamondGenerators: List<Location>
+        get() = TODO("Not yet implemented")
+    override val emeraldGenerators: List<Location>
+        get() = TODO("Not yet implemented")
     override val teamSpawnPoints: MutableMap<Int, Location>
         get() = mutableMapOf(
             1 to buildSpawnPoint(0.0, 100.0, -10.0),

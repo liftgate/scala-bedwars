@@ -6,6 +6,15 @@ import org.bukkit.Material
 
 object TestEightArena : BedwarsArena() {
 
+    override val diamondGenerators: List<Location>
+        get() = mutableListOf(
+            buildSpawnPoint(5.0, 100.0, 0.0),
+            buildSpawnPoint(-5.0, 100.0, 0.0),
+            buildSpawnPoint(0.0, 100.0, 5.0),
+            buildSpawnPoint(0.0, 100.0, -5.0),
+        )
+    override val emeraldGenerators: List<Location>
+        get() = mutableListOf(buildSpawnPoint(0.0, 100.0, 0.0))
     override val teamSpawnPoints: MutableMap<Int, Location>
         get() = mutableMapOf(
             1 to buildSpawnPoint(-8.0, 100.0, 15.0),

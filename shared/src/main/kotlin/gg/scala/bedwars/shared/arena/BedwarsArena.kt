@@ -34,4 +34,6 @@ abstract class BedwarsArena : CgsSlimeGameArena()
     }
 
     abstract val teamSpawnPoints: MutableMap<Int, Location>
+    abstract val diamondGenerators: List<Location>
+    abstract val emeraldGenerators: List<Location>
 }
