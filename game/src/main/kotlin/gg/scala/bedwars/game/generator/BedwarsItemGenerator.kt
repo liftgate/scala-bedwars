@@ -1,8 +1,6 @@
 package gg.scala.bedwars.game.generator
 
 import org.bukkit.Location
-import org.bukkit.entity.ArmorStand
-import org.bukkit.entity.EntityType
 import org.bukkit.inventory.ItemStack
 
 abstract class BedwarsItemGenerator(

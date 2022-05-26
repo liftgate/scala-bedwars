@@ -11,6 +11,7 @@ class BedwarsEmeraldItemGenerator(
     override val itemMaterial: ItemStack =
         ItemBuilder.of(XMaterial.EMERALD).build()
 ) : BedwarsProminentItemGenerator(mapOf(
+    0 to 90,
     1 to 75,
     2 to 60,
     3 to 45

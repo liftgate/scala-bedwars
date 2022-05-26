@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game
 
+import gg.scala.bedwars.game.generator.tier.BedwarsItemGeneratorTierIncrementer
 import gg.scala.bedwars.shared.BedwarsCgsInfo
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.cgs.common.CgsGameEngine
@@ -8,6 +9,7 @@ import gg.scala.cgs.common.information.mode.CgsGameMode
 import gg.scala.commons.ExtendedScalaPlugin
 import gg.scala.commons.annotations.container.ContainerEnable
 import gg.scala.commons.config.annotations.ContainerConfig
+import me.lucko.helper.Schedulers
 import me.lucko.helper.plugin.ap.Plugin
 import me.lucko.helper.plugin.ap.PluginDependency
 import org.bukkit.entity.Player
@@ -59,5 +61,10 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
 
         CgsGameEngine.INSTANCE = engine
         engine.initialLoad()
+
+        BedwarsItemGeneratorTierIncrementer
+            .runTaskTimerAsynchronously(
+                this, 0L, 20L
+            )
     }
 }

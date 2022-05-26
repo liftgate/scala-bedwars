@@ -1,6 +1,7 @@
 package gg.scala.bedwars.game.scoreboard
 
 import gg.scala.bedwars.game.ScalaBedwarsGameEngine
+import gg.scala.bedwars.game.generator.tier.BedwarsItemGeneratorTierIncrementer
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.handler.CgsPlayerHandler
@@ -90,7 +91,14 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             val statistics = ScalaBedwarsGameEngine.INSTANCE
                 .getStatistics(cgsGamePlayer)
 
-            lines.add("Diamond I in ${CC.GREEN}5:00${CC.WHITE}")
+            lines.add("${
+                BedwarsItemGeneratorTierIncrementer.formatted()
+            } in ${CC.GREEN}${
+                TimeUtil.formatIntoMMSS(
+                    BedwarsItemGeneratorTierIncrementer.countdown
+                )
+            }${CC.WHITE}")
+
             lines.add("")
 
             CgsGameTeamService.teams

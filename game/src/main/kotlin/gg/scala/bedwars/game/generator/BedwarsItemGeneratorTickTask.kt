@@ -8,7 +8,9 @@ object BedwarsItemGeneratorTickTask : Runnable
     override fun run()
     {
         BedwarsItemGeneratorService
-            .generators.filterIsInstance<BedwarsProminentItemGenerator>().forEach {
+            .generators
+            .filterIsInstance<BedwarsProminentItemGenerator>()
+            .forEach {
                 it.tick()
             }
     }

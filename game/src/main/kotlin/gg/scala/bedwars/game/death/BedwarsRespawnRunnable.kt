@@ -89,9 +89,9 @@ class BedwarsRespawnRunnable(
                                 "${CC.WHITE}You have respawned!"
                             ),
                         Title.Times.times(
+                            Duration.ofMillis(250L),
                             Duration.ofMillis(500L),
-                            Duration.ofMillis(1000L),
-                            Duration.ofMillis(500L)
+                            Duration.ofMillis(250L)
                         )
                     )
                 )

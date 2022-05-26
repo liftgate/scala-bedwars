@@ -1,7 +1,5 @@
 package gg.scala.bedwars.game.generator
 
-import com.cryptomorin.xseries.XMaterial
-import gg.scala.bedwars.game.generator.BedwarsItemGenerator
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType

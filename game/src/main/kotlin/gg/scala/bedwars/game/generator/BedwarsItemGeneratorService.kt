@@ -1,7 +1,5 @@
 package gg.scala.bedwars.game.generator
 
-import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
-import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.flavor.service.Close
 import gg.scala.flavor.service.Service
 
@@ -13,8 +11,10 @@ object BedwarsItemGeneratorService
     @Close
     fun close()
     {
-        generators.filterIsInstance<BedwarsProminentItemGenerator>().forEach {
-            it.stand.remove()
-        }
+        generators
+            .filterIsInstance<BedwarsProminentItemGenerator>()
+            .forEach {
+                it.stand.remove()
+            }
     }
 }
