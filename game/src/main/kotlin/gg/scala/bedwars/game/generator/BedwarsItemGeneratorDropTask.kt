@@ -9,6 +9,7 @@ object BedwarsItemGeneratorDropTask : Runnable
     {
         BedwarsItemGeneratorService.generators.forEach {
             it.cooldown--
+
             if (it.cooldown == 0)
             {
                 it.cooldown = it.seconds

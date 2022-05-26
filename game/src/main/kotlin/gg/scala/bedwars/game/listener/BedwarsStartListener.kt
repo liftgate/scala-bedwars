@@ -13,9 +13,11 @@ import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import org.bukkit.Bukkit
 import org.bukkit.Material
+import org.bukkit.block.BlockFace
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.metadata.FixedMetadataValue
+
 
 @Listeners
 object BedwarsStartListener : Listener
@@ -49,10 +51,35 @@ object BedwarsStartListener : Listener
                     it.bedDestroyed = true
                 } else
                 {
-
-
+                    val block = it.spawnPoint!!.block
                     it.spawnPoint!!.block.type = Material.BED_BLOCK
-                    it.spawnPoint!!.block.setMetadata("team", FixedMetadataValue(plugin, it.id))
+
+                    val bedFoot = block
+                        .getRelative(
+                            block.getFace(block)
+                        )
+                        .state
+
+                    val bedHead = bedFoot.block
+                        .getRelative(BlockFace.SOUTH)
+                        .state
+
+                    bedFoot.type = Material.BED_BLOCK
+                    bedHead.type = Material.BED_BLOCK
+
+                    bedFoot.setRawData(0x0.toByte())
+                    bedHead.setRawData(0x8.toByte())
+
+                    bedFoot.update(true, false)
+                    bedHead.update(true, true)
+
+                    listOf(bedFoot, bedHead)
+                        .forEach { state ->
+                            state.block.setMetadata(
+                                "team", FixedMetadataValue(plugin, it.id)
+                            )
+                        }
+
                     it.participants.forEach { id ->
                         val player = Bukkit.getPlayer(id)
                         player.displayName = it.color.toString() + player.displayName
