@@ -6,6 +6,8 @@ import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.information.mode.CgsGameMode
 import gg.scala.commons.ExtendedScalaPlugin
+import gg.scala.commons.annotations.container.ContainerEnable
+import gg.scala.commons.config.annotations.ContainerConfig
 import me.lucko.helper.plugin.ap.Plugin
 import me.lucko.helper.plugin.ap.PluginDependency
 
@@ -21,17 +23,18 @@ import me.lucko.helper.plugin.ap.PluginDependency
         PluginDependency("Lemon")
     ]
 )
-class ScalaBedwarsGame : ExtendedScalaPlugin() {
-
-    override fun enable()
+@ContainerConfig(
+    value = "orchestration",
+    model = ScalaBedwarsOrchestration::class
+)
+class ScalaBedwarsGame : ExtendedScalaPlugin()
+{
+    @ContainerEnable
+    fun containerEnable()
     {
-        val orchestration =
-            loadConfig("orchestration.yml")
-
-        val mode = orchestration.getString("mode")
-            ?: "gg.scala.bedwars.shared.gamemode.BedwarsSoloGameMode"
-
-        val modeClass = Class.forName(mode)
+        val modeClass = Class.forName(
+            this.config<ScalaBedwarsOrchestration>().mode
+        )
 
         val modeClassObject = modeClass.kotlin.objectInstance!! as CgsGameMode
         CgsGameArenaHandler.configure(modeClassObject)
