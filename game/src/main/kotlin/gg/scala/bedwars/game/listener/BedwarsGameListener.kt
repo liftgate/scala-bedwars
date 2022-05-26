@@ -112,7 +112,8 @@ object BedwarsGameListener : Listener
                     return
                 }
 
-                event.block.drops.clear()
+                event.block.type = Material.AIR
+                event.isCancelled = true
 
                 BedwarsBedDestroyEvent(
                     CgsGameTeamService.teams[meta[0].asInt()] as BedwarsCgsGameTeam,

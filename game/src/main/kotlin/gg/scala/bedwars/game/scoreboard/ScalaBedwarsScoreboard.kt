@@ -24,7 +24,7 @@ import java.util.*
 object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
 {
     private val dateFormat =
-        SimpleDateFormat("MM/dd/yyyy")
+        SimpleDateFormat("MM/dd/yy")
             .format(
                 Date()
             )
@@ -96,7 +96,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                 }
                 .forEach {
                     lines.add(
-                        " ${it.color}${it.color.name.substring(0, 1)} ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
+                        " ${CC.BOLD}${it.color}${it.color.name.substring(0, 1)} ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
                             if (it.bedDestroyed)
                             {
                                 if (it.alive.isEmpty()) CC.RED + "✘"
@@ -115,22 +115,5 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
 
         lines.add("")
         lines.add("${CC.GRAY}www.glade.gg    ${CC.GRAY}")
-    }
-
-    private fun getFormattedPing(ping: Int): String
-    {
-        return if (ping > 300)
-        {
-            CC.D_RED + ping + "ms"
-        } else if (ping > 150)
-        {
-            CC.PRI + ping + "ms"
-        } else if (ping > 80)
-        {
-            CC.YELLOW + ping + "ms"
-        } else
-        {
-            CC.GREEN + ping + "ms"
-        }
     }
 }
