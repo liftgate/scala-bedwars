@@ -93,7 +93,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
 
             lines.add("${
                 BedwarsItemGeneratorTierIncrementer.formatted()
-            } in ${CC.GREEN}${
+            }${CC.WHITE} in ${CC.GREEN}${
                 TimeUtil.formatIntoMMSS(
                     BedwarsItemGeneratorTierIncrementer.countdown
                 )
@@ -107,7 +107,7 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                 }
                 .forEach {
                     lines.add(
-                        " ${CC.BOLD}${it.color}${it.color.name.substring(0, 1)} ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
+                        " ${CC.BOLD}${it.color}${it.name.substring(0, 1)} ${CC.WHITE}${ChatColor.stripColor(it.name)}: ${
                             if (it.bedDestroyed)
                             {
                                 if (it.alive.isEmpty()) CC.RED + "✘"
@@ -125,6 +125,6 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
         }
 
         lines.add("")
-        lines.add("${CC.GRAY}www.glade.gg    ${CC.GRAY}")
+        lines.add("${CC.GRAY}www.glade.gg       ${CC.GRAY}")
     }
 }

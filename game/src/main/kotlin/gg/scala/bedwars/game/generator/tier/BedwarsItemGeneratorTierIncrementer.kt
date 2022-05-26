@@ -1,13 +1,13 @@
 package gg.scala.bedwars.game.generator.tier
 
 import gg.scala.bedwars.game.generator.BedwarsItemGeneratorService
-import gg.scala.bedwars.game.generator.BedwarsProminentItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.states.CgsGameState
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.time.TimeUtil
+import org.apache.commons.lang.math.NumberUtils
 import org.bukkit.scheduler.BukkitRunnable
 
 /**
@@ -46,7 +46,7 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
     )
 
     // very stupid
-    private val mappings = mapOf(
+    private val mappings = listOf(
         // something
         BedwarsDiamondItemGenerator::class to 1,
         BedwarsDiamondItemGenerator::class to 2,
@@ -61,23 +61,30 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
 
     fun currentEvent(): Pair<String, Int>
     {
-        val current = this.mappings
-            .entries.toList()[current]
+        val current = this.mappings[current]
 
         return Pair(
-            generators[current.key]!!,
-            current.value
+            generators[current.first]!!,
+            current.second
         )
     }
 
-    private fun current() = this.mappings
-        .entries.toList()[current]
+    private fun current() =
+        this.mappings[current]
 
-    fun formatted(): String
+    fun formatted(
+        colored: Boolean = true
+    ): String
     {
         val current = this.current()
 
-        return "${colors[current.key]}${mappings[current.key]} ${numerals[current.value]}"
+        return "${
+            if (colored) colors[current.first] else ""
+        }${
+            generators[current.first]
+        } ${
+            numerals[current.second]
+        }"
     }
 
     override fun run()
@@ -90,15 +97,14 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
             return
         }
 
-        val current = this.mappings
-            .entries.toList()[current]
+        val current = this.mappings[current]
 
         if (this.updates.contains(this.countdown))
         {
             this.engine.sendMessage(
-                "${colors[current.key]}${mappings[current.key]} ${numerals[current.value]}${CC.SEC} will commence in ${CC.PRI}${
-                    TimeUtil.formatIntoDetailedString(this.current)
-                }."
+                "${colors[current.first]}${generators[current.first]} ${numerals[current.second]}${CC.SEC} will commence in ${CC.PRI}${
+                    TimeUtil.formatIntoDetailedString(this.countdown)
+                }${CC.SEC}."
             )
         }
 
@@ -106,13 +112,13 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
         {
             BedwarsItemGeneratorService
                 .generators
-                .filterIsInstance(current.key.java)
+                .filterIsInstance(current.first.java)
                 .forEach {
-                    it.tier = current.value
+                    it.tier = current.second
                 }
 
             this.engine.sendMessage(
-                "${colors[current.key]}${mappings[current.key]} ${numerals[current.value]}${CC.SEC} has commenced."
+                "${colors[current.first]}${generators[current.first]} ${numerals[current.second]}${CC.SEC} has commenced."
             )
 
             if (
