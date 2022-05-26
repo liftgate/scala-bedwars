@@ -113,6 +113,9 @@ object BedwarsGameListener : Listener
                     CgsGameTeamService.teams[meta[0].asInt()] as BedwarsCgsGameTeam,
                     event.player
                 ).callEvent()
+            } else
+            {
+                event.isCancelled = true
             }
         } else if (!event.block.hasMetadata("placed"))
         {
