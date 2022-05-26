@@ -9,8 +9,7 @@ import org.bukkit.inventory.ItemStack
 
 class BedwarsTeamItemGenerator(
     location: Location,
-    override val itemMaterial: ItemStack = ItemBuilder.of(Material.AIR).build(),
-    override val itemBlock: ItemStack = ItemBuilder.of(Material.AIR).build()
+    override val itemMaterial: ItemStack = ItemBuilder.of(Material.IRON_INGOT).build()
 ) : BedwarsItemGenerator(1, location)
 {
     private var goldCooldown = 4
@@ -19,10 +18,7 @@ class BedwarsTeamItemGenerator(
     {
         goldCooldown--
 
-        location.world.dropItem(
-            location, ItemBuilder.of(XMaterial.IRON_INGOT).build()
-        )
-
+        super.drop()
         if (goldCooldown == 0)
         {
             location.world.dropItem(
