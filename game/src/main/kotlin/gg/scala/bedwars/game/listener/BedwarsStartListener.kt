@@ -41,50 +41,47 @@ object BedwarsStartListener : Listener
         CgsGameTeamService.teams.values
             .map { it as BedwarsCgsGameTeam }
             .forEach {
-                if (it.participants.size > 0)
-                {
-                    BedwarsTeamItemGenerator(it.spawnPoint!!)
-                }
-
-                if (it.participants.size <= 0)
+                if (it.participants.isEmpty())
                 {
                     it.bedDestroyed = true
-                } else
-                {
-                    val block = it.spawnPoint!!.block
-                    it.spawnPoint!!.block.type = Material.BED_BLOCK
+                    return
+                }
 
-                    val bedFoot = block
-                        .getRelative(
-                            block.getFace(block)
+                BedwarsTeamItemGenerator(it.spawnPoint!!)
+
+                val block = it.spawnPoint!!.block
+                it.spawnPoint!!.block.type = Material.BED_BLOCK
+
+                val bedFoot = block
+                    .getRelative(
+                        block.getFace(block)
+                    )
+                    .state
+
+                val bedHead = bedFoot.block
+                    .getRelative(BlockFace.SOUTH)
+                    .state
+
+                bedFoot.type = Material.BED_BLOCK
+                bedHead.type = Material.BED_BLOCK
+
+                bedFoot.setRawData(0x0.toByte())
+                bedHead.setRawData(0x8.toByte())
+
+                bedFoot.update(true, false)
+                bedHead.update(true, true)
+
+                listOf(bedFoot, bedHead)
+                    .forEach { state ->
+                        state.block.setMetadata(
+                            "team", FixedMetadataValue(plugin, it.id)
                         )
-                        .state
-
-                    val bedHead = bedFoot.block
-                        .getRelative(BlockFace.SOUTH)
-                        .state
-
-                    bedFoot.type = Material.BED_BLOCK
-                    bedHead.type = Material.BED_BLOCK
-
-                    bedFoot.setRawData(0x0.toByte())
-                    bedHead.setRawData(0x8.toByte())
-
-                    bedFoot.update(true, false)
-                    bedHead.update(true, true)
-
-                    listOf(bedFoot, bedHead)
-                        .forEach { state ->
-                            state.block.setMetadata(
-                                "team", FixedMetadataValue(plugin, it.id)
-                            )
-                        }
-
-                    it.participants.forEach { id ->
-                        val player = Bukkit.getPlayer(id)
-                        player.displayName = it.color.toString() + player.displayName
-                        player.teleport(it.spawnPoint)
                     }
+
+                it.participants.forEach { id ->
+                    val player = Bukkit.getPlayer(id)
+                    player.displayName = it.color.toString() + player.displayName
+                    player.teleport(it.spawnPoint)
                 }
             }
     }
