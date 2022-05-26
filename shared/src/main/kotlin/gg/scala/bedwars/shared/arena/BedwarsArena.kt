@@ -15,7 +15,6 @@ import java.nio.file.Path
 abstract class BedwarsArena : CgsSlimeGameArena()
 {
     override fun getDirectory(): Path? = null
-    override fun getBukkitWorldName() = getId()
 
     override fun getPreLobbyLocation() = Location(
         Bukkit.getWorld("world"),
