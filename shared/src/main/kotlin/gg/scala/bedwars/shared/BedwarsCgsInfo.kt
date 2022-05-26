@@ -11,7 +11,7 @@ import gg.scala.bedwars.shared.gamemode.BedwarsFoursGameMode
  * @since 12/17/2021
  */
 object BedwarsCgsInfo : CgsGameGeneralInfo(
-    "BedWars", 0.03F, 2,
+    "BedWars", 0.04F, 2,
     61, BedwarsCgsAwards, false,
     false, false, true,
     true, listOf(

@@ -21,7 +21,7 @@ String environmental(String key)
 
 allprojects {
     group "gg.scala.bedwars"
-    version "0.03"
+    version "0.04"
 
     repositories {
         mavenCentral()
