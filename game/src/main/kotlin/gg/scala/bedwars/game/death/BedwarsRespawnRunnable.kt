@@ -10,6 +10,7 @@ import net.kyori.adventure.title.Title
 import net.kyori.adventure.title.TitlePart
 import org.bukkit.entity.Player
 import org.bukkit.scheduler.BukkitRunnable
+import java.time.Duration
 
 /**
  * @author GrowlyX
@@ -77,12 +78,22 @@ class BedwarsRespawnRunnable(
                     player.teleport(this)
                 }
 
-                audience.sendTitlePart(
-                    TitlePart.TITLE,
-                    LegacyComponentSerializer.legacySection()
-                        .deserialize(
-                            "${CC.RED}RESPAWNED"
+                audience.showTitle(
+                    Title.title(
+                        LegacyComponentSerializer.legacySection()
+                            .deserialize(
+                                "${CC.GREEN}RESPAWNED"
+                            ),
+                        LegacyComponentSerializer.legacySection()
+                            .deserialize(
+                                "${CC.WHITE}You have respawned!"
+                            ),
+                        Title.Times.times(
+                            Duration.ofMillis(500L),
+                            Duration.ofMillis(1000L),
+                            Duration.ofMillis(500L)
                         )
+                    )
                 )
 
                 this.player.sendMessage("${CC.GREEN}You have respawned!")
