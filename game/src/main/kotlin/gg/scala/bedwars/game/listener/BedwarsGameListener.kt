@@ -9,6 +9,7 @@ import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.bukkit.Constants
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -57,18 +58,11 @@ object BedwarsGameListener : Listener
         event.team.bedDestroyed = true
 
         CgsGameEngine.INSTANCE.playSound(Sound.ENDERDRAGON_GROWL)
-        CgsGameEngine.INSTANCE.sendMessage("")
-        CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed")
-        CgsGameEngine.INSTANCE.sendMessage("")
-        CgsGameEngine.INSTANCE.sendMessage("${event.team.name}${CC.RED}'s bed has been destroyed!")
 
-        if (event.destroyer != null)
-        {
-            CgsGameEngine.INSTANCE.sendMessage(
-                CC.RED + "Destroyed by " + event.destroyer.displayName
-            )
-        }
-
+        CgsGameEngine.INSTANCE.sendMessage("")
+        CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}${CC.RED}'s bed has been destroyed${
+            if (event.destroyer != null) " by " + event.destroyer.displayName else ""
+        }!")
         CgsGameEngine.INSTANCE.sendMessage("")
 
         event.team.alive.filter { Bukkit.getPlayer(it) == null }.forEach {

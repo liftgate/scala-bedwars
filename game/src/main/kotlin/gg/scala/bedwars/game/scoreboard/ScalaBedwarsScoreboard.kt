@@ -24,9 +24,12 @@ import java.util.*
 object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
 {
     private val dateFormat =
-        SimpleDateFormat("MM/dd/yy")
+        SimpleDateFormat("MM/dd/yyyy")
             .format(
                 Date()
+            )
+            .replace(
+                "20", ""
             )
             .replace(
                 "0", ""
