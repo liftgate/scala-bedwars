@@ -8,11 +8,13 @@ import gg.scala.cgs.common.player.scoreboard.CgsGameScoreboardRenderer
 import gg.scala.cgs.common.runnable.state.StartingStateRunnable
 import gg.scala.cgs.common.states.CgsGameState
 import gg.scala.cgs.common.teams.CgsGameTeamService
+import gg.scala.lemon.Lemon
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.time.TimeUtil
 import org.bukkit.Bukkit
 import org.bukkit.ChatColor
 import org.bukkit.entity.Player
+import java.text.SimpleDateFormat
 import java.util.*
 
 /**
@@ -21,10 +23,23 @@ import java.util.*
  */
 object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
 {
+    private val dateFormat =
+        SimpleDateFormat("MM/dd/yyyy")
+            .format(
+                Date()
+            )
+            .replace(
+                "0", ""
+            )
+
+    private val serverId = Lemon.instance.settings
+        .id.replace("bedwars", "mg")
+
     override fun getTitle() = "${CC.B_PRI}Bedwars"
 
     override fun render(lines: LinkedList<String>, player: Player, state: CgsGameState)
     {
+        lines.add("${CC.GRAY}$dateFormat ${CC.D_GRAY}$serverId")
         lines.add("")
 
         if (state == CgsGameState.WAITING || state == CgsGameState.STARTING)
