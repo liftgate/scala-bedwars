@@ -36,7 +36,7 @@ open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id)
     fun broadcastElimination()
     {
         CgsGameEngine.INSTANCE.sendMessage("")
-        CgsGameEngine.INSTANCE.sendMessage("${CC.B_WHITE}Team Elimination ${Constants.DOUBLE_ARROW_RIGHT} $name ${CC.RED}has been eliminated!")
+        CgsGameEngine.INSTANCE.sendMessage("${CC.B_WHITE}Team Elimination ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} $name ${CC.RED}has been eliminated!")
         CgsGameEngine.INSTANCE.sendMessage("")
     }
 }

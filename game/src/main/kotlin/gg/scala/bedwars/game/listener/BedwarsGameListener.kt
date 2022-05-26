@@ -13,12 +13,14 @@ import net.evilblock.cubed.util.bukkit.Constants
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
+import org.bukkit.entity.ArmorStand
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.inventory.ItemStack
@@ -49,6 +51,17 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
+    fun onInteract(
+        event: PlayerInteractAtEntityEvent
+    )
+    {
+       if (event.rightClicked is ArmorStand)
+       {
+           event.isCancelled = true
+       }
+    }
+
+    @EventHandler
     fun onPlace(event: BlockPlaceEvent)
     {
         event.blockPlaced.setMetadata("placed", FixedMetadataValue(plugin, true))
@@ -62,9 +75,9 @@ object BedwarsGameListener : Listener
         CgsGameEngine.INSTANCE.playSound(Sound.ENDERDRAGON_GROWL)
 
         CgsGameEngine.INSTANCE.sendMessage("")
-        CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}${CC.RED}'s bed has been destroyed${
+        CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}'s${CC.RED} bed has been destroyed${
             if (event.destroyer != null) " by " + event.destroyer.displayName else ""
-        }!")
+        }${CC.RED}!")
         CgsGameEngine.INSTANCE.sendMessage("")
 
         event.team.alive.filter { Bukkit.getPlayer(it) == null }.forEach {
