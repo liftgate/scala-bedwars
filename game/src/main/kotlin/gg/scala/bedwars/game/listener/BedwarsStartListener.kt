@@ -2,6 +2,7 @@ package gg.scala.bedwars.game.listener
 
 import gg.scala.bedwars.game.generator.BedwarsItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
+import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
@@ -21,6 +22,10 @@ object BedwarsStartListener : Listener
     fun onStart(e: CgsGameEngine.CgsGameStartEvent) {
         (CgsGameArenaHandler.arena as BedwarsArena).diamondGenerators.forEach {
             BedwarsDiamondItemGenerator(it)
+        }
+
+        (CgsGameArenaHandler.arena as BedwarsArena).emeraldGenerators.forEach {
+            BedwarsEmeraldItemGenerator(it)
         }
 
         CgsGameTeamService.teams.values.map { it as BedwarsCgsGameTeam }.forEach {

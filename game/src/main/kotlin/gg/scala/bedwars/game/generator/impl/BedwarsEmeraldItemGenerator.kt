@@ -8,13 +8,13 @@ import org.bukkit.Material
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
 
-class BedwarsDiamondItemGenerator(location: Location) : BedwarsItemGenerator(45, location)
+class BedwarsEmeraldItemGenerator(location: Location) : BedwarsItemGenerator(60, location)
 {
     var stand: ArmorStand
 
     override fun drop()
     {
-        location.world.dropItem(location, ItemBuilder(XMaterial.DIAMOND).build())
+        location.world.dropItem(location, ItemBuilder(XMaterial.EMERALD).build())
     }
 
     override fun tick()
@@ -23,7 +23,7 @@ class BedwarsDiamondItemGenerator(location: Location) : BedwarsItemGenerator(45,
         if (loc.yaw == 360f) loc.yaw = 0f
         else loc.yaw += 2f
         stand.teleport(loc)
-        stand.customName = "Diamond in $cooldown"
+        stand.customName = "Emerald in $cooldown"
     }
 
     init {
@@ -34,6 +34,6 @@ class BedwarsDiamondItemGenerator(location: Location) : BedwarsItemGenerator(45,
         stand.isCustomNameVisible = true
         stand.isVisible = false
         //stand.addPotionEffect(PotionEffect(PotionEffectType.INVISIBILITY, Int.MAX_VALUE, 1))
-        stand.helmet = ItemBuilder(Material.DIAMOND_BLOCK).build()
+        stand.helmet = ItemBuilder(Material.EMERALD_BLOCK).build()
     }
 }
