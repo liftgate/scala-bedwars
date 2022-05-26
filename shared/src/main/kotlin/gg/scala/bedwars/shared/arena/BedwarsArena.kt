@@ -16,7 +16,7 @@ abstract class BedwarsArena : CgsGameArena
     override fun getBukkitWorldName() = getId()
 
     override fun getPreLobbyLocation() = Location(
-        Bukkit.getWorld(getBukkitWorldName()),
+        Bukkit.getWorld("world"),
         0.5, 150.0, 0.5
     )
 
