@@ -43,7 +43,7 @@ object BedwarsStartListener : Listener
             .forEach {
                 if (it.participants.size > 0)
                 {
-                    BedwarsTeamItemGenerator(it.spawnPoint!!)
+                    BedwarsTeamItemGenerator(it.spawnPoint!!, it)
                 }
 
                 if (it.participants.size <= 0)

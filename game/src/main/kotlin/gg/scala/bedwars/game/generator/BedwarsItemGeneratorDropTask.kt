@@ -8,11 +8,11 @@ object BedwarsItemGeneratorDropTask : Runnable
     override fun run()
     {
         BedwarsItemGeneratorService.generators.forEach {
-            it.cooldown--
+            it.`cool down`--
 
-            if (it.cooldown == 0)
+            if (it.`cool down` == 0)
             {
-                it.cooldown = it.seconds
+                it.`cool down` = it.upgrades[it.tier] ?: it.upgrades[1]!!
                 it.drop()
             }
         }

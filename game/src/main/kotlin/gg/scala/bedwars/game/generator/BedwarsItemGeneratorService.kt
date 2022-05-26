@@ -13,12 +13,8 @@ object BedwarsItemGeneratorService
     @Close
     fun close()
     {
-        generators.forEach {
-            if (it is BedwarsDiamondItemGenerator)
-                it.stand.remove()
-
-            if (it is BedwarsEmeraldItemGenerator)
-                it.stand.remove()
+        generators.filterIsInstance<BedwarsProminentItemGenerator>().forEach {
+            it.stand.remove()
         }
     }
 }

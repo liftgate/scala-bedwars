@@ -10,6 +10,8 @@ class BedwarsDiamondItemGenerator(
     location: Location,
     override val itemMaterial: ItemStack =
         ItemBuilder.of(XMaterial.DIAMOND).build(),
-    override val itemBlock: ItemStack =
-        ItemBuilder.of(XMaterial.DIAMOND_BLOCK).build()
-) : BedwarsProminentItemGenerator(45, location)
+) : BedwarsProminentItemGenerator(mapOf(
+    1 to 45,
+    2 to 30,
+    3 to 15
+), location, ItemBuilder.of(XMaterial.DIAMOND_BLOCK).build())

@@ -8,11 +8,10 @@ import org.bukkit.entity.EntityType
 import org.bukkit.inventory.ItemStack
 
 abstract class BedwarsProminentItemGenerator(
-    seconds: Int, location: Location
-) : BedwarsItemGenerator(seconds, location)
+    upgrades: Map<Int, Int>, location: Location, itemBlock: ItemStack
+) : BedwarsItemGenerator(upgrades, location)
 {
     val stand: ArmorStand
-    abstract val itemBlock: ItemStack
 
     open fun tick() {
         val location =

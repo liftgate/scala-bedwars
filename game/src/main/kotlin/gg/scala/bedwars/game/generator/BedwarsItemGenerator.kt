@@ -6,10 +6,11 @@ import org.bukkit.entity.EntityType
 import org.bukkit.inventory.ItemStack
 
 abstract class BedwarsItemGenerator(
-    val seconds: Int, var location: Location
+    val upgrades: Map<Int, Int>, var location: Location
 )
 {
-    var cooldown = seconds
+    var tier = 1
+    var cooldown = upgrades[tier]!!
 
     abstract val itemMaterial: ItemStack
 
