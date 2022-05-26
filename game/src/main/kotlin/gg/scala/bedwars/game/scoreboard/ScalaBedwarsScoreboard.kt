@@ -59,7 +59,8 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             }.forEach {
                 lines.add(" ${it.color}${it.color.name.substring(0, 1)} ${CC.WHITE}${it.color.name.lowercase().capitalize()}: ${
                     if (it.bedDestroyed) {
-                        CC.RED + "✘"
+                        if (it.alive.isEmpty()) CC.RED + "✘"
+                        else CC.GREEN + it.alive.size
                     } else CC.GREEN + "✔"
                 }")
             }

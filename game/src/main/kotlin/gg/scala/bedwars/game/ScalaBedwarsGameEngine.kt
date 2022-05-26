@@ -37,7 +37,11 @@ class ScalaBedwarsGameEngine(
     companion object
     {
         @JvmStatic
-        var INSTANCE by Delegates.notNull<ScalaBedwarsGameEngine>()
+        lateinit var INSTANCE: ScalaBedwarsGameEngine
+    }
+
+    init {
+        INSTANCE = this
     }
 
     override fun getScoreboardRenderer() = ScalaBedwarsScoreboard

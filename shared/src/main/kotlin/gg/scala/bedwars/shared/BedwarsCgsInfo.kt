@@ -12,7 +12,7 @@ import gg.scala.bedwars.shared.gamemode.BedwarsFoursGameMode
  */
 object BedwarsCgsInfo : CgsGameGeneralInfo(
     "BedWars", 0.04F, 2,
-    61, BedwarsCgsAwards, false,
+    6, BedwarsCgsAwards, false,
     false, false, true,
     true, listOf(
         BedwarsSoloGameMode,
