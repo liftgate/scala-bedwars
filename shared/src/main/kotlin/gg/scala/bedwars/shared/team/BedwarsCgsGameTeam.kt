@@ -6,6 +6,7 @@ import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.teams.CgsGameTeam
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ColorUtil
+import net.evilblock.cubed.util.bukkit.Constants
 import org.bukkit.ChatColor
 import org.bukkit.DyeColor
 import org.bukkit.Location
@@ -35,9 +36,7 @@ open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id)
     fun broadcastElimination()
     {
         CgsGameEngine.INSTANCE.sendMessage("")
-        CgsGameEngine.INSTANCE.sendMessage("${CC.B_WHITE}Team Elimination")
-        CgsGameEngine.INSTANCE.sendMessage("")
-        CgsGameEngine.INSTANCE.sendMessage("$name ${CC.RED}has been eliminated!")
+        CgsGameEngine.INSTANCE.sendMessage("${CC.B_WHITE}Team Elimination ${Constants.DOUBLE_ARROW_RIGHT} $name ${CC.RED}has been eliminated!")
         CgsGameEngine.INSTANCE.sendMessage("")
     }
 }

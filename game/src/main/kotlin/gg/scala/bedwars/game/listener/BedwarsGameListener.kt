@@ -17,9 +17,11 @@ import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 
 @Listeners
@@ -80,6 +82,20 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
+    fun onItem(
+        event: ItemSpawnEvent
+    )
+    {
+        if (
+            event.entity.itemStack.type
+                .name.contains("BED")
+        )
+        {
+            event.isCancelled = true
+        }
+    }
+
+    @EventHandler
     fun onBreak(event: BlockBreakEvent)
     {
         if (event.block.type == Material.BED_BLOCK)
@@ -105,9 +121,6 @@ object BedwarsGameListener : Listener
                     event.player.sendMessage("${CC.RED}You cannot break your own team's bed!")
                     return
                 }
-
-                event.block.type = Material.AIR
-                event.isCancelled = true
 
                 BedwarsBedDestroyEvent(
                     CgsGameTeamService.teams[meta[0].asInt()] as BedwarsCgsGameTeam,
