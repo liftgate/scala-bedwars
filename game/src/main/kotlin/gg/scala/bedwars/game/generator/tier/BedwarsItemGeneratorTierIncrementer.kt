@@ -96,7 +96,7 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
     override fun run()
     {
         if (
-            engine.gameState.isAfter(CgsGameState.STARTED)
+            engine.gameState == CgsGameState.STARTED
         )
         {
             return
