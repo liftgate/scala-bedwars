@@ -62,7 +62,7 @@ object BedwarsShopBlockCategory
                 description = listOf("lmao"),
                 itemCreator = {
                     ItemBuilder.of(Material.WOOD)
-                        .amount(4)
+                        .amount(16)
                         .build()
                 }
             ),
