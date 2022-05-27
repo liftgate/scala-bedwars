@@ -86,7 +86,9 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             )
         } else if (state.isAfter(CgsGameState.STARTED))
         {
-            val cgsGamePlayer = CgsPlayerHandler.find(player)!!
+            val cgsGamePlayer = CgsPlayerHandler
+                .find(player)
+                ?: return
 
             val statistics = ScalaBedwarsGameEngine.INSTANCE
                 .getStatistics(cgsGamePlayer)
