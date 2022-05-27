@@ -138,6 +138,8 @@ object BedwarsStartListener : Listener
                                 CgsPlayerHandler.find(player)!!
                             )
 
+                        player.enderChest.clear()
+
                         stats.gameKills.update(0)
 
                         BedwarsArmorService.applyArmor(player)

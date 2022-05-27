@@ -48,12 +48,6 @@ class BedwarsShopMenu : PaginatedMenu()
                         .setLore(
                             mutableListOf<String>()
                                 .apply {
-                                    addAll(
-                                        item.description
-                                            .map {
-                                                "${CC.WHITE}$it"
-                                            }
-                                    )
                                     add("")
                                     add("${CC.GRAY}Price: ${
                                         item.price.first.color
@@ -94,6 +88,11 @@ class BedwarsShopMenu : PaginatedMenu()
                                         item.price.first.displayPlural.lowercase()
                                     }
                                 } to purchase this item!")
+                                return@toButton
+                            }
+
+                            if (!item.contextualProvider.allowed(player, item))
+                            {
                                 return@toButton
                             }
 

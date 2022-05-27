@@ -17,11 +17,13 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.ArmorStand
+import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -224,6 +226,23 @@ object BedwarsGameListener : Listener
             {
                 event.isCancelled = true
             }
+        }
+    }
+
+    @EventHandler
+    fun onEntityDamage(
+        event: EntityDamageEvent
+    )
+    {
+        if (
+            event.cause == EntityDamageEvent.DamageCause.VOID &&
+                    event.entity is Player
+        )
+        {
+            event.isCancelled = true
+
+            BedwarsRespawnRunnable(event.entity as Player)
+                .runTaskTimer(this.plugin, 0L, 20L)
         }
     }
 

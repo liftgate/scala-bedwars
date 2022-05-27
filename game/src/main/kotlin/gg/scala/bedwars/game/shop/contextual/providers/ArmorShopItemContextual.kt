@@ -4,6 +4,7 @@ import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.armor.BedwarsArmorType
 import gg.scala.bedwars.game.shop.BedwarsShopItem
 import gg.scala.bedwars.game.shop.contextual.BedwarsShopItemContextualProvider
+import net.evilblock.cubed.util.CC
 import org.bukkit.entity.Player
 
 /**
@@ -29,5 +30,40 @@ object ArmorShopItemContextual : BedwarsShopItemContextualProvider
         )
 
         BedwarsArmorService.applyArmor(player)
+    }
+
+    override fun allowed(
+        player: Player, item: BedwarsShopItem
+    ): Boolean
+    {
+        val armor = BedwarsArmorService
+            .armor[player.uniqueId]
+            ?: BedwarsArmorType.LEATHER
+
+        val mapping = this.mappings[item.name]!!
+
+        if (armor == mapping)
+        {
+            player.sendMessage(
+                "${CC.RED}You already own this armor!"
+            )
+            return false
+        }
+
+        val purchasing = this.mappings
+            .values.indexOf(mapping)
+
+        val current = this.mappings
+            .values.indexOf(armor)
+
+        if (purchasing < current)
+        {
+            player.sendMessage(
+                "${CC.RED}You already own better armor!"
+            )
+            return false
+        }
+
+        return true
     }
 }

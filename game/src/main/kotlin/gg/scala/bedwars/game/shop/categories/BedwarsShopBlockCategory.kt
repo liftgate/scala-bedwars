@@ -17,7 +17,7 @@ import org.bukkit.entity.Player
 object BedwarsShopBlockCategory
 {
     val category = BedwarsShopCategory(
-        "Blocks", 3,
+        "Blocks", 1,
         ItemBuilder
             .of(Material.BRICK)
             .build(),

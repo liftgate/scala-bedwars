@@ -19,15 +19,6 @@ class BedwarsTeamUpgradesNpcEntity(
     location.add(0.5, 0.0, 0.5)
 )
 {
-    init
-    {
-        updateTextureByUsername(
-            "GrowlyX"
-        ) { _, it ->
-            it?.printStackTrace()
-        }
-    }
-
     override fun onRightClick(player: Player)
     {
         player.sendMessage("${CC.RED}test team upgrades")
