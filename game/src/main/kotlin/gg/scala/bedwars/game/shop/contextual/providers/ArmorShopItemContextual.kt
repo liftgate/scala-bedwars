@@ -32,7 +32,9 @@ object ArmorShopItemContextual : BedwarsShopItemContextualProvider
         BedwarsArmorService.applyArmor(player)
     }
 
-    override fun allowed(player: Player, item: BedwarsShopItem): Boolean
+    override fun allowed(
+        player: Player, item: BedwarsShopItem
+    ): Boolean
     {
         val armor = BedwarsArmorService
             .armor[player.uniqueId]
