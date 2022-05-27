@@ -29,7 +29,7 @@ object ScalaBedwarsNametagAdapter : CgsGameNametagAdapter
             "${team.color}${CC.BOLD}${
                 if (team.color == ChatColor.LIGHT_PURPLE)
                     "P" else team.color.name.substring(0, 1)
-            } ",
+            } ${team.color}",
             ""
         )
     }
