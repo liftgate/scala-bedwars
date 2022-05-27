@@ -66,18 +66,18 @@ object TestEightArena : BedwarsArena() {
     )
 
     override val teamBedLocations = mutableMapOf(
-        1 to buildSpawnPoint(-6.0, 100.0, 15.0),
-        2 to buildSpawnPoint(6.0, 100.0, 15.0),
+        1 to buildSpawnPoint(-8.0, 100.0, 14.0),
+        2 to buildSpawnPoint(8.0, 100.0, 14.0),
 
-        3 to buildSpawnPoint(6.0, 100.0, -15.0),
-        4 to buildSpawnPoint(-6.0, 100.0, -15.0),
+        3 to buildSpawnPoint(8.0, 100.0, -14.0),
+        4 to buildSpawnPoint(-8.0, 100.0, -14.0),
 
 
-        5 to buildSpawnPoint(15.0, 100.0, 6.0),
-        6 to buildSpawnPoint(15.0, 100.0, -6.0),
+        5 to buildSpawnPoint(14.0, 100.0, 8.0),
+        6 to buildSpawnPoint(14.0, 100.0, -8.0),
 
-        7 to buildSpawnPoint(-15.0, 100.0, 6.0),
-        8 to buildSpawnPoint(-15.0, 100.0, -6.0)
+        7 to buildSpawnPoint(-14.0, 100.0, 8.0),
+        8 to buildSpawnPoint(-14.0, 100.0, -8.0)
     )
 
     override val teamEnderChestLocations = mutableMapOf(
