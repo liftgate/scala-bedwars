@@ -81,6 +81,19 @@ object BedwarsStartListener : Listener
                             )
                         }
 
+                    val chestLocation = it.spawnPoint!!
+                        .clone().add(1.0, 0.0, 0.0)
+
+                    chestLocation.block.type = Material.CHEST
+                    chestLocation.block.setMetadata(
+                        "team", FixedMetadataValue(plugin, it.id)
+                    )
+
+                    val enderChestLocation = it.spawnPoint!!
+                        .clone().add(-1.0, 0.0, 0.0)
+
+                    enderChestLocation.block.type = Material.ENDER_CHEST
+
                     it.participants.forEach { id ->
                         val player = Bukkit.getPlayer(id)
                         player.displayName = it.color.toString() + player.displayName

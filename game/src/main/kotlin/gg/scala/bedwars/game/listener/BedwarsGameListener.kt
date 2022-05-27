@@ -24,6 +24,7 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
+import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.inventory.ItemStack
@@ -81,6 +82,47 @@ object BedwarsGameListener : Listener
     fun onPlace(event: BlockPlaceEvent)
     {
         event.blockPlaced.setMetadata("placed", FixedMetadataValue(plugin, true))
+    }
+
+    @EventHandler
+    fun onChestInteract(
+        event: PlayerInteractEvent
+    )
+    {
+        if (event.clickedBlock != null)
+        {
+            val block = event.clickedBlock
+
+            if (block.type == Material.CHEST)
+            {
+                val metaData = block
+                    .getMetadata("team")
+
+                if (metaData.isNullOrEmpty())
+                {
+                    return
+                }
+
+                val teamId = metaData[0].asInt()
+                val team = CgsGameTeamService
+                    .getTeamOf(event.player) as BedwarsCgsGameTeam?
+
+                if (team == null)
+                {
+                    event.isCancelled = true
+                    return
+                }
+
+                if (team.id != teamId && !team.bedDestroyed)
+                {
+                    event.isCancelled = true
+                    event.player.sendMessage(
+                        "${CC.RED}You cannot open ${team.color}${team.name}'s${CC.RED} team chest as their bed has not been destroyed."
+                    )
+                    return
+                }
+            }
+        }
     }
 
     @EventHandler
