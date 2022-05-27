@@ -16,7 +16,7 @@ class BedwarsTeamUpgradesNpcEntity(
         "${CC.D_AQUA}Team Upgrades",
         "${CC.GREEN}CLICK TO OPEN!"
     ),
-    location
+    location.add(0.5, 0.0, 0.5)
 )
 {
     override fun onRightClick(player: Player)
