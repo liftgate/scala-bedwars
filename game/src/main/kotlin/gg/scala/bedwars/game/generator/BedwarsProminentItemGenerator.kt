@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game.generator
 
+import gg.scala.bedwars.game.generator.hologram.BedwarsUpdatingHologramEntity
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
@@ -11,7 +12,10 @@ abstract class BedwarsProminentItemGenerator(
 {
     val stand: ArmorStand
 
-    open fun tick() {
+    abstract val name: String
+
+    open fun tick()
+    {
         val location =
             this.stand.location
 
@@ -22,7 +26,8 @@ abstract class BedwarsProminentItemGenerator(
         this.stand.teleport(location)
     }
 
-    init {
+    init
+    {
         if (
             !this.location.world
                 .isChunkLoaded(this.location.chunk)
@@ -37,7 +42,11 @@ abstract class BedwarsProminentItemGenerator(
                 location, EntityType.ARMOR_STAND
             ) as ArmorStand
 
-        // TODO: 5/26/2022 add custom hologram through Cubed
+        BedwarsUpdatingHologramEntity(
+            location.clone().add(0.0, 0.500, 0.0), this
+        ).apply {
+            initializeData()
+        }
 
         this.stand.setGravity(false)
         this.stand.isCustomNameVisible = false

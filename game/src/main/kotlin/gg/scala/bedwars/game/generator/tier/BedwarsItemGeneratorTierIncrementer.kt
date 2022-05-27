@@ -38,7 +38,7 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
         BedwarsEmeraldItemGenerator::class to "Emerald"
     )
 
-    private val numerals = mapOf(
+    val numerals = mapOf(
         1 to "I",
         2 to "II",
         3 to "III",
