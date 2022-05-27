@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game.generator.npc
 
+import gg.scala.bedwars.game.shop.BedwarsShopMenu
 import net.evilblock.cubed.entity.npc.NpcEntity
 import net.evilblock.cubed.util.CC
 import org.bukkit.Location
@@ -21,6 +22,6 @@ class BedwarsShopNpcEntity(
 {
     override fun onRightClick(player: Player)
     {
-        player.sendMessage("${CC.RED}test shop")
+        BedwarsShopMenu().openMenu(player)
     }
 }

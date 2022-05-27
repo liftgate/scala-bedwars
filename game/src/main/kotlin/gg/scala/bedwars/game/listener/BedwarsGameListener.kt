@@ -56,15 +56,6 @@ object BedwarsGameListener : Listener
         {
             return
         }
-
-        val team = (CgsGameTeamService.getTeamOf(event.participant) as BedwarsCgsGameTeam?)
-            ?: return
-
-        if (!team.bedDestroyed)
-        {
-//            BedwarsRespawnRunnable(event.participant)
-//                .runTaskTimer(this.plugin, 1L, 20L)
-        }
     }
 
     @EventHandler

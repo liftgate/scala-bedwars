@@ -13,6 +13,7 @@ enum class BedwarsShopCurrency(
     val displaySingular: String,
     val displayPlural: String,
     val color: ChatColor,
+    val material: Material,
     val removeFrom: (Player, Int) -> Unit
 )
 {
@@ -20,6 +21,7 @@ enum class BedwarsShopCurrency(
         displaySingular = "Emerald",
         displayPlural = "Emeralds",
         color = ChatColor.DARK_GREEN,
+        material = Material.EMERALD,
         removeFrom = { player, amount ->
             player.inventory.removeItem(
                 ItemBuilder.of(Material.EMERALD)
@@ -33,6 +35,7 @@ enum class BedwarsShopCurrency(
         displaySingular = "Diamond",
         displayPlural = "Diamonds",
         color = ChatColor.AQUA,
+        material = Material.DIAMOND,
         removeFrom = { player, amount ->
             player.inventory.removeItem(
                 ItemBuilder.of(Material.DIAMOND)
@@ -46,6 +49,7 @@ enum class BedwarsShopCurrency(
         displaySingular = "Iron",
         displayPlural = "Iron",
         color = ChatColor.WHITE,
+        material = Material.IRON_INGOT,
         removeFrom = { player, amount ->
             player.inventory.removeItem(
                 ItemBuilder.of(Material.IRON_INGOT)
@@ -59,6 +63,7 @@ enum class BedwarsShopCurrency(
         displaySingular = "Gold",
         displayPlural = "Gold",
         color = ChatColor.GOLD,
+        material = Material.GOLD_INGOT,
         removeFrom = { player, amount ->
             player.inventory.removeItem(
                 ItemBuilder.of(Material.GOLD_INGOT)
