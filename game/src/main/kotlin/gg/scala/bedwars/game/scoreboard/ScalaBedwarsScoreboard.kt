@@ -93,6 +93,9 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             val statistics = ScalaBedwarsGameEngine.INSTANCE
                 .getStatistics(cgsGamePlayer)
 
+            val team = CgsGameTeamService
+                .getTeamOf(player)!! as BedwarsCgsGameTeam
+
             lines.add("${
                 BedwarsItemGeneratorTierIncrementer
                     .formatted(colored = false)
@@ -119,6 +122,8 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
                                 if (it.alive.isEmpty()) CC.RED + "✘"
                                 else CC.GREEN + it.alive.size
                             } else CC.GREEN + "✔"
+                        }${
+                            if (team == it) "${CC.GRAY} (You)" else ""
                         }"
                     )
                 }
