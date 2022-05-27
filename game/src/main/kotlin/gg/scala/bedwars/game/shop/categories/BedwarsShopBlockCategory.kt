@@ -87,24 +87,7 @@ object BedwarsShopBlockCategory
                         .amount(4)
                         .data(
                             ColorUtil
-                                .toWoolData(team.color)
-                                .toShort()
-                        )
-                        .build()
-                }
-            ),
-            BedwarsShopItem(
-                name = "Glass x4",
-                price = BedwarsShopCurrency.IRON to 12,
-                description = listOf("lmao"),
-                itemCreator = {
-                    val team = it.team()!!
-
-                    ItemBuilder.of(Material.GLASS)
-                        .amount(4)
-                        .data(
-                            ColorUtil
-                                .toWoolData(team.color)
+                                .toDyeData(team.color)
                                 .toShort()
                         )
                         .build()

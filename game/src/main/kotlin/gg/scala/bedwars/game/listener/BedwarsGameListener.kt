@@ -24,6 +24,7 @@ import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.EntityDamageEvent
+import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
@@ -231,6 +232,17 @@ object BedwarsGameListener : Listener
             {
                 event.isCancelled = true
             }
+        }
+    }
+
+    @EventHandler
+    fun onExplosion(
+        event: EntityExplodeEvent
+    )
+    {
+        event.blockList().removeIf {
+            it.type == Material.GLASS ||
+                    !it.hasMetadata("placed")
         }
     }
 
