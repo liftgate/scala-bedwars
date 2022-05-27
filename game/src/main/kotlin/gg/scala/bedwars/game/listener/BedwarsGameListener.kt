@@ -17,6 +17,7 @@ import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.ArmorStand
+import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -233,6 +234,18 @@ object BedwarsGameListener : Listener
                 event.isCancelled = true
             }
         }
+    }
+
+    @EventHandler
+    fun onTntIgnite(
+        event: BlockPlaceEvent
+    )
+    {
+        event.block.type = Material.AIR
+
+        event.block.world.spawnEntity(
+            event.block.location, EntityType.PRIMED_TNT
+        )
     }
 
     @EventHandler
