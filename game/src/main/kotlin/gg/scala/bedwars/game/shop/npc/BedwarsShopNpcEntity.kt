@@ -20,15 +20,6 @@ class BedwarsShopNpcEntity(
     location.add(0.5, 0.0, 0.5)
 )
 {
-    init
-    {
-        updateTextureByUsername(
-            "Foraged"
-        ) { _, it ->
-            it?.printStackTrace()
-        }
-    }
-
     override fun onRightClick(player: Player)
     {
         BedwarsShopMenu().openMenu(player)
