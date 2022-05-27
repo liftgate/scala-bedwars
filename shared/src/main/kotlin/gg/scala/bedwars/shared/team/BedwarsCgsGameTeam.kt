@@ -13,18 +13,7 @@ import org.bukkit.Location
 
 open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id)
 {
-    val color = when (id)
-    {
-        1 -> ChatColor.RED
-        2 -> ChatColor.BLUE
-        3 -> ChatColor.GREEN
-        4 -> ChatColor.YELLOW
-        5 -> ChatColor.AQUA
-        6 -> ChatColor.WHITE
-        7 -> ChatColor.LIGHT_PURPLE
-        8 -> ChatColor.GRAY
-        else -> ChatColor.BLACK
-    }
+    val color = BedwarsCgsGameTeamColors.fromId(id)
 
     val name = "$color${
         BedwarsCgsGameTeamColors.map(this.color)
@@ -32,6 +21,7 @@ open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id)
 
     var bedDestroyed: Boolean = false
     val spawnPoint = (CgsGameArenaHandler.arena as BedwarsArena).getSpawnPoint(id)
+    val upgrades = mutableMapOf<BedwarsCgsGameTeamUpgrade ,Int>()
 
     fun broadcastElimination()
     {

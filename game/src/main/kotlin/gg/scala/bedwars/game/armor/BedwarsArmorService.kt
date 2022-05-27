@@ -26,8 +26,7 @@ object BedwarsArmorService
         ChatColor.YELLOW to Color.YELLOW,
         ChatColor.AQUA to Color.AQUA,
         ChatColor.WHITE to Color.WHITE,
-        ChatColor.LIGHT_PURPLE to Color
-            .fromRGB(255, 105, 180),
+        ChatColor.LIGHT_PURPLE to Color.FUCHSIA,
         ChatColor.GRAY to Color.GRAY
     )
 
@@ -67,8 +66,10 @@ object BedwarsArmorService
                     .setUnbreakable(true)
                     .build()
                     .apply {
-                        (itemMeta as LeatherArmorMeta).color =
+                        val meta = (itemMeta as LeatherArmorMeta)
+                            meta.color =
                             mappings[team.color]
+                        itemMeta = meta
                     }
             }
             .toTypedArray()
