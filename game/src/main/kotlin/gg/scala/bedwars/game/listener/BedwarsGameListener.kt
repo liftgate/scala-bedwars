@@ -111,7 +111,7 @@ object BedwarsGameListener : Listener
         if (
             event.team.alive
                 .mapNotNull { Bukkit.getPlayer(it) }
-                .isEmpty()
+                .none { !it.hasMetadata("spectator") }
         )
         {
             event.team.broadcastElimination()
