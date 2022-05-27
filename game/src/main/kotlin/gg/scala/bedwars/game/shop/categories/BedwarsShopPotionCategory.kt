@@ -14,7 +14,7 @@ import org.bukkit.Material
 object BedwarsShopPotionCategory
 {
     val category = BedwarsShopCategory(
-        "Potions", 3,
+        "Potions", 4,
         ItemBuilder
             .of(Material.POTION)
             .data(16421)
