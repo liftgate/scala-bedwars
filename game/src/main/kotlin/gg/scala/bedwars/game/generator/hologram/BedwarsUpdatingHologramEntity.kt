@@ -12,6 +12,7 @@ import org.bukkit.Location
  */
 class BedwarsUpdatingHologramEntity(
     location: Location,
+    @Transient
     private val generator: BedwarsProminentItemGenerator
 ) : UpdatingHologramEntity("GeneratorX", location)
 {

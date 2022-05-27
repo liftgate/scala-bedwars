@@ -91,8 +91,9 @@ object BedwarsGameListener : Listener
         CgsGameEngine.INSTANCE.playSound(Sound.ENDERDRAGON_GROWL)
 
         if (event.destroyer != null) {
-            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken.increment()
+            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken.inc()
         }
+
         CgsGameEngine.INSTANCE.sendMessage("")
         CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}'s${CC.RED} bed has been destroyed${
             if (event.destroyer != null) " by " + event.destroyer.displayName else ""

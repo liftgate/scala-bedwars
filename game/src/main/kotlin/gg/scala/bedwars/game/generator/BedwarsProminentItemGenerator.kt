@@ -1,6 +1,7 @@
 package gg.scala.bedwars.game.generator
 
 import gg.scala.bedwars.game.generator.hologram.BedwarsUpdatingHologramEntity
+import net.evilblock.cubed.entity.EntityHandler
 import org.bukkit.Location
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
@@ -46,6 +47,9 @@ abstract class BedwarsProminentItemGenerator(
             location.clone().add(0.0, 0.500, 0.0), this
         ).apply {
             initializeData()
+
+            EntityHandler
+                .trackEntity(this)
         }
 
         this.stand.setGravity(false)

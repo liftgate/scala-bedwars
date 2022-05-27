@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game
 
+import gg.scala.bedwars.game.generator.hologram.BedwarsUpdatingHologramEntity
 import gg.scala.bedwars.game.generator.tier.BedwarsItemGeneratorTierIncrementer
 import gg.scala.bedwars.shared.BedwarsCgsInfo
 import gg.scala.bedwars.shared.arena.BedwarsArena
@@ -12,6 +13,7 @@ import gg.scala.commons.config.annotations.ContainerConfig
 import me.lucko.helper.Schedulers
 import me.lucko.helper.plugin.ap.Plugin
 import me.lucko.helper.plugin.ap.PluginDependency
+import net.evilblock.cubed.entity.EntityHandler
 import org.bukkit.entity.Player
 
 /**
@@ -58,6 +60,16 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                 entity.remove()
             }
         }
+
+        EntityHandler
+            .getEntitiesByType(
+                BedwarsUpdatingHologramEntity::class.java
+            )
+            .forEach {
+                EntityHandler.forgetEntity(it)
+            }
+
+        EntityHandler.close()
 
         CgsGameEngine.INSTANCE = engine
         engine.initialLoad()
