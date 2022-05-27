@@ -241,11 +241,14 @@ object BedwarsGameListener : Listener
         event: BlockPlaceEvent
     )
     {
-        event.block.type = Material.AIR
+        if (event.block.type == Material.TNT)
+        {
+            event.block.type = Material.AIR
 
-        event.block.world.spawnEntity(
-            event.block.location, EntityType.PRIMED_TNT
-        )
+            event.block.world.spawnEntity(
+                event.block.location, EntityType.PRIMED_TNT
+            )
+        }
     }
 
     @EventHandler
