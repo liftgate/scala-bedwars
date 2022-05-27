@@ -18,6 +18,7 @@ import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
+import org.bukkit.entity.Fireball
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
@@ -33,6 +34,7 @@ import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 
 
@@ -262,7 +264,9 @@ object BedwarsGameListener : Listener
         }
     }
 
-    @EventHandler
+    @EventHandler(
+        ignoreCancelled = true
+    )
     fun onEntityDamage(
         event: EntityDamageEvent
     )
@@ -276,6 +280,33 @@ object BedwarsGameListener : Listener
 
             BedwarsRespawnRunnable(event.entity as Player)
                 .runTaskTimer(this.plugin, 0L, 20L)
+        } else if (event.cause == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
+        {
+            event.isCancelled = false
+        }
+    }
+
+    @EventHandler
+    fun onFireabll(
+        event: PlayerInteractEvent
+    )
+    {
+        if (event.item.type == Material.FIREBALL)
+        {
+            event.player.itemInHand = ItemStack(Material.AIR)
+
+            val eye = event.player.eyeLocation
+            val location = eye.add(
+                eye.direction.multiply(1.2)
+            )
+
+            val fireball = location.world
+                .spawnEntity(location, EntityType.FIREBALL) as Fireball
+
+            fireball.velocity = location
+                .direction.normalize().multiply(2)
+
+            fireball.shooter = event.player
         }
     }
 
