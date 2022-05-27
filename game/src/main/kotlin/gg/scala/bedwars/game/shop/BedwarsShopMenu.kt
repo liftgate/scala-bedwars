@@ -48,12 +48,6 @@ class BedwarsShopMenu : PaginatedMenu()
                         .setLore(
                             mutableListOf<String>()
                                 .apply {
-                                    addAll(
-                                        item.description
-                                            .map {
-                                                "${CC.WHITE}$it"
-                                            }
-                                    )
                                     add("")
                                     add("${CC.GRAY}Price: ${
                                         item.price.first.color

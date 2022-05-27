@@ -16,7 +16,7 @@ import org.bukkit.enchantments.Enchantment
 object BedwarsShopRangedCategory
 {
     val category = BedwarsShopCategory(
-        "Ranged", 5,
+        "Ranged", 4,
         ItemBuilder
             .of(Material.BOW)
             .build(),

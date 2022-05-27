@@ -4,10 +4,7 @@ import gg.scala.bedwars.game.generator.hologram.BedwarsUpdatingHologramEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.game.generator.tier.BedwarsItemGeneratorTierIncrementer
-import gg.scala.bedwars.game.shop.categories.BedwarsShopArmorCategory
-import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory
-import gg.scala.bedwars.game.shop.categories.BedwarsShopCategories
-import gg.scala.bedwars.game.shop.categories.BedwarsShopRangedCategory
+import gg.scala.bedwars.game.shop.categories.*
 import gg.scala.bedwars.shared.BedwarsCgsInfo
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.cgs.common.CgsGameEngine
@@ -100,8 +97,11 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
             .register(
                 BedwarsShopBlockCategory.category,
                 BedwarsShopRangedCategory.category,
-                BedwarsShopArmorCategory.category
+                BedwarsShopArmorCategory.category,
+                BedwarsShopPotionCategory.category,
+                BedwarsShopUtilityCategory.category
             )
+
         BedwarsItemGeneratorTierIncrementer
             .runTaskTimerAsynchronously(
                 this, 0L, 20L
