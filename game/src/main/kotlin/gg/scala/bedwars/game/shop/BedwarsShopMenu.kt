@@ -6,6 +6,7 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 
 /**
  * @author GrowlyX
@@ -41,6 +42,9 @@ class BedwarsShopMenu : PaginatedMenu()
                     this[size] = ItemBuilder
                         .copyOf(invoked)
                         .name("${CC.D_AQUA}${item.name}")
+                        .addFlags(
+                            ItemFlag.HIDE_ATTRIBUTES
+                        )
                         .setLore(
                             mutableListOf<String>()
                                 .apply {
