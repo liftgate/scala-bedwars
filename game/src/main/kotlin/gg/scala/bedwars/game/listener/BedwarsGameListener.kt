@@ -122,7 +122,7 @@ object BedwarsGameListener : Listener
                 {
                     event.isCancelled = true
                     event.player.sendMessage(
-                        "${CC.RED}You cannot open ${team.color}${team.name}'s${CC.RED} team chest as their bed has not been destroyed."
+                        "${CC.RED}You cannot open ${chestTeam.color}${chestTeam.name}'s${CC.RED} team chest as their bed has not been destroyed."
                     )
                     return
                 }
