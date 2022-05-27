@@ -44,7 +44,7 @@ abstract class BedwarsProminentItemGenerator(
             ) as ArmorStand
 
         BedwarsUpdatingHologramEntity(
-            location.clone().add(0.0, 0.750, 0.0), this
+            location.clone().add(0.0, 0.900, 0.0), this
         ).apply {
             initializeData()
 
