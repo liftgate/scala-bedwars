@@ -6,6 +6,7 @@ import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.game.generator.tier.BedwarsItemGeneratorTierIncrementer
 import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory
 import gg.scala.bedwars.game.shop.categories.BedwarsShopCategories
+import gg.scala.bedwars.game.shop.categories.BedwarsShopRangedCategory
 import gg.scala.bedwars.shared.BedwarsCgsInfo
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.cgs.common.CgsGameEngine
@@ -94,10 +95,11 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
         CgsGameEngine.INSTANCE = engine
         engine.initialLoad()
 
-        BedwarsShopCategories.categories.add(
-            BedwarsShopBlockCategory.category
-        )
-
+        BedwarsShopCategories
+            .register(
+                BedwarsShopBlockCategory.category,
+                BedwarsShopRangedCategory.category
+            )
         BedwarsItemGeneratorTierIncrementer
             .runTaskTimerAsynchronously(
                 this, 0L, 20L

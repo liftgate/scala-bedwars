@@ -10,4 +10,13 @@ object BedwarsShopCategories
 {
     val categories =
         mutableListOf<BedwarsShopCategory>()
+
+    fun register(
+        vararg categories: BedwarsShopCategory
+    )
+    {
+        categories.forEach {
+            this.categories.add(it)
+        }
+    }
 }
