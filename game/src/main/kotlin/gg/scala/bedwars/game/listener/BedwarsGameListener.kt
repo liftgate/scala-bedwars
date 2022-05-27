@@ -327,6 +327,9 @@ object BedwarsGameListener : Listener
                 .direction.normalize().multiply(0.80)
 
             fireball.shooter = event.player
+
+            this.lastThrown[event.player.uniqueId] =
+                System.currentTimeMillis()
         }
     }
 
