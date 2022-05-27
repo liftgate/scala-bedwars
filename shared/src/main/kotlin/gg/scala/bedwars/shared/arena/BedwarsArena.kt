@@ -29,6 +29,10 @@ abstract class BedwarsArena : CgsSlimeGameArena()
         return Location(Bukkit.getWorld(getBukkitWorldName()), x, y, z)
     }
 
+    fun buildSpawnPoint(x: Double, y: Double, z: Double, yaw: Float, pitch: Float) : Location {
+        return Location(Bukkit.getWorld(getBukkitWorldName()), x, y, z, yaw, pitch)
+    }
+
     fun getSpawnPoint(id: Int): Location? {
         return teamSpawnPoints[id]
     }
