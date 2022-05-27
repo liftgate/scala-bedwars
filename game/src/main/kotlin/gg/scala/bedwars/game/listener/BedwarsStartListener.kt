@@ -47,7 +47,9 @@ object BedwarsStartListener : Listener
             .forEach {
                 if (it.participants.size > 0)
                 {
-                    BedwarsTeamItemGenerator(it.spawnPoint!!, it)
+                    BedwarsTeamItemGenerator(
+                        arena.teamGeneratorLocations[it.id]!!, it
+                    )
                 }
 
                 if (it.participants.size <= 0)
@@ -55,8 +57,9 @@ object BedwarsStartListener : Listener
                     it.bedDestroyed = true
                 } else
                 {
-                    val block = it.spawnPoint!!.block
-                    it.spawnPoint!!.block.type = Material.BED_BLOCK
+                    val block = arena
+                        .teamBedLocations[it.id]!!.block
+                    block.type = Material.BED_BLOCK
 
                     val bedFoot = block
                         .getRelative(
