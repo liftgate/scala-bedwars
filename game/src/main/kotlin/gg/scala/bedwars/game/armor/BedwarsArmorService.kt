@@ -67,11 +67,8 @@ object BedwarsArmorService
                     .setUnbreakable(true)
                     .build()
                     .apply {
-                        if (itemMeta is LeatherArmorMeta)
-                        {
-                            (itemMeta as LeatherArmorMeta).color =
-                                mappings[team.color]
-                        }
+                        (itemMeta as LeatherArmorMeta).color =
+                            mappings[team.color]
                     }
             }
             .toTypedArray()
