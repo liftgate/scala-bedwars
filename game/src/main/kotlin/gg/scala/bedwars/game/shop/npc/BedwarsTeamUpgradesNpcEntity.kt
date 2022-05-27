@@ -13,12 +13,21 @@ class BedwarsTeamUpgradesNpcEntity(
     location: Location
 ) : NpcEntity(
     listOf(
-        "${CC.D_AQUA}Team Upgrades",
-        "${CC.GREEN}CLICK TO OPEN!"
+        "${CC.B_AQUA}Team Upgrades",
+        "${CC.YELLOW}Click to open!"
     ),
     location.add(0.5, 0.0, 0.5)
 )
 {
+    init
+    {
+        updateTextureByUsername(
+            "GrowlyX"
+        ) { _, it ->
+            it?.printStackTrace()
+        }
+    }
+
     override fun onRightClick(player: Player)
     {
         player.sendMessage("${CC.RED}test team upgrades")
