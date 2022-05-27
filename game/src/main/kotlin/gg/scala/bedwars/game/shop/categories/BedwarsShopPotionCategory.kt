@@ -3,7 +3,6 @@ package gg.scala.bedwars.game.shop.categories
 import gg.scala.bedwars.game.shop.BedwarsShopCategory
 import gg.scala.bedwars.game.shop.BedwarsShopCurrency
 import gg.scala.bedwars.game.shop.BedwarsShopItem
-import gg.scala.bedwars.game.shop.contextual.providers.ArmorShopItemContextual
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 
