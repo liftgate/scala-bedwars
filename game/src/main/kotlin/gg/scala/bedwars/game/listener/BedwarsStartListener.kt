@@ -4,6 +4,7 @@ import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
+import gg.scala.bedwars.game.generator.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -11,6 +12,7 @@ import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
+import net.evilblock.cubed.entity.EntityHandler
 import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
 import org.bukkit.Material
@@ -81,6 +83,28 @@ object BedwarsStartListener : Listener
                             )
                         }
 
+                    val shopLocation = it.spawnPoint!!
+                        .clone().add(1.5, 0.0, 2.5)
+
+                    val shopEntity = BedwarsShopNpcEntity(shopLocation)
+                        .apply {
+                            initializeData()
+
+                            EntityHandler
+                                .trackEntity(this)
+                        }
+
+                    val upgradesLocation = it.spawnPoint!!
+                        .clone().add(-1.5, 0.0, 2.5)
+
+                    val upgradesEntity = BedwarsShopNpcEntity(upgradesLocation)
+                        .apply {
+                            initializeData()
+
+                            EntityHandler
+                                .trackEntity(this)
+                        }
+
                     val chestLocation = it.spawnPoint!!
                         .clone().add(1.0, 0.0, 0.0)
 
@@ -99,6 +123,9 @@ object BedwarsStartListener : Listener
                         player.displayName = it.color.toString() + player.displayName
                         player.playerListName = (if (player.hasMetadata("spectator")) CC.GRAY else it.color.toString()) + player.displayName
                         player.teleport(it.spawnPoint)
+
+                        shopEntity.spawn(player)
+                        upgradesEntity.spawn(player)
                     }
                 }
             }

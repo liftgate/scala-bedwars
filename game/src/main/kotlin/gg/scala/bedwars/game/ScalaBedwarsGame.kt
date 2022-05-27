@@ -1,6 +1,8 @@
 package gg.scala.bedwars.game
 
 import gg.scala.bedwars.game.generator.hologram.BedwarsUpdatingHologramEntity
+import gg.scala.bedwars.game.generator.npc.BedwarsShopNpcEntity
+import gg.scala.bedwars.game.generator.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.game.generator.tier.BedwarsItemGeneratorTierIncrementer
 import gg.scala.bedwars.shared.BedwarsCgsInfo
 import gg.scala.bedwars.shared.arena.BedwarsArena
@@ -64,6 +66,22 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
         EntityHandler
             .getEntitiesByType(
                 BedwarsUpdatingHologramEntity::class.java
+            )
+            .forEach {
+                EntityHandler.forgetEntity(it)
+            }
+
+        EntityHandler
+            .getEntitiesByType(
+                BedwarsShopNpcEntity::class.java
+            )
+            .forEach {
+                EntityHandler.forgetEntity(it)
+            }
+
+        EntityHandler
+            .getEntitiesByType(
+                BedwarsTeamUpgradesNpcEntity::class.java
             )
             .forEach {
                 EntityHandler.forgetEntity(it)
