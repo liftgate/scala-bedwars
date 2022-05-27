@@ -22,14 +22,11 @@ object ScalaBedwarsNametagAdapter : CgsGameNametagAdapter
         target: CgsGamePlayer
     ): NametagInfo
     {
-        val player = Bukkit.getPlayer(viewer.uniqueId)
         val targetPlayer = Bukkit.getPlayer(viewer.uniqueId)
 
-        if (viewer == target && player.hasMetadata("spectator") && targetPlayer.hasMetadata("spectator"))
-        {
-            return NametagProvider.createNametag(ChatColor.GRAY.toString(), "")
-        }
-
-        return NametagProvider.createNametag((CgsGameTeamService.getTeamOf(targetPlayer) as BedwarsCgsGameTeam).color.toString(), "")
+        return NametagProvider.createNametag(
+            (CgsGameTeamService.getTeamOf(targetPlayer) as BedwarsCgsGameTeam).color.toString(),
+            ""
+        )
     }
 }

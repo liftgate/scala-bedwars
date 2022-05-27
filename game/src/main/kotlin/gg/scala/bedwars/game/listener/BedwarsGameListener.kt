@@ -45,10 +45,24 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
-    fun onRejoin(event: PlayerJoinEvent)
+    fun onRejoin(
+        event: CgsGameEngine.CgsGameParticipantReconnectEvent
+    )
     {
-        val team = (CgsGameTeamService.getTeamOf(event.player) as BedwarsCgsGameTeam)
-        if (team.bedDestroyed) CgsGameDisqualificationHandler.disqualifyPlayer(event.player)
+        if (!event.connectedWithinTimeframe)
+        {
+            return
+        }
+
+        val team = (CgsGameTeamService.getTeamOf(event.participant) as BedwarsCgsGameTeam?)
+
+        if (team != null && team.bedDestroyed)
+        {
+            return
+        }
+
+        BedwarsRespawnRunnable(event.participant)
+            .runTaskTimer(this.plugin, 1L, 20L)
     }
 
     @EventHandler
