@@ -17,6 +17,9 @@ class BedwarsShopMenu : PaginatedMenu()
     private var current =
         BedwarsShopCategories.categories.first()
 
+    private var lastPurchased = System
+        .currentTimeMillis()
+
     companion object
     {
         @JvmStatic
@@ -77,6 +80,13 @@ class BedwarsShopMenu : PaginatedMenu()
                                 }
                         )
                         .toButton { player, _ ->
+                            if (
+                                System.currentTimeMillis() - lastPurchased < 600L
+                            )
+                            {
+                                return@toButton
+                            }
+
                             val amount = player!!
                                 .inventory.contents
                                 .filterNotNull()
@@ -116,6 +126,8 @@ class BedwarsShopMenu : PaginatedMenu()
                                 .invoke(player, item.price.second)
 
                             item.contextualProvider.provide(item, player)
+
+                            lastPurchased = System.currentTimeMillis()
                         }
                 }
             }

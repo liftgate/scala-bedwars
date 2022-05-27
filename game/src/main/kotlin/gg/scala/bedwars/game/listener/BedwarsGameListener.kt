@@ -285,7 +285,7 @@ object BedwarsGameListener : Listener
         }
     }
 
-    val lastThrown = mutableMapOf<UUID, Long>()
+    private val lastThrown = mutableMapOf<UUID, Long>()
 
     @EventHandler
     fun onFireball(
