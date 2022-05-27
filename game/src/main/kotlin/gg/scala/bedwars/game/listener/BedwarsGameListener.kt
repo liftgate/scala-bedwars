@@ -18,17 +18,19 @@ import org.bukkit.Material
 import org.bukkit.Sound
 import org.bukkit.entity.ArmorStand
 import org.bukkit.event.EventHandler
+import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
+
 
 @Listeners
 object BedwarsGameListener : Listener
@@ -207,6 +209,18 @@ object BedwarsGameListener : Listener
                 block.type.name.contains("BED") &&
                 !event.isBlockInHand
             )
+            {
+                event.isCancelled = true
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun onInventoryClick(event: InventoryClickEvent)
+    {
+        if (event.clickedInventory.type == InventoryType.PLAYER)
+        {
+            if (event.slotType == InventoryType.SlotType.ARMOR)
             {
                 event.isCancelled = true
             }
