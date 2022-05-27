@@ -104,16 +104,21 @@ object BedwarsGameListener : Listener
                 }
 
                 val teamId = metaData[0].asInt()
+
                 val team = CgsGameTeamService
                     .getTeamOf(event.player) as BedwarsCgsGameTeam?
 
-                if (team == null)
+                val chestTeam = CgsGameTeamService.teams.values
+                    .filterIsInstance<BedwarsCgsGameTeam>()
+                    .firstOrNull { it.id == teamId }
+
+                if (team == null || chestTeam == null)
                 {
                     event.isCancelled = true
                     return
                 }
 
-                if (team.id != teamId && !team.bedDestroyed)
+                if (team.id != teamId && !chestTeam.bedDestroyed)
                 {
                     event.isCancelled = true
                     event.player.sendMessage(
