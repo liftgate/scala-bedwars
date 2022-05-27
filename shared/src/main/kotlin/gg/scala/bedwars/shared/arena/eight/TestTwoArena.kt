@@ -16,8 +16,8 @@ object TestTwoArena : BedwarsArena() {
     )
 
     override val teamShopLocations = mutableMapOf(
-        1 to buildSpawnPoint(13.5, 86.0, 33.5),
-        2 to buildSpawnPoint(17.5, 86.0, 103.5, 180F, 0F)
+        1 to buildSpawnPoint(13.0, 86.0, 33.0),
+        2 to buildSpawnPoint(17.0, 86.0, 103.0, 180F, 0F)
     )
 
     override val teamGeneratorLocations = mutableMapOf(
@@ -26,28 +26,28 @@ object TestTwoArena : BedwarsArena() {
     )
 
     override val teamItemUpgradeLocations = mutableMapOf(
-        1 to buildSpawnPoint(17.5, 86.0, 33.5),
-        2 to buildSpawnPoint(17.5, 86.0, 103.5, 180F, 0F)
+        1 to buildSpawnPoint(17.0, 86.0, 33.0),
+        2 to buildSpawnPoint(13.0, 86.0, 103.0, 180F, 0F)
     )
 
     override val teamBedLocations = mutableMapOf(
-        1 to buildSpawnPoint(15.5, 100.0, 37.5),
-        2 to buildSpawnPoint(15.5, 100.0, 98.5)
+        1 to buildSpawnPoint(15.5, 86.0, 37.5),
+        2 to buildSpawnPoint(15.5, 86.0, 98.5)
     )
 
     override val teamEnderChestLocations = mutableMapOf(
-        1 to buildSpawnPoint(16.5, 100.0, 34.5),
-        2 to buildSpawnPoint(16.5, 100.0, 102.5)
+        1 to buildSpawnPoint(16.5, 86.0, 34.5),
+        2 to buildSpawnPoint(16.5, 86.0, 102.5)
     )
 
     override val teamChestLocations = mutableMapOf(
-        1 to buildSpawnPoint(14.5, 100.0, 34.5),
-        2 to buildSpawnPoint(14.5, 100.0, 102.5)
+        1 to buildSpawnPoint(14.5, 86.0, 34.5),
+        2 to buildSpawnPoint(14.5, 86.0, 102.5)
     )
 
     override val teamSpawnPoints = mutableMapOf(
-        1 to buildSpawnPoint(15.5, 100.0, 34.5),
-        2 to buildSpawnPoint(15.5, 100.0, 102.5, 180F, 0F)
+        1 to buildSpawnPoint(15.5, 86.0, 34.5),
+        2 to buildSpawnPoint(15.5, 86.0, 102.5, 180F, 0F)
     )
 
     override fun getDescription(): String {
