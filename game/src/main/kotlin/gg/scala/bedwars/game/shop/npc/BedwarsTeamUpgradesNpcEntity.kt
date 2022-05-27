@@ -1,4 +1,4 @@
-package gg.scala.bedwars.game.generator.npc
+package gg.scala.bedwars.game.shop.npc
 
 import net.evilblock.cubed.entity.npc.NpcEntity
 import net.evilblock.cubed.util.CC

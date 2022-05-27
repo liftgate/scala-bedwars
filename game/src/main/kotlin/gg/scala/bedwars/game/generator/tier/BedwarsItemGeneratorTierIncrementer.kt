@@ -49,15 +49,13 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
 
     // very stupid
     private val mappings = listOf(
-        // something
         BedwarsDiamondItemGenerator::class to 1,
-        BedwarsDiamondItemGenerator::class to 2,
-        BedwarsDiamondItemGenerator::class to 3,
-        BedwarsDiamondItemGenerator::class to 4,
-        // emerald
         BedwarsEmeraldItemGenerator::class to 1,
+        BedwarsDiamondItemGenerator::class to 2,
         BedwarsEmeraldItemGenerator::class to 2,
+        BedwarsDiamondItemGenerator::class to 3,
         BedwarsEmeraldItemGenerator::class to 3,
+        BedwarsDiamondItemGenerator::class to 4,
         BedwarsEmeraldItemGenerator::class to 4
     )
 
