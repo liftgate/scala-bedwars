@@ -14,31 +14,100 @@ object TestEightArena : BedwarsArena() {
     )
 
     override val emeraldGenerators = mutableListOf(
-        buildSpawnPoint(0.0, 100.0, 0.0)
+        buildSpawnPoint(1.0, 100.0, 1.0),
+        buildSpawnPoint(-1.0, 100.0, 1.0),
+        buildSpawnPoint(1.0, 100.0, -1.0),
+        buildSpawnPoint(-1.0, 100.0, -1.0)
     )
 
     override val teamShopLocations = mutableMapOf(
-        0 to buildSpawnPoint(0.0, 100.0, 0.0)
+        1 to buildSpawnPoint(-9.0, 100.0, 17.0),
+        2 to buildSpawnPoint(9.0, 100.0, 17.0),
+
+        3 to buildSpawnPoint(9.0, 100.0, -17.0),
+        4 to buildSpawnPoint(-9.0, 100.0, -17.0),
+
+
+        5 to buildSpawnPoint(17.0, 100.0, 9.0),
+        6 to buildSpawnPoint(17.0, 100.0, -9.0),
+
+        7 to buildSpawnPoint(-17.0, 100.0, 9.0),
+        8 to buildSpawnPoint(-17.0, 100.0, -9.0)
     )
 
     override val teamGeneratorLocations = mutableMapOf(
-        0 to buildSpawnPoint(0.0, 100.0, 0.0)
+        1 to buildSpawnPoint(-8.0, 100.0, 15.0),
+        2 to buildSpawnPoint(8.0, 100.0, 15.0),
+
+        3 to buildSpawnPoint(8.0, 100.0, -15.0),
+        4 to buildSpawnPoint(-8.0, 100.0, -15.0),
+
+
+        5 to buildSpawnPoint(15.0, 100.0, 8.0),
+        6 to buildSpawnPoint(15.0, 100.0, -8.0),
+
+        7 to buildSpawnPoint(-15.0, 100.0, 8.0),
+        8 to buildSpawnPoint(-15.0, 100.0, -8.0)
     )
 
     override val teamItemUpgradeLocations = mutableMapOf(
-        0 to buildSpawnPoint(0.0, 100.0, 0.0)
+        1 to buildSpawnPoint(-7.0, 100.0, 17.0),
+        2 to buildSpawnPoint(7.0, 100.0, 17.0),
+
+        3 to buildSpawnPoint(8.0, 100.0, -17.0),
+        4 to buildSpawnPoint(-8.0, 100.0, -17.0),
+
+
+        5 to buildSpawnPoint(17.0, 100.0, 7.0),
+        6 to buildSpawnPoint(17.0, 100.0, -7.0),
+
+        7 to buildSpawnPoint(-17.0, 100.0, 7.0),
+        8 to buildSpawnPoint(-17.0, 100.0, -7.0)
     )
 
     override val teamBedLocations = mutableMapOf(
-        0 to buildSpawnPoint(0.0, 100.0, 0.0)
+        1 to buildSpawnPoint(-6.0, 100.0, 15.0),
+        2 to buildSpawnPoint(6.0, 100.0, 15.0),
+
+        3 to buildSpawnPoint(6.0, 100.0, -15.0),
+        4 to buildSpawnPoint(-6.0, 100.0, -15.0),
+
+
+        5 to buildSpawnPoint(15.0, 100.0, 6.0),
+        6 to buildSpawnPoint(15.0, 100.0, -6.0),
+
+        7 to buildSpawnPoint(-15.0, 100.0, 6.0),
+        8 to buildSpawnPoint(-15.0, 100.0, -6.0)
     )
 
     override val teamEnderChestLocations = mutableMapOf(
-        0 to buildSpawnPoint(0.0, 100.0, 0.0)
+        1 to buildSpawnPoint(-10.0, 100.0, 15.0),
+        2 to buildSpawnPoint(10.0, 100.0, 15.0),
+
+        3 to buildSpawnPoint(10.0, 100.0, -15.0),
+        4 to buildSpawnPoint(-10.0, 100.0, -15.0),
+
+
+        5 to buildSpawnPoint(15.0, 100.0, 10.0),
+        6 to buildSpawnPoint(15.0, 100.0, -10.0),
+
+        7 to buildSpawnPoint(-15.0, 100.0, 10.0),
+        8 to buildSpawnPoint(-15.0, 100.0, -10.0)
     )
 
     override val teamChestLocations = mutableMapOf(
-        0 to buildSpawnPoint(0.0, 100.0, 0.0)
+        1 to buildSpawnPoint(-6.0, 100.0, 15.0),
+        2 to buildSpawnPoint(6.0, 100.0, 15.0),
+
+        3 to buildSpawnPoint(6.0, 100.0, -15.0),
+        4 to buildSpawnPoint(-6.0, 100.0, -15.0),
+
+
+        5 to buildSpawnPoint(15.0, 100.0, 6.0),
+        6 to buildSpawnPoint(15.0, 100.0, -6.0),
+
+        7 to buildSpawnPoint(-15.0, 100.0, 6.0),
+        8 to buildSpawnPoint(-15.0, 100.0, -6.0)
     )
 
     override val teamSpawnPoints = mutableMapOf(
