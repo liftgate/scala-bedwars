@@ -220,6 +220,11 @@ object BedwarsGameListener : Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     fun onInventoryClick(event: InventoryClickEvent)
     {
+        if (event.clickedInventory == null)
+        {
+            return
+        }
+
         if (event.clickedInventory.type == InventoryType.PLAYER)
         {
             if (event.slotType == InventoryType.SlotType.ARMOR)
