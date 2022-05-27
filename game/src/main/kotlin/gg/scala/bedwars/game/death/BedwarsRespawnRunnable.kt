@@ -54,7 +54,12 @@ class BedwarsRespawnRunnable(
                         LegacyComponentSerializer.legacySection()
                             .deserialize(
                                 "${CC.WHITE}You will respawn in ${CC.GREEN}$tick${CC.WHITE} seconds!"
-                            )
+                            ),
+                        Title.Times.times(
+                            Duration.ofMillis(0L),
+                            Duration.ofMillis(1000L),
+                            Duration.ofMillis(0L),
+                        )
                     )
                 )
 
@@ -89,7 +94,7 @@ class BedwarsRespawnRunnable(
                                 "${CC.WHITE}You have respawned!"
                             ),
                         Title.Times.times(
-                            Duration.ofMillis(250L),
+                            Duration.ofMillis(0L),
                             Duration.ofMillis(500L),
                             Duration.ofMillis(250L)
                         )
