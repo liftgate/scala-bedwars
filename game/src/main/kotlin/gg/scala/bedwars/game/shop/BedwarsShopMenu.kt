@@ -51,6 +51,16 @@ class BedwarsShopMenu : PaginatedMenu()
                     val invoked = item.itemCreator
                         .invoke(player)
 
+                    val amount = player
+                        .inventory.contents
+                        .filterNotNull()
+                        .filter {
+                            it.type == item.price.first.material
+                        }
+                        .sumOf {
+                            it.amount
+                        }
+
                     this[size] = ItemBuilder
                         .copyOf(invoked)
                         .name("${CC.YELLOW}${item.name}")
@@ -76,7 +86,14 @@ class BedwarsShopMenu : PaginatedMenu()
                                         }"
                                     )
                                     add("")
-                                    add("${CC.GREEN}Click to purchase.")
+
+                                    if (amount < item.price.second)
+                                    {
+                                        add("${CC.RED}You cannot afford this!")
+                                    } else
+                                    {
+                                        add("${CC.GREEN}Click to purchase.")
+                                    }
                                 }
                         )
                         .toButton { player, _ ->
@@ -87,19 +104,9 @@ class BedwarsShopMenu : PaginatedMenu()
                                 return@toButton
                             }
 
-                            val amount = player!!
-                                .inventory.contents
-                                .filterNotNull()
-                                .filter {
-                                    it.type == item.price.first.material
-                                }
-                                .sumOf {
-                                    it.amount
-                                }
-
                             if (amount < item.price.second)
                             {
-                                player.sendMessage(
+                                player!!.sendMessage(
                                     "${CC.RED}You need ${CC.BOLD}${item.price.second - amount}${CC.RED} more ${
                                         if (item.price.second - amount == 1)
                                         {
@@ -113,7 +120,7 @@ class BedwarsShopMenu : PaginatedMenu()
                                 return@toButton
                             }
 
-                            if (!item.contextualProvider.allowed(player, item))
+                            if (!item.contextualProvider.allowed(player!!, item))
                             {
                                 return@toButton
                             }
