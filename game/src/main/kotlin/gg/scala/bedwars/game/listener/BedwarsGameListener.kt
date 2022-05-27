@@ -24,7 +24,6 @@ import org.bukkit.event.block.BlockPlaceEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
-import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerJoinEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.inventory.ItemStack
@@ -85,52 +84,6 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
-    fun onChestInteract(
-        event: PlayerInteractEvent
-    )
-    {
-        if (event.clickedBlock != null)
-        {
-            val block = event.clickedBlock
-
-            if (block.type == Material.CHEST)
-            {
-                val metaData = block
-                    .getMetadata("team")
-
-                if (metaData.isNullOrEmpty())
-                {
-                    return
-                }
-
-                val teamId = metaData[0].asInt()
-
-                val team = CgsGameTeamService
-                    .getTeamOf(event.player) as BedwarsCgsGameTeam?
-
-                val chestTeam = CgsGameTeamService.teams.values
-                    .filterIsInstance<BedwarsCgsGameTeam>()
-                    .firstOrNull { it.id == teamId }
-
-                if (team == null || chestTeam == null)
-                {
-                    event.isCancelled = true
-                    return
-                }
-
-                if (team.id != teamId && !chestTeam.bedDestroyed)
-                {
-                    event.isCancelled = true
-                    event.player.sendMessage(
-                        "${CC.RED}You cannot open ${chestTeam.color}${chestTeam.name}'s${CC.RED} team chest as their bed has not been destroyed."
-                    )
-                    return
-                }
-            }
-        }
-    }
-
-    @EventHandler
     fun onBreak(event: BedwarsBedDestroyEvent)
     {
         event.team.bedDestroyed = true
@@ -138,9 +91,8 @@ object BedwarsGameListener : Listener
         CgsGameEngine.INSTANCE.playSound(Sound.ENDERDRAGON_GROWL)
 
         if (event.destroyer != null) {
-            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken.inc()
+            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken++
         }
-
         CgsGameEngine.INSTANCE.sendMessage("")
         CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}'s${CC.RED} bed has been destroyed${
             if (event.destroyer != null) " by " + event.destroyer.displayName else ""
