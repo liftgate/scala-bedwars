@@ -16,7 +16,7 @@ import java.util.UUID
  */
 object BedwarsArmorService
 {
-    private val armor =
+    val armor =
         mutableMapOf<UUID, BedwarsArmorType>()
 
     private val mappings = mapOf(

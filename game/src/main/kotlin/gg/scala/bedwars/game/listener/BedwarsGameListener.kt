@@ -347,7 +347,7 @@ object BedwarsGameListener : Listener
 
                     e.damager.sendMessage("${
                         currency!!.color
-                    }+ ${it.amount} ${if (
+                    }+${it.amount} ${if (
                         it.amount > 1
                     ) currency.displayPlural else currency.displaySingular}")
                     (e.damager as Player).inventory.addItem(it)
