@@ -23,17 +23,24 @@ class BedwarsShopMenu : PaginatedMenu()
         placeholdBorders = true
     }
 
-    override fun size(buttons: Map<Int, Button>) = 36
+    override fun size(buttons: Map<Int, Button>) = 45
 
     override fun getAllPagesButtonSlots() =
         listOf(
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25
-        )
+        ).map {
+            it + 9
+        }
 
     override fun getAllPagesButtons(player: Player) =
         mutableMapOf<Int, Button>()
             .apply {
+                listOf(10, 11, 12, 13, 14, 15, 16)
+                    .forEach {
+                        this[it] = PLACEHOLDER
+                    }
+
                 for (item in current.items)
                 {
                     val invoked = item.itemCreator
