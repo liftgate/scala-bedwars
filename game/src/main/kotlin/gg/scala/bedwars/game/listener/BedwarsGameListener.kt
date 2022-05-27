@@ -291,8 +291,13 @@ object BedwarsGameListener : Listener
         event: PlayerInteractEvent
     )
     {
-        if (event.item.type == Material.FIREBALL)
+        if (
+            event.item.type == Material.FIREBALL &&
+            event.action.name.contains("RIGHT")
+        )
         {
+            event.isCancelled = true
+
             event.player.inventory
                 .removeAmount(
                     Material.FIREBALL, 1
