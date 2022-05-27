@@ -125,7 +125,19 @@ class BedwarsShopMenu : PaginatedMenu()
             .apply {
                 placeholders
                     .forEach {
-                        this[it] = PLACEHOLDER
+                        this[it] = if (it - 9 == current.position)
+                        {
+                            ItemBuilder
+                                .copyOf(
+                                    PLACEHOLDER
+                                        .getButtonItem(player)
+                                )
+                                .data(5)
+                                .toButton()
+                        } else
+                        {
+                            PLACEHOLDER
+                        }
                     }
 
                 for (category in BedwarsShopCategories.categories)
