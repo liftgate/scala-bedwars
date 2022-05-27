@@ -17,23 +17,40 @@ class BedwarsShopMenu : PaginatedMenu()
     private var current =
         BedwarsShopCategories.categories.first()
 
+    companion object
+    {
+        @JvmStatic
+        private val placeholders =
+            listOf(10, 11, 12, 13, 14, 15, 16)
+                .map {
+                    it - 9
+                }
+    }
+
     init
     {
         updateAfterClick = true
         placeholdBorders = true
     }
 
-    override fun size(buttons: Map<Int, Button>) = 36
+    override fun size(buttons: Map<Int, Button>) = 45
 
     override fun getAllPagesButtonSlots() =
         listOf(
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25
-        )
+        ).map {
+            it + 9
+        }
 
     override fun getAllPagesButtons(player: Player) =
         mutableMapOf<Int, Button>()
             .apply {
+                placeholders
+                    .forEach {
+                        this[it] = PLACEHOLDER
+                    }
+
                 for (item in current.items)
                 {
                     val invoked = item.itemCreator
@@ -41,27 +58,28 @@ class BedwarsShopMenu : PaginatedMenu()
 
                     this[size] = ItemBuilder
                         .copyOf(invoked)
-                        .name("${CC.D_AQUA}${item.name}")
+                        .name("${CC.YELLOW}${item.name}")
                         .addFlags(
                             ItemFlag.HIDE_ATTRIBUTES
                         )
                         .setLore(
                             mutableListOf<String>()
                                 .apply {
-                                    add("")
-                                    add("${CC.GRAY}Price: ${
-                                        item.price.first.color
-                                    }${
-                                        item.price.second
-                                    } ${
-                                        if (item.price.second == 1)
-                                        {
-                                            item.price.first.displaySingular
-                                        } else
-                                        {
-                                            item.price.first.displayPlural
-                                        }
-                                    }")
+                                    add(
+                                        "${CC.GRAY}Price: ${
+                                            item.price.first.color
+                                        }${
+                                            item.price.second
+                                        } ${
+                                            if (item.price.second == 1)
+                                            {
+                                                item.price.first.displaySingular
+                                            } else
+                                            {
+                                                item.price.first.displayPlural
+                                            }
+                                        }"
+                                    )
                                     add("")
                                     add("${CC.GREEN}Click to purchase.")
                                 }
@@ -79,15 +97,17 @@ class BedwarsShopMenu : PaginatedMenu()
 
                             if (amount < item.price.second)
                             {
-                                player.sendMessage("${CC.RED}You need ${CC.BOLD}${item.price.second - amount}${CC.RED} more ${
-                                    if (item.price.second - amount == 1)
-                                    {
-                                        item.price.first.displaySingular.lowercase()
-                                    } else
-                                    {
-                                        item.price.first.displayPlural.lowercase()
-                                    }
-                                } to purchase this item!")
+                                player.sendMessage(
+                                    "${CC.RED}You need ${CC.BOLD}${item.price.second - amount}${CC.RED} more ${
+                                        if (item.price.second - amount == 1)
+                                        {
+                                            item.price.first.displaySingular.lowercase()
+                                        } else
+                                        {
+                                            item.price.first.displayPlural.lowercase()
+                                        }
+                                    } to purchase this item!"
+                                )
                                 return@toButton
                             }
 

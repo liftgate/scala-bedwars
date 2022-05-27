@@ -18,7 +18,7 @@ object BedwarsShopUtilityCategory
         .INSTANCE.gameMode
 
     val category = BedwarsShopCategory(
-        "Utility", 5,
+        "Utility", 6,
         ItemBuilder
             .of(Material.TNT)
             .build(),
