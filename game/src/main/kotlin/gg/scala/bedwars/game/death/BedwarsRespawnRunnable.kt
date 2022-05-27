@@ -50,7 +50,7 @@ class BedwarsRespawnRunnable(
                     Title.title(
                         LegacyComponentSerializer.legacySection()
                             .deserialize(
-                                "${CC.RED}YOU DIED"
+                                "${CC.B_RED}YOU DIED"
                             ),
                         LegacyComponentSerializer.legacySection()
                             .deserialize(
@@ -88,7 +88,7 @@ class BedwarsRespawnRunnable(
                     Title.title(
                         LegacyComponentSerializer.legacySection()
                             .deserialize(
-                                "${CC.GREEN}RESPAWNED"
+                                "${CC.B_GREEN}RESPAWNED"
                             ),
                         LegacyComponentSerializer.legacySection()
                             .deserialize(
