@@ -5,6 +5,7 @@ import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
 import gg.scala.bedwars.game.generator.npc.BedwarsShopNpcEntity
+import gg.scala.bedwars.game.generator.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -84,7 +85,7 @@ object BedwarsStartListener : Listener
                         }
 
                     val shopLocation = it.spawnPoint!!
-                        .clone().add(1.5, 0.0, 2.5)
+                        .clone().add(1.5, 0.0, -2.5)
 
                     val shopEntity = BedwarsShopNpcEntity(shopLocation)
                         .apply {
@@ -95,9 +96,9 @@ object BedwarsStartListener : Listener
                         }
 
                     val upgradesLocation = it.spawnPoint!!
-                        .clone().add(-1.5, 0.0, 2.5)
+                        .clone().add(-1.5, 0.0, -2.5)
 
-                    val upgradesEntity = BedwarsShopNpcEntity(upgradesLocation)
+                    val upgradesEntity = BedwarsTeamUpgradesNpcEntity(upgradesLocation)
                         .apply {
                             initializeData()
 
