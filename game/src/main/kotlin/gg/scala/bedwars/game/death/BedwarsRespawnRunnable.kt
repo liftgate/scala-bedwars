@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game.death
 
+import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.handler.CgsSpectatorHandler
@@ -100,6 +101,8 @@ class BedwarsRespawnRunnable(
                         )
                     )
                 )
+
+                BedwarsArmorService.applyArmor(this.player)
 
                 this.player.sendMessage("${CC.GREEN}You have respawned!")
 

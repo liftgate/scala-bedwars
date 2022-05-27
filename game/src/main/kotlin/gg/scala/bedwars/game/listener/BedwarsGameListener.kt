@@ -203,6 +203,9 @@ object BedwarsGameListener : Listener
                     )
                     return
                 }
+            } else if (block.type.name.contains("BED"))
+            {
+                event.isCancelled = true
             }
         }
     }

@@ -1,6 +1,7 @@
 package gg.scala.bedwars.game.listener
 
 import gg.scala.bedwars.game.ScalaBedwarsGame
+import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
@@ -130,6 +131,8 @@ object BedwarsStartListener : Listener
 
                         shopEntity.spawn(player)
                         upgradesEntity.spawn(player)
+
+                        BedwarsArmorService.applyArmor(player)
                     }
                 }
             }

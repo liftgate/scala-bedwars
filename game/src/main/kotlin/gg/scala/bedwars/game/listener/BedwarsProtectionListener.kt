@@ -8,9 +8,9 @@ import org.bukkit.event.inventory.CraftItemEvent
 @Listeners
 object BedwarsProtectionListener : Listener
 {
-
     @EventHandler
-    fun onCraft(e: CraftItemEvent) {
-        e.isCancelled = true
+    fun onCraft(event: CraftItemEvent)
+    {
+        event.isCancelled = true
     }
 }

@@ -97,11 +97,14 @@ class BedwarsShopMenu : PaginatedMenu()
                                 return@toButton
                             }
 
-                            player.inventory.addItem(invoked)
-                            player.sendMessage("${CC.GREEN}You purchased ${CC.SEC}${item.name}${CC.GREEN}!")
+                            player.sendMessage(
+                                "${CC.GREEN}You purchased ${CC.SEC}${item.name}${CC.GREEN}!"
+                            )
 
                             item.price.first.removeFrom
                                 .invoke(player, item.price.second)
+
+                            item.contextualProvider.provide(item, player)
                         }
                 }
             }
