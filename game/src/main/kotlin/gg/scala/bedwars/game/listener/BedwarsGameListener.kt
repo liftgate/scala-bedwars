@@ -36,7 +36,6 @@ import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 
 
@@ -73,10 +72,10 @@ object BedwarsGameListener : Listener
         event: PlayerInteractAtEntityEvent
     )
     {
-       if (event.rightClicked is ArmorStand)
-       {
-           event.isCancelled = true
-       }
+        if (event.rightClicked is ArmorStand)
+        {
+            event.isCancelled = true
+        }
     }
 
     @EventHandler
@@ -92,13 +91,17 @@ object BedwarsGameListener : Listener
 
         CgsGameEngine.INSTANCE.playSound(Sound.ENDERDRAGON_GROWL)
 
-        if (event.destroyer != null) {
+        if (event.destroyer != null)
+        {
             (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken++
         }
+
         CgsGameEngine.INSTANCE.sendMessage("")
-        CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}'s${CC.RED} bed has been destroyed${
-            if (event.destroyer != null) " by " + event.destroyer.displayName else ""
-        }${CC.RED}!")
+        CgsGameEngine.INSTANCE.sendMessage(
+            CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}'s${CC.RED} bed has been destroyed${
+                if (event.destroyer != null) " by " + event.destroyer.displayName else ""
+            }${CC.RED}!"
+        )
         CgsGameEngine.INSTANCE.sendMessage("")
 
         event.team.alive.filter { Bukkit.getPlayer(it) == null }.forEach {
@@ -275,7 +278,7 @@ object BedwarsGameListener : Listener
     {
         if (
             event.cause == EntityDamageEvent.DamageCause.VOID &&
-                    event.entity is Player
+            event.entity is Player
         )
         {
             event.isCancelled = true
@@ -289,11 +292,12 @@ object BedwarsGameListener : Listener
     }
 
     @EventHandler
-    fun onFireabll(
+    fun onFireball(
         event: PlayerInteractEvent
     )
     {
         if (
+            event.item != null &&
             event.item.type == Material.FIREBALL &&
             event.action.name.contains("RIGHT")
         )
@@ -314,7 +318,7 @@ object BedwarsGameListener : Listener
                 .spawnEntity(location, EntityType.FIREBALL) as Fireball
 
             fireball.velocity = location
-                .direction.normalize().multiply(0.85)
+                .direction.normalize().multiply(0.80)
 
             fireball.shooter = event.player
         }
@@ -337,21 +341,37 @@ object BedwarsGameListener : Listener
             }
         }
 
-        val e = event.entity.lastDamageCause
-        if (e is EntityDamageByEntityEvent) {
-            if (e.damager is Player) {
-                event.drops.forEach {
-                    val currency = BedwarsShopCurrency.values().find { currency ->
-                        it.type == currency.material
-                    }
+        val cause = event.entity.lastDamageCause
 
-                    e.damager.sendMessage("${
-                        currency!!.color
-                    }+${it.amount} ${if (
-                        it.amount > 1
-                    ) currency.displayPlural else currency.displaySingular}")
-                    (e.damager as Player).inventory.addItem(it)
+        if (cause is EntityDamageByEntityEvent)
+        {
+            if (cause.damager is Player)
+            {
+                event.drops.forEach {
+                    val currency = BedwarsShopCurrency
+                        .values().firstOrNull { currency ->
+                            it.type == currency.material
+                        }
+
+                    if (currency != null)
+                    {
+                        cause.damager.sendMessage(
+                            "${currency.color}+${it.amount} ${
+                                if (it.amount > 1)
+                                {
+                                    currency.displayPlural
+                                } else
+                                {
+                                    currency.displaySingular
+                                }
+                            }"
+                        )
+
+                        (cause.damager as Player)
+                            .inventory.addItem(it)
+                    }
                 }
+
                 event.drops.clear()
             }
         }
