@@ -3,6 +3,7 @@ package gg.scala.bedwars.game.listener
 import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.death.BedwarsRespawnRunnable
 import gg.scala.bedwars.game.event.BedwarsBedDestroyEvent
+import gg.scala.bedwars.game.shop.BedwarsShopCurrency
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -25,6 +26,7 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
+import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDamageEvent
 import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.entity.ItemSpawnEvent
@@ -327,6 +329,31 @@ object BedwarsGameListener : Listener
         )
         {
             return
+        }
+
+        event.drops.removeIf {
+            it.type !in BedwarsShopCurrency.values().map { currency ->
+                currency.material
+            }
+        }
+
+        val e = event.entity.lastDamageCause
+        if (e is EntityDamageByEntityEvent) {
+            if (e.damager is Player) {
+                event.drops.forEach {
+                    val currency = BedwarsShopCurrency.values().find { currency ->
+                        it.type == currency.material
+                    }
+
+                    e.damager.sendMessage("${
+                        currency!!.color
+                    }+ ${it.amount} ${if (
+                        it.amount > 1
+                    ) currency.displayPlural else currency.displaySingular}")
+                    (e.damager as Player).inventory.addItem(it)
+                }
+                event.drops.clear()
+            }
         }
 
         val team = CgsGameTeamService.getTeamOf(event.entity) as BedwarsCgsGameTeam?
