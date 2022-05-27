@@ -84,8 +84,8 @@ object BedwarsStartListener : Listener
                             )
                         }
 
-                    val shopLocation = it.spawnPoint!!
-                        .clone().add(1.5, 0.0, -2.5)
+                    val shopLocation = arena
+                        .teamShopLocations[it.id]!!
 
                     val shopEntity = BedwarsShopNpcEntity(shopLocation)
                         .apply {
@@ -95,8 +95,8 @@ object BedwarsStartListener : Listener
                                 .trackEntity(this)
                         }
 
-                    val upgradesLocation = it.spawnPoint!!
-                        .clone().add(-1.5, 0.0, -2.5)
+                    val upgradesLocation = arena
+                        .teamItemUpgradeLocations[it.id]!!
 
                     val upgradesEntity = BedwarsTeamUpgradesNpcEntity(upgradesLocation)
                         .apply {
@@ -106,16 +106,16 @@ object BedwarsStartListener : Listener
                                 .trackEntity(this)
                         }
 
-                    val chestLocation = it.spawnPoint!!
-                        .clone().add(1.0, 0.0, 0.0)
+                    val chestLocation = arena
+                        .teamChestLocations[it.id]!!
 
                     chestLocation.block.type = Material.CHEST
                     chestLocation.block.setMetadata(
                         "team", FixedMetadataValue(plugin, it.id)
                     )
 
-                    val enderChestLocation = it.spawnPoint!!
-                        .clone().add(-1.0, 0.0, 0.0)
+                    val enderChestLocation = arena
+                        .teamEnderChestLocations[it.id]!!
 
                     enderChestLocation.block.type = Material.ENDER_CHEST
 

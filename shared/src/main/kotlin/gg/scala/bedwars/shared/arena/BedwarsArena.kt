@@ -36,4 +36,12 @@ abstract class BedwarsArena : CgsSlimeGameArena()
     abstract val teamSpawnPoints: MutableMap<Int, Location>
     abstract val diamondGenerators: List<Location>
     abstract val emeraldGenerators: List<Location>
+
+    abstract val teamShopLocations: MutableMap<Int, Location>
+    abstract val teamGeneratorLocations: MutableMap<Int, Location>
+    abstract val teamItemUpgradeLocations: MutableMap<Int, Location>
+    abstract val teamBedLocations: MutableMap<Int, Location>
+
+    abstract val teamEnderChestLocations: MutableMap<Int, Location>
+    abstract val teamChestLocations: MutableMap<Int, Location>
 }
