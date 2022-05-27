@@ -35,6 +35,7 @@ import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
+import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.metadata.FixedMetadataValue
 
@@ -273,21 +274,13 @@ object BedwarsGameListener : Listener
         ignoreCancelled = true
     )
     fun onEntityDamage(
-        event: EntityDamageEvent
+        event: PlayerMoveEvent
     )
     {
-        if (
-            event.cause == EntityDamageEvent.DamageCause.VOID &&
-            event.entity is Player
-        )
+        if (event.player.location.y <= 0)
         {
-            event.isCancelled = true
-
-            BedwarsRespawnRunnable(event.entity as Player)
+            BedwarsRespawnRunnable(event.player)
                 .runTaskTimer(this.plugin, 0L, 20L)
-        } else if (event.cause == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION)
-        {
-            event.isCancelled = false
         }
     }
 
