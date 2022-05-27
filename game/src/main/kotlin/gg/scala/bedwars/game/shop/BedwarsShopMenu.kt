@@ -22,9 +22,6 @@ class BedwarsShopMenu : PaginatedMenu()
         @JvmStatic
         private val placeholders =
             listOf(10, 11, 12, 13, 14, 15, 16)
-                .map {
-                    it - 9
-                }
     }
 
     init
@@ -46,11 +43,6 @@ class BedwarsShopMenu : PaginatedMenu()
     override fun getAllPagesButtons(player: Player) =
         mutableMapOf<Int, Button>()
             .apply {
-                placeholders
-                    .forEach {
-                        this[it] = PLACEHOLDER
-                    }
-
                 for (item in current.items)
                 {
                     val invoked = item.itemCreator
@@ -131,6 +123,11 @@ class BedwarsShopMenu : PaginatedMenu()
     override fun getGlobalButtons(player: Player) =
         mutableMapOf<Int, Button>()
             .apply {
+                placeholders
+                    .forEach {
+                        this[it] = PLACEHOLDER
+                    }
+
                 for (category in BedwarsShopCategories.categories)
                 {
                     this[category.position] = ItemBuilder
