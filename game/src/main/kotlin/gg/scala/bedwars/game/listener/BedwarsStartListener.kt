@@ -4,8 +4,8 @@ import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
-import gg.scala.bedwars.game.generator.npc.BedwarsShopNpcEntity
-import gg.scala.bedwars.game.generator.npc.BedwarsTeamUpgradesNpcEntity
+import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
+import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine

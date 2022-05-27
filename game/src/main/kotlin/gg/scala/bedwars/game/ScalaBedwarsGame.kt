@@ -1,8 +1,8 @@
 package gg.scala.bedwars.game
 
 import gg.scala.bedwars.game.generator.hologram.BedwarsUpdatingHologramEntity
-import gg.scala.bedwars.game.generator.npc.BedwarsShopNpcEntity
-import gg.scala.bedwars.game.generator.npc.BedwarsTeamUpgradesNpcEntity
+import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
+import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.game.generator.tier.BedwarsItemGeneratorTierIncrementer
 import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory
 import gg.scala.bedwars.game.shop.categories.BedwarsShopCategories
