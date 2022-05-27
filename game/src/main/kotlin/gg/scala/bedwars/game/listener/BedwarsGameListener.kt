@@ -3,9 +3,11 @@ package gg.scala.bedwars.game.listener
 import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.death.BedwarsRespawnRunnable
 import gg.scala.bedwars.game.event.BedwarsBedDestroyEvent
+import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.handler.CgsGameDisqualificationHandler
+import gg.scala.cgs.common.player.handler.CgsPlayerHandler
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
@@ -89,6 +91,9 @@ object BedwarsGameListener : Listener
 
         CgsGameEngine.INSTANCE.playSound(Sound.ENDERDRAGON_GROWL)
 
+        if (event.destroyer != null) {
+            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken.increment()
+        }
         CgsGameEngine.INSTANCE.sendMessage("")
         CgsGameEngine.INSTANCE.sendMessage(CC.B_WHITE + "Bed Destroyed ${CC.GRAY}${Constants.DOUBLE_ARROW_RIGHT} ${event.team.name}'s${CC.RED} bed has been destroyed${
             if (event.destroyer != null) " by " + event.destroyer.displayName else ""
