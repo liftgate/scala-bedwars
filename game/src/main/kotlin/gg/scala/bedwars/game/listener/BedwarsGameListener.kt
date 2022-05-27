@@ -38,6 +38,7 @@ import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.metadata.FixedMetadataValue
+import java.util.UUID
 
 
 @Listeners
@@ -284,6 +285,8 @@ object BedwarsGameListener : Listener
         }
     }
 
+    val lastThrown = mutableMapOf<UUID, Long>()
+
     @EventHandler
     fun onFireball(
         event: PlayerInteractEvent
@@ -296,6 +299,16 @@ object BedwarsGameListener : Listener
         )
         {
             event.isCancelled = true
+
+            val lastThrown = lastThrown[event.player.uniqueId]
+
+            if (
+                lastThrown != null &&
+                System.currentTimeMillis() - lastThrown < 1000
+            )
+            {
+                return
+            }
 
             event.player.inventory
                 .removeAmount(
