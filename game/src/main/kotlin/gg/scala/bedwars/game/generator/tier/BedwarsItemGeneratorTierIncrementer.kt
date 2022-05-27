@@ -21,7 +21,6 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
         CgsGameEngine.INSTANCE
     }
 
-    @JvmField
     var countdown = 300
 
     private var current = 0
@@ -47,25 +46,6 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
         3 to "III",
         4 to "IV"
     )
-
-    init
-    {
-        val countdown = this::class
-            .java.getField("countdown")
-
-        EnvironmentEditorService
-            .editable.add(
-                EditableFieldEntry(countdown, this)
-            )
-
-        val current = this::class
-            .java.getField("current")
-
-        EnvironmentEditorService
-            .editable.add(
-                EditableFieldEntry(current, this)
-            )
-    }
 
     // very stupid
     private val mappings = listOf(

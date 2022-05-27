@@ -27,7 +27,7 @@ class BedwarsUpdatingHologramEntity(
                     " ${numeral()}"
                 }
             }",
-            "${CC.SEC}Spawns in ${CC.GREEN}${generator.cooldown}${CC.SEC}..."
+            "${CC.SEC}Spawns in ${CC.GREEN}${generator.cooldown}${CC.SEC} seconds"
         )
 
     private fun numeral() = BedwarsItemGeneratorTierIncrementer
