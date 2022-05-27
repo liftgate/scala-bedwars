@@ -4,6 +4,7 @@ import gg.scala.bedwars.game.generator.BedwarsItemGeneratorService
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.cgs.common.CgsGameEngine
+import gg.scala.cgs.common.environment.EditableFieldEntry
 import gg.scala.cgs.common.environment.editor.EnvironmentEditorService
 import gg.scala.cgs.common.states.CgsGameState
 import net.evilblock.cubed.util.CC
@@ -20,7 +21,9 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
         CgsGameEngine.INSTANCE
     }
 
+    @JvmField
     var countdown = 300
+
     private var current = 0
 
     private val updates = listOf(
@@ -47,8 +50,21 @@ object BedwarsItemGeneratorTierIncrementer : BukkitRunnable()
 
     init
     {
+        val countdown = this::class
+            .java.getField("countdown")
+
         EnvironmentEditorService
-            .registerAllEditables(this)
+            .editable.add(
+                EditableFieldEntry(countdown, this)
+            )
+
+        val current = this::class
+            .java.getField("current")
+
+        EnvironmentEditorService
+            .editable.add(
+                EditableFieldEntry(current, this)
+            )
     }
 
     // very stupid

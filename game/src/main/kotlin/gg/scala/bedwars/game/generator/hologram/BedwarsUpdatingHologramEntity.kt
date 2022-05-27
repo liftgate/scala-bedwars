@@ -18,12 +18,20 @@ class BedwarsUpdatingHologramEntity(
 {
     override fun getNewLines() =
         listOf(
-            "${generator.name} ${
-                BedwarsItemGeneratorTierIncrementer
-                    .numerals[generator.tier]
+            "${generator.name}${
+                if (numeral() == null)
+                {
+                    ""
+                } else
+                {
+                    " ${numeral()}"
+                }
             }",
-            "${CC.SEC}Spawns in ${CC.GREEN}${generator.cooldown}${CC.SEC} seconds!"
+            "${CC.SEC}Spawns in ${CC.GREEN}${generator.cooldown}${CC.SEC}..."
         )
+
+    private fun numeral() = BedwarsItemGeneratorTierIncrementer
+        .numerals[generator.tier - 1]
 
     override fun getTickInterval() = 900L
 }
