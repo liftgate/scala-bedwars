@@ -81,7 +81,7 @@ class BedwarsShopMenu : PaginatedMenu()
                         )
                         .toButton { player, _ ->
                             if (
-                                System.currentTimeMillis() - lastPurchased < 600L
+                                System.currentTimeMillis() - lastPurchased < 250L
                             )
                             {
                                 return@toButton
