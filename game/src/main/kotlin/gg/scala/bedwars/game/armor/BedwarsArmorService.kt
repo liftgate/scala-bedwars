@@ -16,7 +16,7 @@ import java.util.UUID
  */
 object BedwarsArmorService
 {
-    private val armor =
+    val armor =
         mutableMapOf<UUID, BedwarsArmorType>()
 
     private val mappings = mapOf(
@@ -67,8 +67,11 @@ object BedwarsArmorService
                     .setUnbreakable(true)
                     .build()
                     .apply {
-                        (itemMeta as LeatherArmorMeta).color =
-                            mappings[team.color]
+                        if (itemMeta is LeatherArmorMeta)
+                        {
+                            (itemMeta as LeatherArmorMeta).color =
+                                mappings[team.color]
+                        }
                     }
             }
             .toTypedArray()

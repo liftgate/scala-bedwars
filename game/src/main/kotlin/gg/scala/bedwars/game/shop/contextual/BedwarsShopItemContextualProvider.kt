@@ -10,4 +10,9 @@ import org.bukkit.entity.Player
 interface BedwarsShopItemContextualProvider
 {
     fun provide(item: BedwarsShopItem, player: Player)
+
+    open fun allowed(player: Player, item: BedwarsShopItem): Boolean
+    {
+        return true
+    }
 }

@@ -97,6 +97,11 @@ class BedwarsShopMenu : PaginatedMenu()
                                 return@toButton
                             }
 
+                            if (!item.contextualProvider.allowed(player, item))
+                            {
+                                return@toButton
+                            }
+
                             player.sendMessage(
                                 "${CC.GREEN}You purchased ${CC.SEC}${item.name}${CC.GREEN}!"
                             )
