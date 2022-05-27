@@ -293,7 +293,10 @@ object BedwarsGameListener : Listener
     {
         if (event.item.type == Material.FIREBALL)
         {
-            event.player.itemInHand = ItemStack(Material.AIR)
+            event.player.inventory
+                .removeAmount(
+                    Material.FIREBALL, 1
+                )
 
             val eye = event.player.eyeLocation
             val location = eye.add(
@@ -304,7 +307,7 @@ object BedwarsGameListener : Listener
                 .spawnEntity(location, EntityType.FIREBALL) as Fireball
 
             fireball.velocity = location
-                .direction.normalize().multiply(2)
+                .direction.normalize().multiply(0.85)
 
             fireball.shooter = event.player
         }
