@@ -22,6 +22,8 @@ class BedwarsShopMenu : PaginatedMenu()
         placeholdBorders = true
     }
 
+    override fun size(buttons: Map<Int, Button>) = 36
+
     override fun getAllPagesButtonSlots() =
         listOf(
             10, 11, 12, 13, 14, 15, 16,
@@ -64,6 +66,7 @@ class BedwarsShopMenu : PaginatedMenu()
                         .toButton { player, _ ->
                             val amount = player!!
                                 .inventory.contents
+                                .filterNotNull()
                                 .filter {
                                     it.type == item.price.first.material
                                 }
