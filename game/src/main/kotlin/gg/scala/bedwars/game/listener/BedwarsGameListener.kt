@@ -304,7 +304,7 @@ object BedwarsGameListener : Listener
 
             if (
                 lastThrown != null &&
-                System.currentTimeMillis() - lastThrown < 1000
+                System.currentTimeMillis() - lastThrown < 350L
             )
             {
                 return
