@@ -13,6 +13,7 @@ import gg.scala.bedwars.game.team.BedwarsTeamChatChannelComposite
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTicker
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTracker
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTrackerService
+import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -174,7 +175,11 @@ object BedwarsStartListener : Listener
 
                         player.enderChest.clear()
 
-                        stats.gameKills.update(0)
+                        (stats as BedwarsCgsStatistics)
+                            .gameKills.update(0)
+
+                        stats.gameBedsBroken.update(0)
+                        stats.gameFinalKills.update(0)
 
                         BedwarsArmorService.applyArmor(player)
                         BedwarsLoadoutService.applyLoadout(player)

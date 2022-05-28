@@ -15,6 +15,8 @@ constructor(
     override var kills: CgsGameStatistic = CgsGameStatistic(),
     var finalKills: CgsGameStatistic = CgsGameStatistic(),
     var bedsBroken: CgsGameStatistic = CgsGameStatistic(),
+    var gameBedsBroken: CgsGameStatistic = CgsGameStatistic(),
+    var gameFinalKills: CgsGameStatistic = CgsGameStatistic(),
     override var deaths: CgsGameStatistic = CgsGameStatistic(),
     override var played: CgsGameStatistic = CgsGameStatistic(),
     override var wins: CgsGameStatistic = CgsGameStatistic(),

@@ -132,6 +132,8 @@ object ScalaBedwarsScoreboard : CgsGameScoreboardRenderer
             {
                 lines.add("")
                 lines.add("Kills: " + CC.D_AQUA + statistics.gameKills.value)
+                lines.add("Final Kills: " + CC.D_AQUA + statistics.gameFinalKills.value)
+                lines.add("Beds Broken: " + CC.D_AQUA + statistics.gameBedsBroken.value)
             }
         }
 

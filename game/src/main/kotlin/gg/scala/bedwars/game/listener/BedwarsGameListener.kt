@@ -5,6 +5,7 @@ import gg.scala.bedwars.game.death.BedwarsRespawnRunnable
 import gg.scala.bedwars.game.event.BedwarsBedDestroyEvent
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.BedwarsShopCurrency
+import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -95,6 +96,7 @@ object BedwarsGameListener : Listener
         if (event.destroyer != null)
         {
             (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken++
+            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).gameBedsBroken++
         }
 
         CgsGameEngine.INSTANCE.sendMessage("")
@@ -486,11 +488,17 @@ object BedwarsGameListener : Listener
         }
 
         val cause = event.entity.lastDamageCause
+        val team = event.entity.team()!!
 
         if (cause is EntityDamageByEntityEvent)
         {
             if (cause.damager is Player)
             {
+                if (!(cause.damager as Player).isOnline)
+                {
+                    return
+                }
+
                 event.drops.forEach {
                     val currency = BedwarsShopCurrency
                         .values().firstOrNull { currency ->
@@ -517,30 +525,35 @@ object BedwarsGameListener : Listener
                 }
 
                 event.drops.clear()
+
+                if (team.bedDestroyed)
+                {
+                    val stats = CgsGameEngine.INSTANCE.getStatistics(
+                        CgsPlayerHandler.find(cause.damager as Player)!!
+                    ) as BedwarsCgsStatistics
+
+                    stats.finalKills++
+                    stats.gameFinalKills++
+                }
             }
         }
 
-        val team = CgsGameTeamService.getTeamOf(event.entity) as BedwarsCgsGameTeam?
-
-        if (team != null)
+        if (team.bedDestroyed)
         {
-            if (team.bedDestroyed)
-            {
-                CgsGameDisqualificationHandler.disqualifyPlayer(
-                    player = event.entity, broadcastNotification = true, setSpectator = true
-                )
+            CgsGameDisqualificationHandler.disqualifyPlayer(
+                player = event.entity, broadcastNotification = true, setSpectator = true
+            )
 
-                if (team.alive.isEmpty())
-                {
-                    team.broadcastElimination()
-                }
-            } else
+            if (team.alive.isEmpty())
             {
-                BedwarsRespawnRunnable(event.entity)
-                    .runTaskTimer(
-                        this.plugin, 1L, 20L
-                    )
+                team.broadcastElimination()
             }
+        } else
+        {
+            BedwarsRespawnRunnable(event.entity)
+                .runTaskTimer(
+                    this.plugin, 1L, 20L
+                )
         }
     }
 }
