@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game.upgrades
 
+import gg.scala.bedwars.game.shop.BedwarsShopCurrency
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.teams.CgsGameTeamService
@@ -162,7 +163,55 @@ class BedwarsTeamUpgradesMenu : Menu(
                 )
                 .setLore(description)
                 .toButton { _, _ ->
+                    val price = if (upgrade.names.size == 1)
+                    {
+                        upgrade
+                            .costs[this.gameMode]!!
+                            .values.first()
+                    } else
+                    {
+                        upgrade
+                            .costs[this.gameMode]!![tier + 1]!!
+                    }
 
+                    if (tier == upgrade.maxLevel)
+                    {
+                        player.sendMessage("${CC.RED}You cannot upgrade this any further!")
+                        return@toButton
+                    }
+
+                    if (upgrade.names.size == 1)
+                    {
+                        if (diamonds < price)
+                        {
+                            player.sendMessage(
+                                "${CC.RED}You need ${CC.BOLD}${price - diamonds}${CC.RED} more diamond${
+                                    if (price - diamonds == 1) "" else "s"
+                                } to purchase this item!"
+                            )
+                            return@toButton
+                        }
+                    } else
+                    {
+                        if (diamonds < price)
+                        {
+                            player.sendMessage(
+                                "${CC.RED}You need ${CC.BOLD}${price - diamonds}${CC.RED} more diamond${
+                                    if (price - diamonds == 1) "" else "s"
+                                } to purchase this item!"
+                            )
+                            return@toButton
+                        }
+                    }
+
+                    tracker.upgrades[upgrade] = tier + 1
+
+                    BedwarsShopCurrency.DIAMOND.removeFrom
+                        .invoke(player, price)
+
+                    player.sendMessage("${CC.GREEN}You purchased ${CC.YELLOW}${
+                        upgrade.display
+                    }${CC.GREEN} tier ${CC.GOLD}${tier + 1}${CC.GREEN}.")
                 }
         }
 
