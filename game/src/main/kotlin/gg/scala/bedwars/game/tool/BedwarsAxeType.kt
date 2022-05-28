@@ -14,16 +14,16 @@ enum class BedwarsAxeType(
 )
 {
     WOOD(
-        ItemBuilder.of(Material.WOOD_PICKAXE)
+        ItemBuilder.of(Material.WOOD_AXE)
     ),
     STONE(
-        ItemBuilder.of(XMaterial.STONE_PICKAXE)
+        ItemBuilder.of(XMaterial.STONE_AXE)
     ),
     IRON(
-        ItemBuilder.of(XMaterial.IRON_PICKAXE)
+        ItemBuilder.of(XMaterial.IRON_AXE)
     ),
     DIAMOND(
-        ItemBuilder.of(XMaterial.DIAMOND_PICKAXE)
+        ItemBuilder.of(XMaterial.DIAMOND_AXE)
     );
 
 

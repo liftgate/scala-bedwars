@@ -93,7 +93,13 @@ object BedwarsToolService
                 player.inventory.addItem(tool.tool.build())
             }
         }
-        if (uniqueId in shears && !player.inventory.any { it.type == Material.SHEARS }) {
+        if (uniqueId in shears) {
+            try
+            {
+                player.inventory.remove(Material.SHEARS)
+            } catch (_: Exception) {
+                // stfu
+            }
             player.inventory.addItem(ItemBuilder.of(XMaterial.SHEARS).build())
         }
     }
