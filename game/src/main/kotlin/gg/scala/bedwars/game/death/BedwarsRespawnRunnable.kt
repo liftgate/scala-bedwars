@@ -24,12 +24,11 @@ class BedwarsRespawnRunnable(
     private val player: Player
 ) : BukkitRunnable()
 {
-    init {
-        if (player.hasMetadata("respawning")) cancel()
-        else player.setMetadata("respawning", FixedMetadataValue(CgsGameEngine.INSTANCE.plugin, "true"))
-    }
-
     private var tick = 6
+
+    init {
+        player.setMetadata("respawning", FixedMetadataValue(CgsGameEngine.INSTANCE.plugin, true))
+    }
 
     override fun run()
     {
@@ -113,7 +112,7 @@ class BedwarsRespawnRunnable(
                 BedwarsArmorService.applyArmor(this.player)
                 BedwarsLoadoutService.applyLoadout(this.player)
 
-                this.player.removeMetadata("respawning", CgsGameEngine.INSTANCE.plugin)
+                player.removeMetadata("respawning", CgsGameEngine.INSTANCE.plugin)
                 this.player.sendMessage("${CC.GREEN}You have respawned!")
 
                 this.cancel()

@@ -294,6 +294,15 @@ object BedwarsGameListener : Listener
 
     private val lastUpdated = mutableMapOf<UUID, Long>()
 
+    @EventHandler
+    fun onMove(event: PlayerMoveEvent) {
+        if (event.to.y < 0) {
+            if (!event.player.hasMetadata("respawning")) {
+                event.player.health = 0.0
+            }
+        }
+    }
+
     @EventHandler(
         ignoreCancelled = true
     )
@@ -457,6 +466,7 @@ object BedwarsGameListener : Listener
                 .removeAmount(
                     Material.FIREBALL, 1
                 )
+            event.player.updateInventory()
 
             val eye = event.player.eyeLocation
             val location = eye.add(

@@ -56,5 +56,6 @@ abstract class BedwarsProminentItemGenerator(
         this.stand.isCustomNameVisible = false
         this.stand.isVisible = false
         this.stand.helmet = itemBlock
+        this.stand.isSmall = true
     }
 }
