@@ -32,6 +32,7 @@ object BedwarsShopMeleeCategory
                 itemCreator = {
                     ItemBuilder
                         .of(Material.STONE_SWORD)
+                        .setUnbreakable(true)
                         .build()
                 },
                 contextualProvider = MeleeShopItemContextual
@@ -43,6 +44,7 @@ object BedwarsShopMeleeCategory
                 itemCreator = {
                     ItemBuilder
                         .of(Material.IRON_SWORD)
+                        .setUnbreakable(true)
                         .build()
                 },
                 contextualProvider = MeleeShopItemContextual
@@ -54,6 +56,7 @@ object BedwarsShopMeleeCategory
                 itemCreator = {
                     ItemBuilder
                         .of(Material.DIAMOND_SWORD)
+                        .setUnbreakable(true)
                         .build()
                 },
                 contextualProvider = MeleeShopItemContextual

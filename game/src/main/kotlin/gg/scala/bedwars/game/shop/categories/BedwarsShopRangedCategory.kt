@@ -36,6 +36,7 @@ object BedwarsShopRangedCategory
                 itemCreator = {
                     ItemBuilder
                         .of(Material.BOW)
+                        .setUnbreakable(true)
                         .build()
                 }
             ),
@@ -46,6 +47,7 @@ object BedwarsShopRangedCategory
                 itemCreator = {
                     ItemBuilder
                         .of(Material.BOW)
+                        .setUnbreakable(true)
                         .enchant(
                             Enchantment.ARROW_DAMAGE, 1
                         )
@@ -59,6 +61,7 @@ object BedwarsShopRangedCategory
                 itemCreator = {
                     ItemBuilder
                         .of(Material.BOW)
+                        .setUnbreakable(true)
                         .enchant(
                             Enchantment.ARROW_DAMAGE, 1
                         )
