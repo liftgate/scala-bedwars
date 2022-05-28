@@ -50,16 +50,17 @@ object ToolShopItemContextual : BedwarsShopItemContextualProvider
     {
         return when (val tool = mappings[item.name]) {
             is BedwarsPickaxeType -> {
-                val pickaxe = BedwarsToolService.pickaxes[player.uniqueId] ?: return true
-                return pickaxe.ordinal < tool.ordinal && pickaxe.next() == tool
+                val pickaxe = BedwarsToolService.pickaxes[player.uniqueId] ?: return tool == BedwarsPickaxeType.WOOD
+                pickaxe.next() == tool
             }
 
             is BedwarsAxeType -> {
-                val axe = BedwarsToolService.axes[player.uniqueId] ?: return true
-                return axe.ordinal < tool.ordinal && axe.next() == tool
+                val axe = BedwarsToolService.axes[player.uniqueId] ?: return tool == BedwarsAxeType.WOOD
+                axe.next() == tool
             }
 
-            else -> return player.uniqueId !in BedwarsToolService.shears
+            null -> player.uniqueId !in BedwarsToolService.shears
+            else -> false
         }
     }
 }
