@@ -5,6 +5,7 @@ import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 
@@ -167,9 +168,9 @@ class BedwarsShopMenu : PaginatedMenu()
                 {
                     this[category.position] = ItemBuilder
                         .copyOf(category.icon)
-                        .name("${CC.D_AQUA}${category.name}")
+                        .name("${CC.YELLOW}${category.name}")
                         .addToLore(
-                            "${CC.WHITE}View all somethings.",
+                            "${CC.GRAY}View all somethings.",
                             "",
                             "${CC.GREEN}Click to view."
                         )
@@ -184,6 +185,17 @@ class BedwarsShopMenu : PaginatedMenu()
                             current = category
                         }
                 }
+
+                this[40] = ItemBuilder(Material.NETHER_STAR)
+                    .name("${CC.YELLOW}Quick Buy")
+                    .addToLore(
+                        "${CC.GRAY}View all somethings.",
+                        "",
+                        "${CC.GREEN}Click to view."
+                    )
+                    .toButton { _, _ ->
+
+                    }
             }
 
     override fun getPrePaginatedTitle(player: Player) = "Item Shop"
