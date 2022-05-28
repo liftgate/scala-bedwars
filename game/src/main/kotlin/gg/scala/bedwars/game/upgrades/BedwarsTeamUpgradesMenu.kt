@@ -119,7 +119,7 @@ class BedwarsTeamUpgradesMenu : Menu(
             description += if (tier == upgrade.maxLevel)
             {
                 "${CC.GREEN}${
-                    if (upgrade.names.size == 1) "You already own this!" else "Already at max level!"
+                    if (upgrade.names.size == 1) "${CC.RED}You already own this!" else "${CC.RED}Already at max level!"
                 }"
             } else
             {
