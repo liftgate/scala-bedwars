@@ -59,8 +59,7 @@ object ToolShopItemContextual : BedwarsShopItemContextualProvider
                 (axe.next() ?: false) == tool
             }
 
-            null -> player.uniqueId !in BedwarsToolService.shears
-            else -> false
+            else -> player.uniqueId !in BedwarsToolService.shears
         }
     }
 }
