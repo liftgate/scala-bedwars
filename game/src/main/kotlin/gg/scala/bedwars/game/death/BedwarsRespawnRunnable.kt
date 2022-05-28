@@ -110,6 +110,7 @@ class BedwarsRespawnRunnable(
                     )
                 )
 
+                BedwarsToolService.decreaseType(this.player.uniqueId)
                 BedwarsArmorService.applyArmor(this.player)
                 BedwarsLoadoutService.applyLoadout(this.player)
                 BedwarsToolService.applyTools(this.player)

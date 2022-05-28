@@ -100,7 +100,7 @@ object BedwarsToolService
             } catch (_: Exception) {
                 // stfu
             }
-            player.inventory.addItem(ItemBuilder.of(XMaterial.SHEARS).build())
+            player.inventory.addItem(ItemBuilder.of(XMaterial.SHEARS).setUnbreakable(true).build())
         }
     }
 }

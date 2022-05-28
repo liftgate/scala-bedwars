@@ -51,15 +51,15 @@ object ToolShopItemContextual : BedwarsShopItemContextualProvider
         return when (val tool = mappings[item.name]) {
             is BedwarsPickaxeType -> {
                 val pickaxe = BedwarsToolService.pickaxes[player.uniqueId] ?: return true
-                return pickaxe.ordinal < tool.ordinal
+                return pickaxe.ordinal < tool.ordinal && pickaxe.next() == tool
             }
 
             is BedwarsAxeType -> {
                 val axe = BedwarsToolService.axes[player.uniqueId] ?: return true
-                return axe.ordinal < tool.ordinal
+                return axe.ordinal < tool.ordinal && axe.next() == tool
             }
 
-            else -> return player.uniqueId in BedwarsToolService.shears
+            else -> return player.uniqueId !in BedwarsToolService.shears
         }
     }
 }
