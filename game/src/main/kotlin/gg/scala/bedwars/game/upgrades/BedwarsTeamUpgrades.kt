@@ -151,8 +151,8 @@ enum class BedwarsTeamUpgrades(
         XMaterial.DRAGON_EGG, "Dragon Buff", 21,
         mapOf(1 to "Dragon Buff"),
         mapOf(
-            "eight" to mapOf(1 to 1),
-            "four" to mapOf(1 to 3)
+            "eight" to mapOf(1 to 5),
+            "four" to mapOf(1 to 5)
         )
     ),
 
