@@ -58,13 +58,11 @@ object BedwarsStartListener : Listener
                     .compose()
                     .override(5000) {
                         it.team()!!.id == team.id && !CgsGameEngine
-                            .INSTANCE.gameMode.isSoloGame() && CgsGameEngine
-                            .INSTANCE.gameState == CgsGameState.STARTED
+                            .INSTANCE.gameMode.isSoloGame()
                     }
                     .allowOnlyIf {
                         it.team()!!.id == team.id && !CgsGameEngine
-                            .INSTANCE.gameMode.isSoloGame() && CgsGameEngine
-                            .INSTANCE.gameState == CgsGameState.STARTED
+                            .INSTANCE.gameMode.isSoloGame()
                     }
                     .monitor()
 

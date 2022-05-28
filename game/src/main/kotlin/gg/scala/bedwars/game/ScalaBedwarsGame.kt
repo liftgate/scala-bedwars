@@ -14,6 +14,7 @@ import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.information.mode.CgsGameMode
+import gg.scala.cgs.common.states.CgsGameState
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.ExtendedScalaPlugin
 import gg.scala.commons.annotations.container.ContainerEnable
@@ -113,21 +114,26 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                 BedwarsShopUtilityCategory.category
             )
 
-        if (CgsGameEngine.INSTANCE.gameMode.isSoloGame())
-        {
-            DefaultChatChannel
-                .provideAdditionalPrefix {
-                    val team = it.team()
-                        ?: return@provideAdditionalPrefix Component.empty()
+        DefaultChatChannel
+            .provideAdditionalPrefix {
+                val team = it.team()
+                    ?: return@provideAdditionalPrefix Component.empty()
 
-                    LegacyComponentSerializer.legacySection()
-                        .deserialize(
-                            "${team.color}[${
-                                team.name.uppercase()
-                            }] ${CC.GRAY}[1✫] ${CC.WHITE}"
-                        )
-                }
-        }
+                LegacyComponentSerializer.legacySection()
+                    .deserialize(
+                        "${
+                            if (CgsGameEngine.INSTANCE.gameState == CgsGameState.STARTED)
+                            {
+                                "${team.color}[${
+                                    team.name.uppercase()
+                                }] "
+                            } else
+                            {
+                                ""
+                            }
+                        }${CC.GRAY}[1✫] ${CC.WHITE}"
+                    )
+            }
 
         val executor = Executors
             .newSingleThreadScheduledExecutor()
