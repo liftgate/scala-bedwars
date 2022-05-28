@@ -37,6 +37,7 @@ import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerDropItemEvent
@@ -324,16 +325,23 @@ object BedwarsGameListener : Listener
         }
     }
 
-    @EventHandler
+    @EventHandler(
+        priority = EventPriority.HIGHEST,
+        ignoreCancelled = true
+    )
     fun onMoveItem(
         event: InventoryMoveItemEvent
     )
     {
+        plugin.logger.info("Moved item?")
+
         if (event.item.type == Material.WOOD_SWORD)
         {
             event.isCancelled = true
             return
         }
+
+        plugin.logger.info("Not wooden sword?")
 
         val player =
             event.destination
