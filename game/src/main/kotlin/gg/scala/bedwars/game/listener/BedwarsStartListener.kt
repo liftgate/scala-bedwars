@@ -6,8 +6,10 @@ import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
+import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
+import gg.scala.bedwars.game.team.BedwarsTeamChatChannelComposite
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTracker
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTrackerService
 import gg.scala.bedwars.shared.arena.BedwarsArena
@@ -18,6 +20,8 @@ import gg.scala.cgs.common.player.handler.CgsPlayerHandler
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
+import gg.scala.lemon.channel.ChatChannelBuilder
+import gg.scala.lemon.channel.ChatChannelService
 import net.evilblock.cubed.entity.EntityHandler
 import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
@@ -45,6 +49,23 @@ object BedwarsStartListener : Listener
 
                 BedwarsTeamUpgradesTrackerService.trackers[team.id] =
                     BedwarsTeamUpgradesTracker(team)
+
+                val channel = ChatChannelBuilder
+                    .newBuilder().import(
+                        BedwarsTeamChatChannelComposite(team)
+                    )
+                    .compose()
+                    .override(5000) {
+                        it.team()!!.id == team.id && !CgsGameEngine
+                            .INSTANCE.gameMode.isSoloGame()
+                    }
+                    .allowOnlyIf {
+                        it.team()!!.id == team.id && !CgsGameEngine
+                            .INSTANCE.gameMode.isSoloGame()
+                    }
+                    .monitor()
+
+                ChatChannelService.register(channel)
             }
 
         arena.diamondGenerators.forEach {

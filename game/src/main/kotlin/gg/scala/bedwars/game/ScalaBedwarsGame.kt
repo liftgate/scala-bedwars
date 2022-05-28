@@ -113,18 +113,21 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                 BedwarsShopUtilityCategory.category
             )
 
-        DefaultChatChannel
-            .provideAdditionalPrefix {
-                val team = it.team()
-                    ?: return@provideAdditionalPrefix Component.empty()
+        if (CgsGameEngine.INSTANCE.gameMode.isSoloGame())
+        {
+            DefaultChatChannel
+                .provideAdditionalPrefix {
+                    val team = it.team()
+                        ?: return@provideAdditionalPrefix Component.empty()
 
-                LegacyComponentSerializer.legacySection()
-                    .deserialize(
-                        "${team.color}[${
-                            team.name
-                        }] ${CC.WHITE}"
-                    )
-            }
+                    LegacyComponentSerializer.legacySection()
+                        .deserialize(
+                            "${team.color}[${
+                                team.name.uppercase()
+                            }] ${CC.GRAY}[1✫] ${CC.WHITE}"
+                        )
+                }
+        }
 
         val executor = Executors
             .newSingleThreadScheduledExecutor()
