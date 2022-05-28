@@ -1,6 +1,9 @@
 package gg.scala.bedwars.game.shop
 
 import gg.scala.bedwars.game.shop.categories.BedwarsShopCategories
+import gg.scala.bedwars.shared.BedwarsCgsStatistics
+import gg.scala.cgs.common.CgsGameEngine
+import gg.scala.cgs.common.player.handler.CgsPlayerHandler
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
@@ -15,8 +18,7 @@ import org.bukkit.inventory.ItemFlag
  */
 class BedwarsShopMenu : PaginatedMenu()
 {
-    private var current =
-        BedwarsShopCategories.categories.first()
+    private var current: BedwarsShopCategory? = null
 
     private var lastPurchased = System
         .currentTimeMillis()
@@ -47,7 +49,142 @@ class BedwarsShopMenu : PaginatedMenu()
     override fun getAllPagesButtons(player: Player) =
         mutableMapOf<Int, Button>()
             .apply {
-                for (item in current.items)
+                if (current == null)
+                {
+                    val stats = CgsGameEngine.INSTANCE
+                        .getStatistics(
+                            CgsPlayerHandler.find(player)!!
+                        ) as BedwarsCgsStatistics
+
+                    for (entry in stats.quickBuyData.positioning)
+                    {
+                        val selected = BedwarsShopCategories
+                            .categories
+                            .flatMap { it.items }
+                            .firstOrNull {
+                                it.name == entry.value
+                            }
+
+                        if (selected != null)
+                        {
+                            val invoked = selected.itemCreator
+                                .invoke(player)
+
+                            val amount = player
+                                .inventory.contents
+                                .filterNotNull()
+                                .filter {
+                                    it.type == selected.price.first.material
+                                }
+                                .sumOf {
+                                    it.amount
+                                }
+
+                            this[entry.key + 9] = ItemBuilder
+                                .copyOf(invoked)
+                                .name("${CC.YELLOW}${selected.name}")
+                                .addFlags(
+                                    ItemFlag.HIDE_ATTRIBUTES,
+                                    ItemFlag.HIDE_ENCHANTS,
+                                    ItemFlag.HIDE_POTION_EFFECTS,
+                                    ItemFlag.HIDE_UNBREAKABLE,
+                                    ItemFlag.HIDE_PLACED_ON
+                                )
+                                .setLore(
+                                    mutableListOf<String>()
+                                        .apply {
+                                            add(
+                                                "${CC.GRAY}Price: ${
+                                                    selected.price.first.color
+                                                }${
+                                                    selected.price.second
+                                                } ${
+                                                    if (selected.price.second == 1)
+                                                    {
+                                                        selected.price.first.displaySingular
+                                                    } else
+                                                    {
+                                                        selected.price.first.displayPlural
+                                                    }
+                                                }"
+                                            )
+                                            add("")
+
+                                            if (amount < selected.price.second)
+                                            {
+                                                add("${CC.RED}You cannot afford this!")
+                                            } else
+                                            {
+                                                add("${CC.GREEN}Click to purchase.")
+                                            }
+                                        }
+                                )
+                                .toButton { player, _ ->
+                                    if (
+                                        System.currentTimeMillis() - lastPurchased < 100L
+                                    )
+                                    {
+                                        return@toButton
+                                    }
+
+                                    if (amount < selected.price.second)
+                                    {
+                                        player!!.sendMessage(
+                                            "${CC.RED}You need ${CC.BOLD}${selected.price.second - amount}${CC.RED} more ${
+                                                if (selected.price.second - amount == 1)
+                                                {
+                                                    selected.price.first.displaySingular.lowercase()
+                                                } else
+                                                {
+                                                    selected.price.first.displayPlural.lowercase()
+                                                }
+                                            } to purchase this item!"
+                                        )
+                                        return@toButton
+                                    }
+
+                                    if (!selected.contextualProvider.allowed(player!!, selected))
+                                    {
+                                        return@toButton
+                                    }
+
+                                    player.sendMessage(
+                                        "${CC.GREEN}You purchased ${CC.SEC}${selected.name}${CC.GREEN}!"
+                                    )
+
+                                    selected.price.first.removeFrom
+                                        .invoke(player, selected.price.second)
+
+                                    selected.contextualProvider.provide(selected, player)
+
+                                    lastPurchased = System.currentTimeMillis()
+                                }
+                        }
+                    }
+
+                    getAllPagesButtonSlots()
+                        .forEach {
+                            if (this[it] == null)
+                            {
+                                this[it] = ItemBuilder
+                                    .copyOf(
+                                        PLACEHOLDER.getButtonItem(player)
+                                    )
+                                    .data(14)
+                                    .name("${CC.RED}Empty Slot")
+                                    .addToLore(
+                                        "${CC.GRAY}This slot is not bound to any item!",
+                                        "${CC.GRAY}Shift-Click a shop item to configure this menu."
+                                    )
+                                    .toButton()
+                            }
+                        }
+
+                    return@apply
+                }
+
+
+                for (item in current!!.items)
                 {
                     val invoked = item.itemCreator
                         .invoke(player)
@@ -149,7 +286,10 @@ class BedwarsShopMenu : PaginatedMenu()
             .apply {
                 placeholders
                     .forEach {
-                        this[it] = if (it - 9 == current.position)
+                        this[it] = if (
+                            current != null &&
+                            it - 9 == current!!.position
+                        )
                         {
                             ItemBuilder
                                 .copyOf(
