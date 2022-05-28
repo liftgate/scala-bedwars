@@ -2,6 +2,7 @@ package gg.scala.bedwars.game.upgrades
 
 import com.cryptomorin.xseries.XMaterial
 import gg.scala.bedwars.game.armor.BedwarsArmorService
+import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import org.bukkit.entity.Player
 
@@ -21,7 +22,18 @@ enum class BedwarsTeamUpgrades(
         mapOf(
             "eight" to mapOf(1 to 4),
             "four" to mapOf(1 to 8)
-        )
+        ),
+        context = {
+            val swords = it.inventory.contents
+                .filter { stack ->
+                    stack != null && stack.type.name.contains("SWORD")
+                }
+
+            swords.forEach { stack ->
+                BedwarsLoadoutService
+                    .affectItem(it, stack)
+            }
+        }
     ),
     PROTECTION(
         XMaterial.IRON_CHESTPLATE,
