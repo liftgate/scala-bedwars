@@ -22,7 +22,7 @@ constructor(
     override var played: CgsGameStatistic = CgsGameStatistic(),
     override var wins: CgsGameStatistic = CgsGameStatistic(),
     override var losses: CgsGameStatistic = CgsGameStatistic(),
-    val quickBuyData: BedwarsQuickBuyData
+    val quickBuyData: BedwarsQuickBuyData = BedwarsQuickBuyData()
 ) : GameSpecificStatistics()
 {
     override fun getAbstractType(): Type

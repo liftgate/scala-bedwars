@@ -334,7 +334,7 @@ class BedwarsShopMenu : PaginatedMenu()
                         "${CC.GREEN}Click to view."
                     )
                     .toButton { _, _ ->
-
+                        current = null
                     }
             }
 
