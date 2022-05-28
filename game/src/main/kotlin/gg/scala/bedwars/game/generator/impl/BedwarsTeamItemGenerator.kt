@@ -2,6 +2,8 @@ package gg.scala.bedwars.game.generator.impl
 
 import com.cryptomorin.xseries.XMaterial
 import gg.scala.bedwars.game.generator.BedwarsItemGenerator
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgrades
+import gg.scala.bedwars.game.upgrades.Tracker
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Location
@@ -22,6 +24,12 @@ class BedwarsTeamItemGenerator(
     private var goldCooldown = 4
     private var emeraldCooldown = 120
 
+    override fun tier(): Int
+    {
+        return Tracker.of(team)
+            .upgrades[BedwarsTeamUpgrades.FORGE] ?: 1
+    }
+
     override fun drop()
     {
         goldCooldown--
@@ -34,7 +42,7 @@ class BedwarsTeamItemGenerator(
                 location, ItemBuilder.of(XMaterial.GOLD_INGOT).build()
             )
 
-            goldCooldown = when (tier) {
+            goldCooldown = when (tier()) {
                 1 -> 4
                 2 -> 3
                 3 -> 2
@@ -44,14 +52,14 @@ class BedwarsTeamItemGenerator(
 
         if (emeraldCooldown == 0)
         {
-            if (tier >= 3)
+            if (tier() >= 3)
             {
                 location.world.dropItem(
                     location, ItemBuilder.of(XMaterial.GOLD_INGOT).build()
                 )
             }
 
-            emeraldCooldown = when (tier) {
+            emeraldCooldown = when (tier()) {
                 1 -> 120
                 2 -> 120
                 3 -> 120

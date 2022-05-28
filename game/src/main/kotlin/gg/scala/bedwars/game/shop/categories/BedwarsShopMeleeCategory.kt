@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game.shop.categories
 
+import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.BedwarsShopCategory
 import gg.scala.bedwars.game.shop.BedwarsShopCurrency
 import gg.scala.bedwars.game.shop.BedwarsShopItem
@@ -34,6 +35,10 @@ object BedwarsShopMeleeCategory
                         .of(Material.STONE_SWORD)
                         .setUnbreakable(true)
                         .build()
+                        .apply {
+                            BedwarsLoadoutService
+                                .affectItem(it, this)
+                        }
                 },
                 contextualProvider = MeleeShopItemContextual
             ),
@@ -46,6 +51,10 @@ object BedwarsShopMeleeCategory
                         .of(Material.IRON_SWORD)
                         .setUnbreakable(true)
                         .build()
+                        .apply {
+                            BedwarsLoadoutService
+                                .affectItem(it, this)
+                        }
                 },
                 contextualProvider = MeleeShopItemContextual
             ),
@@ -58,6 +67,10 @@ object BedwarsShopMeleeCategory
                         .of(Material.DIAMOND_SWORD)
                         .setUnbreakable(true)
                         .build()
+                        .apply {
+                            BedwarsLoadoutService
+                                .affectItem(it, this)
+                        }
                 },
                 contextualProvider = MeleeShopItemContextual
             ),

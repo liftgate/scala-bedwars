@@ -12,6 +12,8 @@ abstract class BedwarsItemGenerator(
 
     abstract val itemMaterial: ItemStack
 
+    open fun tier() = tier
+
     open fun drop()
     {
         this.location.world.dropItem(

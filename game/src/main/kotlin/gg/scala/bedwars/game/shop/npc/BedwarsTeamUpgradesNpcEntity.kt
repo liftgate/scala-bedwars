@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game.shop.npc
 
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesMenu
 import net.evilblock.cubed.entity.npc.NpcEntity
 import net.evilblock.cubed.util.CC
 import org.bukkit.Location
@@ -21,6 +22,6 @@ class BedwarsTeamUpgradesNpcEntity(
 {
     override fun onRightClick(player: Player)
     {
-        player.sendMessage("${CC.RED}test team upgrades")
+        BedwarsTeamUpgradesMenu().openMenu(player)
     }
 }

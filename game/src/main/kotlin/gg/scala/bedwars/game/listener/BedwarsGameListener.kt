@@ -3,7 +3,9 @@ package gg.scala.bedwars.game.listener
 import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.death.BedwarsRespawnRunnable
 import gg.scala.bedwars.game.event.BedwarsBedDestroyEvent
+import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.BedwarsShopCurrency
+import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -14,11 +16,13 @@ import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
+import net.evilblock.cubed.util.bukkit.Tasks
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Fireball
@@ -28,21 +32,13 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDamageEvent
-import org.bukkit.event.entity.EntityExplodeEvent
-import org.bukkit.event.entity.ItemSpawnEvent
-import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.entity.*
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.event.player.PlayerDropItemEvent
-import org.bukkit.event.player.PlayerInteractAtEntityEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerMoveEvent
-import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.inventory.ItemStack
+import org.bukkit.event.player.*
 import org.bukkit.metadata.FixedMetadataValue
-import java.util.UUID
+import java.util.*
 
 
 @Listeners
@@ -99,7 +95,14 @@ object BedwarsGameListener : Listener
 
         if (event.destroyer != null)
         {
-            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken++
+            val stats = (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics)
+
+            stats.bedsBroken++
+            stats.gameBedsBroken++
+
+            CgsGameEngine.INSTANCE.giveCoins(
+                event.destroyer, ((100..125).random() to "Breaking a Bed")
+            )
         }
 
         CgsGameEngine.INSTANCE.sendMessage("")
@@ -242,12 +245,6 @@ object BedwarsGameListener : Listener
                     )
                     return
                 }
-            } else if (
-                block.type.name.contains("BED") &&
-                !event.isBlockInHand
-            )
-            {
-                event.isCancelled = true
             }
         }
     }
@@ -295,18 +292,97 @@ object BedwarsGameListener : Listener
         }
     }
 
+    private val lastUpdated = mutableMapOf<UUID, Long>()
+
     @EventHandler(
         ignoreCancelled = true
     )
     fun onEntityDamage(
-        event: PlayerMoveEvent
+        event: EntityDamageEvent
     )
     {
-        if (event.player.location.y <= 0)
+        if (
+            event.cause == EntityDamageEvent.DamageCause.VOID &&
+            event.entity is Player
+        )
         {
-            BedwarsRespawnRunnable(event.player)
-                .runTaskTimer(this.plugin, 0L, 20L)
+            val player = event.entity as Player
+            val updated = lastUpdated[player.uniqueId]
+
+            if (
+                updated != null &&
+                System.currentTimeMillis() - updated < 100L
+            )
+            {
+                return
+            }
+
+            player.health = 0.0
+            lastUpdated[player.uniqueId] = System.currentTimeMillis()
         }
+    }
+
+    @EventHandler(
+        priority = EventPriority.HIGHEST,
+        ignoreCancelled = true
+    )
+    fun onMoveItem(
+        event: InventoryMoveItemEvent
+    )
+    {
+        if (event.item.type == Material.WOOD_SWORD)
+        {
+            event.isCancelled = true
+            return
+        }
+
+        val player =
+            event.destination
+                .viewers.first() as Player
+
+        val swords = player.inventory
+            .contents.filter {
+                it != null && it.type.name.contains("SWORD")
+            }
+
+        if (swords.isEmpty())
+        {
+            Tasks.delayed(1L) {
+                BedwarsLoadoutService
+                    .applyLoadout(player)
+            }
+        } else
+        {
+            val woodSwords = swords
+                .filter {
+                    it.type != Material.WOOD_SWORD
+                }
+
+            if (woodSwords.isNotEmpty())
+            {
+                player.inventory.remove(Material.WOOD_SWORD)
+            }
+        }
+    }
+
+    @EventHandler
+    fun onPickup(
+        event: PlayerPickupItemEvent
+    )
+    {
+        val stack = event.item.itemStack
+
+        if (
+            stack != null &&
+            stack.type.name.contains("SWORD") &&
+            stack.type != Material.WOOD_SWORD
+        )
+        {
+            event.player.inventory.remove(Material.WOOD_SWORD)
+        }
+
+        BedwarsLoadoutService
+            .affectItem(event.player, stack)
     }
 
     @EventHandler
@@ -317,11 +393,38 @@ object BedwarsGameListener : Listener
         val stack = event.itemDrop.itemStack
 
         if (
-            stack != null &&
-            stack.type == Material.WOOD_SWORD
+            stack != null
         )
         {
-            event.isCancelled = true
+            if (stack.type == Material.WOOD_SWORD)
+            {
+                event.isCancelled = true
+                return
+            }
+
+            if (
+                stack.type.name.contains("SWORD") &&
+                stack.type != Material.WOOD_SWORD
+            )
+            {
+                val swords = event.player.inventory
+                    .contents.filter {
+                        it != null && it.type.name.contains("SWORD")
+                    }
+
+                if (swords.isEmpty())
+                {
+                    Tasks.delayed(1L) {
+                        BedwarsLoadoutService
+                            .applyLoadout(event.player)
+                    }
+                }
+            }
+        }
+
+        if (!event.isCancelled)
+        {
+            stack.removeEnchantment(Enchantment.DAMAGE_ALL)
         }
     }
 
@@ -391,11 +494,17 @@ object BedwarsGameListener : Listener
         }
 
         val cause = event.entity.lastDamageCause
+        val team = event.entity.team()!!
 
         if (cause is EntityDamageByEntityEvent)
         {
             if (cause.damager is Player)
             {
+                if (!(cause.damager as Player).isOnline)
+                {
+                    return
+                }
+
                 event.drops.forEach {
                     val currency = BedwarsShopCurrency
                         .values().firstOrNull { currency ->
@@ -422,30 +531,43 @@ object BedwarsGameListener : Listener
                 }
 
                 event.drops.clear()
+
+                if (team.bedDestroyed)
+                {
+                    val stats = CgsGameEngine.INSTANCE.getStatistics(
+                        CgsPlayerHandler.find(cause.damager as Player)!!
+                    ) as BedwarsCgsStatistics
+
+                    stats.finalKills++
+                    stats.gameFinalKills++
+
+                    CgsGameEngine.INSTANCE.giveCoins(
+                        cause.damager as Player, ((25..50).random() to "Getting a Final Kill")
+                    )
+                }
+
+                CgsGameEngine.INSTANCE.giveCoins(
+                    cause.damager as Player, ((5..15).random() to "Getting a Kill")
+                )
             }
         }
 
-        val team = CgsGameTeamService.getTeamOf(event.entity) as BedwarsCgsGameTeam?
-
-        if (team != null)
+        if (team.bedDestroyed)
         {
-            if (team.bedDestroyed)
-            {
-                CgsGameDisqualificationHandler.disqualifyPlayer(
-                    player = event.entity, broadcastNotification = true, setSpectator = true
-                )
+            CgsGameDisqualificationHandler.disqualifyPlayer(
+                player = event.entity, broadcastNotification = true, setSpectator = true
+            )
 
-                if (team.alive.isEmpty())
-                {
-                    team.broadcastElimination()
-                }
-            } else
+            if (team.alive.isEmpty())
             {
-                BedwarsRespawnRunnable(event.entity)
-                    .runTaskTimer(
-                        this.plugin, 1L, 20L
-                    )
+                team.broadcastElimination()
             }
+        } else
+        {
+            BedwarsRespawnRunnable(event.entity)
+                .runTaskTimer(
+                    this.plugin, 1L, 20L
+                )
         }
     }
 }

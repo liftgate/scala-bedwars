@@ -6,16 +6,25 @@ import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
+import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
+import gg.scala.bedwars.game.team.BedwarsTeamChatChannelComposite
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTicker
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTracker
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTrackerService
+import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.player.handler.CgsPlayerHandler
+import gg.scala.cgs.common.states.CgsGameState
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
+import gg.scala.lemon.channel.ChatChannelBuilder
+import gg.scala.lemon.channel.ChatChannelService
 import net.evilblock.cubed.entity.EntityHandler
 import net.evilblock.cubed.util.CC
 import org.bukkit.Bukkit
@@ -36,6 +45,31 @@ object BedwarsStartListener : Listener
     fun onStart(event: CgsGameEngine.CgsGameStartEvent)
     {
         val arena = CgsGameArenaHandler.arena as BedwarsArena
+
+        CgsGameTeamService.teams
+            .forEach { (_, u) ->
+                val team = u as BedwarsCgsGameTeam
+
+                BedwarsTeamUpgradesTrackerService.trackers[team.id] =
+                    BedwarsTeamUpgradesTracker(team)
+
+                val channel = ChatChannelBuilder
+                    .newBuilder().import(
+                        BedwarsTeamChatChannelComposite(team)
+                    )
+                    .compose()
+                    .override(5000) {
+                        it.team()!!.id == team.id && !CgsGameEngine
+                            .INSTANCE.gameMode.isSoloGame()
+                    }
+                    .allowOnlyIf {
+                        it.team()!!.id == team.id && !CgsGameEngine
+                            .INSTANCE.gameMode.isSoloGame()
+                    }
+                    .monitor()
+
+                ChatChannelService.register(channel)
+            }
 
         arena.diamondGenerators.forEach {
             BedwarsDiamondItemGenerator(it)
@@ -141,12 +175,21 @@ object BedwarsStartListener : Listener
 
                         player.enderChest.clear()
 
-                        stats.gameKills.update(0)
+                        (stats as BedwarsCgsStatistics)
+                            .gameKills.update(0)
+
+                        stats.gameBedsBroken.update(0)
+                        stats.gameFinalKills.update(0)
 
                         BedwarsArmorService.applyArmor(player)
                         BedwarsLoadoutService.applyLoadout(player)
                     }
                 }
             }
+
+        BedwarsTeamUpgradesTicker
+            .runTaskTimer(
+                plugin, 0L, 20L
+            )
     }
 }
