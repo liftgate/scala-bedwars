@@ -72,16 +72,29 @@ class BedwarsTeamUpgradesMenu : Menu(
         for (upgrade in BedwarsTeamUpgrades.values())
         {
             val description = mutableListOf<String>()
-            description += "${CC.GRAY}Viewing tiers:"
 
-            for (entry in upgrade.names)
+            if (upgrade.names.size == 1)
             {
                 val price = upgrade
-                    .costs[this.gameMode]!![entry.key]
+                    .costs[this.gameMode]!!
+                    .values.first()
 
-                description += " ${CC.WHITE}- ${entry.value}: ${CC.AQUA}$price Diamond${
+                description += "${CC.GRAY}Price: ${CC.AQUA}$price Diamond${
                     if (price == 1) "" else "s"
                 }"
+            } else
+            {
+                description += "${CC.GRAY}Viewing tiers:"
+
+                for (entry in upgrade.names)
+                {
+                    val price = upgrade
+                        .costs[this.gameMode]!![entry.key]
+
+                    description += " ${CC.WHITE}- ${entry.value}: ${CC.AQUA}$price Diamond${
+                        if (price == 1) "" else "s"
+                    }"
+                }
             }
 
             description += ""
