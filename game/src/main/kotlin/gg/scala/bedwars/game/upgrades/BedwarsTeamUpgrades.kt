@@ -3,8 +3,11 @@ package gg.scala.bedwars.game.upgrades
 import com.cryptomorin.xseries.XMaterial
 import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
+import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import org.bukkit.entity.Player
+import org.bukkit.potion.PotionEffect
+import org.bukkit.potion.PotionEffectType
 
 enum class BedwarsTeamUpgrades(
     val item: XMaterial,
@@ -78,7 +81,38 @@ enum class BedwarsTeamUpgrades(
                 1 to 4,
                 2 to 6
             )
-        )
+        ),
+        context = lambda@{
+            val team = it.team()
+                ?: return@lambda
+
+            val tracker =
+                Tracker.of(team)
+
+            val haste = tracker
+                .upgrades[HASTE]
+
+            if (haste != null)
+            {
+                if (
+                    it.hasPotionEffect(
+                        PotionEffectType.FAST_DIGGING
+                    )
+                )
+                {
+                    it.removePotionEffect(
+                        PotionEffectType.FAST_DIGGING
+                    )
+                }
+
+                it.addPotionEffect(
+                    PotionEffect(
+                        PotionEffectType.FAST_DIGGING,
+                        10000, haste
+                    )
+                )
+            }
+        }
     ),
     FORGE(
         XMaterial.FURNACE,

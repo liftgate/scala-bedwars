@@ -131,13 +131,10 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                     )
             }
 
-        val executor = Executors
-            .newSingleThreadScheduledExecutor()
-
-        executor.scheduleAtFixedRate(
-            BedwarsTeamUpgradesTicker,
-            0L, 1L, TimeUnit.SECONDS
-        )
+        BedwarsTeamUpgradesTicker
+            .runTaskTimer(
+                this, 0L, 20L
+            )
 
         BedwarsItemGeneratorTierIncrementer
             .runTaskTimerAsynchronously(
