@@ -5,7 +5,6 @@ import gg.scala.bedwars.game.death.BedwarsRespawnRunnable
 import gg.scala.bedwars.game.event.BedwarsBedDestroyEvent
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.BedwarsShopCurrency
-import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -32,24 +31,13 @@ import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.block.BlockBreakEvent
 import org.bukkit.event.block.BlockPlaceEvent
-import org.bukkit.event.entity.EntityDamageByEntityEvent
-import org.bukkit.event.entity.EntityDamageEvent
-import org.bukkit.event.entity.EntityExplodeEvent
-import org.bukkit.event.entity.ItemSpawnEvent
-import org.bukkit.event.entity.PlayerDeathEvent
+import org.bukkit.event.entity.*
 import org.bukkit.event.inventory.InventoryClickEvent
-import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
-import org.bukkit.event.player.PlayerDropItemEvent
-import org.bukkit.event.player.PlayerInteractAtEntityEvent
-import org.bukkit.event.player.PlayerInteractEvent
-import org.bukkit.event.player.PlayerMoveEvent
-import org.bukkit.event.player.PlayerPickupItemEvent
-import org.bukkit.event.player.PlayerQuitEvent
-import org.bukkit.inventory.ItemStack
+import org.bukkit.event.player.*
 import org.bukkit.metadata.FixedMetadataValue
-import java.util.UUID
+import java.util.*
 
 
 @Listeners
@@ -395,7 +383,6 @@ object BedwarsGameListener : Listener
     )
     {
         val stack = event.itemDrop.itemStack
-        stack.removeEnchantment(Enchantment.DAMAGE_ALL)
 
         if (
             stack != null
@@ -425,6 +412,11 @@ object BedwarsGameListener : Listener
                     }
                 }
             }
+        }
+
+        if (!event.isCancelled)
+        {
+            stack.removeEnchantment(Enchantment.DAMAGE_ALL)
         }
     }
 
