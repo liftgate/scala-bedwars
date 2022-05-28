@@ -3,6 +3,7 @@ package gg.scala.bedwars.game.listener
 import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.death.BedwarsRespawnRunnable
 import gg.scala.bedwars.game.event.BedwarsBedDestroyEvent
+import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.BedwarsShopCurrency
 import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
@@ -15,6 +16,7 @@ import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
+import net.evilblock.cubed.util.bukkit.Tasks
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
@@ -290,18 +292,33 @@ object BedwarsGameListener : Listener
         }
     }
 
+    private val lastUpdated = mutableMapOf<UUID, Long>()
+
     @EventHandler(
         ignoreCancelled = true
     )
     fun onEntityDamage(
-        event: PlayerMoveEvent
+        event: EntityDamageEvent
     )
     {
         if (
-            event.player.location.y <= 0
+            event.cause == EntityDamageEvent.DamageCause.VOID &&
+            event.entity is Player
         )
         {
-            event.player.health = 0.0
+            val player = event.entity as Player
+            val updated = lastUpdated[player.uniqueId]
+
+            if (
+                updated != null &&
+                System.currentTimeMillis() - updated < 100L
+            )
+            {
+                return
+            }
+
+            player.health = 0.0
+            lastUpdated[player.uniqueId] = System.currentTimeMillis()
         }
     }
 
@@ -313,11 +330,30 @@ object BedwarsGameListener : Listener
         val stack = event.itemDrop.itemStack
 
         if (
-            stack != null &&
-            stack.type == Material.WOOD_SWORD
+            stack != null
         )
         {
-            event.isCancelled = true
+            if (stack.type == Material.WOOD_SWORD)
+            {
+                event.isCancelled = true
+                return
+            }
+
+            if (stack.type.name.contains("SWORD"))
+            {
+                val swords = event.player.inventory
+                    .contents.filter {
+                        it.type.name.contains("SWORD")
+                    }
+
+                if (swords.isEmpty())
+                {
+                    Tasks.delayed(1L) {
+                        BedwarsLoadoutService
+                            .applyLoadout(event.player)
+                    }
+                }
+            }
         }
     }
 

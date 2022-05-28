@@ -10,14 +10,17 @@ import org.bukkit.entity.Player
  */
 object BedwarsLoadoutService
 {
+    val defaultLoadout = ItemBuilder
+        .of(Material.WOOD_SWORD)
+        .setUnbreakable(true)
+        .build()
+
     fun applyLoadout(
         player: Player
     )
     {
         player.inventory.addItem(
-            ItemBuilder.of(Material.WOOD_SWORD)
-                .setUnbreakable(true)
-                .build()
+            this.defaultLoadout
         )
     }
 }
