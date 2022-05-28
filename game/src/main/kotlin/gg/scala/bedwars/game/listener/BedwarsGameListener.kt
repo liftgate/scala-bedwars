@@ -339,11 +339,14 @@ object BedwarsGameListener : Listener
                 return
             }
 
-            if (stack.type.name.contains("SWORD"))
+            if (
+                stack.type.name.contains("SWORD") &&
+                stack.type != Material.WOOD_SWORD
+            )
             {
                 val swords = event.player.inventory
                     .contents.filter {
-                        it.type.name.contains("SWORD")
+                        it != null && it.type.name.contains("SWORD")
                     }
 
                 if (swords.isEmpty())
