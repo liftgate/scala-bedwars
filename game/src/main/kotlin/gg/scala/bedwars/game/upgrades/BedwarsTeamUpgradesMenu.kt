@@ -19,7 +19,12 @@ class BedwarsTeamUpgradesMenu : Menu(
     init
     {
         updateAfterClick = true
+        placeholdBorders = true
     }
+
+    override fun size(
+        buttons: Map<Int, Button>
+    ) = 36
 
     override fun getButtons(
         player: Player

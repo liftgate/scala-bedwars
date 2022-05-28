@@ -97,7 +97,7 @@ enum class BedwarsTeamUpgrades(
         )
     ),
     DRAGON_BUFF(
-        XMaterial.BEACON, "Dragon Buff", 21,
+        XMaterial.DRAGON_EGG, "Dragon Buff", 21,
         mapOf(1 to "Dragon Buff"),
         mapOf(
             "eight" to mapOf(1 to 1),
@@ -123,7 +123,7 @@ enum class BedwarsTeamUpgrades(
         emptyMap()
     ),
     FATIGUE_TRAP(
-        XMaterial.DIAMOND_PICKAXE,
+        XMaterial.IRON_PICKAXE,
         "Miner Fatigue", 23,
         mapOf(1 to "Miner Fatigue Trap"),
         emptyMap()
