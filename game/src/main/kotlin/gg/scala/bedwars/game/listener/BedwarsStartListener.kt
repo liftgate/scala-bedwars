@@ -5,6 +5,7 @@ import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.generator.impl.BedwarsDiamondItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsEmeraldItemGenerator
 import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
+import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.shared.arena.BedwarsArena
@@ -143,6 +144,7 @@ object BedwarsStartListener : Listener
                         stats.gameKills.update(0)
 
                         BedwarsArmorService.applyArmor(player)
+                        BedwarsLoadoutService.applyLoadout(player)
                     }
                 }
             }

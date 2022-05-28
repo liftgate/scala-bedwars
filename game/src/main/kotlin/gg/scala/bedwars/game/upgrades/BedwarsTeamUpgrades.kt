@@ -1,9 +1,9 @@
-package gg.scala.bedwars.shared.team
+package gg.scala.bedwars.game.upgrades
 
 import com.cryptomorin.xseries.XMaterial
-import org.bukkit.entity.Player
+import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 
-enum class BedwarsCgsGameTeamUpgrade(
+enum class BedwarsTeamUpgrades(
     val item: XMaterial,
     val names: Map<Int, String>,
     val costs: Map<String, Map<Int, Int>>,
@@ -89,6 +89,7 @@ enum class BedwarsCgsGameTeamUpgrade(
             "four" to mapOf(1 to 3)
         )
     ),
+
     BLINDNESS_TRAP(
         XMaterial.TRIPWIRE_HOOK,
         mapOf(1 to "It's a trap!"),
@@ -110,7 +111,5 @@ enum class BedwarsCgsGameTeamUpgrade(
         emptyMap()
     );
 
-    val maxLevel: Int get() {
-        return names.size
-    }
+    val maxLevel = names.size
 }

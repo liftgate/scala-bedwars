@@ -99,7 +99,8 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                 BedwarsShopRangedCategory.category,
                 BedwarsShopArmorCategory.category,
                 BedwarsShopPotionCategory.category,
-                BedwarsShopUtilityCategory.category
+                BedwarsShopUtilityCategory.category,
+                BedwarsShopMeleeCategory.category,
             )
 
         BedwarsItemGeneratorTierIncrementer

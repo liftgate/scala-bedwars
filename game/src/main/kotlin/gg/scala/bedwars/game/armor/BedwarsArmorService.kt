@@ -66,10 +66,13 @@ object BedwarsArmorService
                     .setUnbreakable(true)
                     .build()
                     .apply {
-                        val meta = (itemMeta as LeatherArmorMeta)
-                            meta.color =
-                            mappings[team.color]
-                        itemMeta = meta
+                        if (itemMeta is LeatherArmorMeta)
+                        {
+                            val meta = (itemMeta as LeatherArmorMeta)
+                            meta.color = mappings[team.color]
+
+                            itemMeta = meta
+                        }
                     }
             }
             .toTypedArray()

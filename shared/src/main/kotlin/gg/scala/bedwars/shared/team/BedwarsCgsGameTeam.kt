@@ -21,11 +21,6 @@ open class BedwarsCgsGameTeam(id: Int) : CgsGameTeam(id)
 
     var bedDestroyed: Boolean = false
     val spawnPoint = (CgsGameArenaHandler.arena as BedwarsArena).getSpawnPoint(id)
-    val upgrades = mutableMapOf<BedwarsCgsGameTeamUpgrade ,Int>()
-
-    fun getNextLevel(upgrade: BedwarsCgsGameTeamUpgrade) : Int {
-        return upgrades[upgrade] ?: 1
-    }
 
     fun broadcastElimination()
     {
