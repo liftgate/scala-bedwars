@@ -126,14 +126,6 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                     )
             }
 
-        CgsGameTeamService.teams
-            .forEach { (_, u) ->
-                val team = u as BedwarsCgsGameTeam
-
-                BedwarsTeamUpgradesTrackerService.trackers[team.id] =
-                    BedwarsTeamUpgradesTracker(team)
-            }
-
         val executor = Executors
             .newSingleThreadScheduledExecutor()
 

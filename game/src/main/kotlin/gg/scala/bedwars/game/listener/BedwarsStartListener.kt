@@ -8,6 +8,8 @@ import gg.scala.bedwars.game.generator.impl.BedwarsTeamItemGenerator
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTracker
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTrackerService
 import gg.scala.bedwars.shared.arena.BedwarsArena
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -147,6 +149,14 @@ object BedwarsStartListener : Listener
                         BedwarsLoadoutService.applyLoadout(player)
                     }
                 }
+            }
+
+        CgsGameTeamService.teams
+            .forEach { (_, u) ->
+                val team = u as BedwarsCgsGameTeam
+
+                BedwarsTeamUpgradesTrackerService.trackers[team.id] =
+                    BedwarsTeamUpgradesTracker(team)
             }
     }
 }
