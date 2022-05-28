@@ -42,6 +42,7 @@ import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerMoveEvent
+import org.bukkit.event.player.PlayerPickupItemEvent
 import org.bukkit.event.player.PlayerQuitEvent
 import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
@@ -319,6 +320,23 @@ object BedwarsGameListener : Listener
 
             player.health = 0.0
             lastUpdated[player.uniqueId] = System.currentTimeMillis()
+        }
+    }
+
+    @EventHandler
+    fun onPickup(
+        event: PlayerPickupItemEvent
+    )
+    {
+        val stack = event.item.itemStack
+
+        if (
+            stack != null &&
+            stack.type.name.contains("SWORD") &&
+            stack.type != Material.WOOD_SWORD
+        )
+        {
+            event.player.inventory.remove(Material.WOOD_SWORD)
         }
     }
 
