@@ -14,6 +14,8 @@ import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
+import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
@@ -108,9 +110,29 @@ object BedwarsGameListener : Listener
         )
         CgsGameEngine.INSTANCE.sendMessage("")
 
-        event.team.alive.filter { Bukkit.getPlayer(it) == null }.forEach {
-            CgsGameDisqualificationHandler.disqualifyPlayer(it)
-        }
+        event.team.alive
+            .mapNotNull { Bukkit.getPlayer(it) }
+            .forEach {
+                val audience = CgsGameEngine
+                    .INSTANCE.audience.player(it)
+
+                audience.showTitle(
+                    Title.title(
+                        LegacyComponentSerializer.legacySection()
+                            .deserialize("${CC.B_RED}BED DESTROYED"),
+                        LegacyComponentSerializer.legacySection()
+                            .deserialize("${CC.WHITE}You will no longer respawn!"),
+                    )
+                )
+            }
+
+        event.team.alive
+            .filter {
+                Bukkit.getPlayer(it) == null
+            }
+            .forEach {
+                CgsGameDisqualificationHandler.disqualifyPlayer(it)
+            }
 
         if (
             event.team.alive

@@ -1,8 +1,8 @@
 package gg.scala.bedwars.game.loadout
 
+import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.Material
 import org.bukkit.entity.Player
-import org.bukkit.inventory.ItemStack
 
 /**
  * @author GrowlyX
@@ -15,7 +15,9 @@ object BedwarsLoadoutService
     )
     {
         player.inventory.addItem(
-            ItemStack(Material.WOOD_SWORD)
+            ItemBuilder.of(Material.WOOD_SWORD)
+                .setUnbreakable(true)
+                .build()
         )
     }
 }
