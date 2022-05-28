@@ -292,14 +292,14 @@ object BedwarsGameListener : Listener
         event: PlayerDropItemEvent
     )
     {
-        if (event.itemDrop is ItemStack)
-        {
-            val stack = event.itemDrop as ItemStack
+        val stack = event.itemDrop.itemStack
 
-            if (stack.type == Material.WOOD_SWORD)
-            {
-                event.isCancelled = true
-            }
+        if (
+            stack != null &&
+            stack.type == Material.WOOD_SWORD
+        )
+        {
+            event.isCancelled = true
         }
     }
 

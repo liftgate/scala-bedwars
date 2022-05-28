@@ -60,7 +60,7 @@ object BedwarsShopMeleeCategory
             ),
             BedwarsShopItem(
                 name = "Knockback Fish",
-                price = BedwarsShopCurrency.EMERALD to 5,
+                price = BedwarsShopCurrency.GOLD to 5,
                 description = listOf("lmao"),
                 itemCreator = {
                     ItemBuilder
