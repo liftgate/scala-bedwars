@@ -7,15 +7,11 @@ import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTicker
-import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTracker
-import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTrackerService
 import gg.scala.bedwars.shared.BedwarsCgsInfo
-import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.information.mode.CgsGameMode
 import gg.scala.cgs.common.states.CgsGameState
-import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.ExtendedScalaPlugin
 import gg.scala.commons.annotations.container.ContainerEnable
 import gg.scala.commons.config.annotations.ContainerConfig
