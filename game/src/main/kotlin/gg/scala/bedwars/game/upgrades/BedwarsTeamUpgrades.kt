@@ -108,7 +108,7 @@ enum class BedwarsTeamUpgrades(
                 it.addPotionEffect(
                     PotionEffect(
                         PotionEffectType.FAST_DIGGING,
-                        10000, haste
+                        Int.MAX_VALUE, haste
                     )
                 )
             }

@@ -117,17 +117,22 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
 
                 LegacyComponentSerializer.legacySection()
                     .deserialize(
-                        "${
-                            if (CgsGameEngine.INSTANCE.gameState == CgsGameState.STARTED)
-                            {
-                                "${team.color}[${
-                                    team.name.uppercase()
-                                }] "
-                            } else
-                            {
-                                ""
-                            }
-                        }${CC.GRAY}[1✫] ${CC.WHITE}"
+                        if (CgsGameEngine.INSTANCE.gameMode.isSoloGame())
+                        {
+                            "${
+                                if (
+                                    CgsGameEngine.INSTANCE.gameState == CgsGameState.STARTED
+                                )
+                                {
+                                    "${team.color}[${
+                                        team.name.uppercase()
+                                    }] "
+                                } else
+                                {
+                                    ""
+                                }
+                            }${CC.GRAY}[1✫] ${CC.WHITE}"
+                        } else ""
                     )
             }
 
