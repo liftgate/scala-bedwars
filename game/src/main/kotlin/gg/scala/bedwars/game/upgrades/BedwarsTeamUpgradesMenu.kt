@@ -4,9 +4,12 @@ import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.menu.Menu
+import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
+import net.evilblock.cubed.util.bukkit.Constants
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 
 /**
  * @author GrowlyX
@@ -38,11 +41,37 @@ class BedwarsTeamUpgradesMenu : Menu(
 
         val tracker = Tracker.of(team)
 
+        listOf(13, 13 + 9).forEach {
+            buttons[it] = ItemBuilder
+                .copyOf(
+                    PaginatedMenu.PLACEHOLDER
+                        .getButtonItem(player)
+                )
+                .name(
+                    "${CC.D_GRAY}${
+                        Constants.DOUBLE_ARROW_LEFT
+                    } ${CC.GRAY}Upgrades"
+                )
+                .addToLore(
+                    "${CC.GRAY}Traps ${CC.D_GRAY}${
+                        Constants.DOUBLE_ARROW_RIGHT
+                    }"
+                )
+                .toButton()
+        }
+
         for (upgrade in BedwarsTeamUpgrades.values())
         {
             buttons[upgrade.position] = ItemBuilder
                 .of(upgrade.item)
                 .name("${CC.YELLOW}${upgrade.display}")
+                .addFlags(
+                    ItemFlag.HIDE_ATTRIBUTES,
+                    ItemFlag.HIDE_ENCHANTS,
+                    ItemFlag.HIDE_POTION_EFFECTS,
+                    ItemFlag.HIDE_UNBREAKABLE,
+                    ItemFlag.HIDE_PLACED_ON
+                )
                 .toButton()
         }
 

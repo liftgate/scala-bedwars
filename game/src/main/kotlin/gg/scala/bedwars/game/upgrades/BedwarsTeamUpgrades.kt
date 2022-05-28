@@ -124,7 +124,7 @@ enum class BedwarsTeamUpgrades(
     ),
     FATIGUE_TRAP(
         XMaterial.IRON_PICKAXE,
-        "Miner Fatigue", 23,
+        "Miner Fatigue", 24,
         mapOf(1 to "Miner Fatigue Trap"),
         emptyMap()
     );

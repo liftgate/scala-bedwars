@@ -65,7 +65,11 @@ class BedwarsShopMenu : PaginatedMenu()
                         .copyOf(invoked)
                         .name("${CC.YELLOW}${item.name}")
                         .addFlags(
-                            ItemFlag.HIDE_ATTRIBUTES
+                            ItemFlag.HIDE_ATTRIBUTES,
+                            ItemFlag.HIDE_ENCHANTS,
+                            ItemFlag.HIDE_POTION_EFFECTS,
+                            ItemFlag.HIDE_UNBREAKABLE,
+                            ItemFlag.HIDE_PLACED_ON
                         )
                         .setLore(
                             mutableListOf<String>()
@@ -168,6 +172,13 @@ class BedwarsShopMenu : PaginatedMenu()
                             "${CC.WHITE}View all somethings.",
                             "",
                             "${CC.GREEN}Click to view."
+                        )
+                        .addFlags(
+                            ItemFlag.HIDE_ATTRIBUTES,
+                            ItemFlag.HIDE_ENCHANTS,
+                            ItemFlag.HIDE_POTION_EFFECTS,
+                            ItemFlag.HIDE_UNBREAKABLE,
+                            ItemFlag.HIDE_PLACED_ON
                         )
                         .toButton { _, _ ->
                             current = category
