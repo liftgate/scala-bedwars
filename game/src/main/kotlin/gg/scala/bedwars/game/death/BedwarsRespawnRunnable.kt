@@ -3,6 +3,7 @@ package gg.scala.bedwars.game.death
 import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
+import gg.scala.bedwars.game.tool.BedwarsToolService
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.handler.CgsSpectatorHandler
@@ -111,6 +112,7 @@ class BedwarsRespawnRunnable(
 
                 BedwarsArmorService.applyArmor(this.player)
                 BedwarsLoadoutService.applyLoadout(this.player)
+                BedwarsToolService.applyTools(this.player)
 
                 player.removeMetadata("respawning", CgsGameEngine.INSTANCE.plugin)
                 this.player.sendMessage("${CC.GREEN}You have respawned!")

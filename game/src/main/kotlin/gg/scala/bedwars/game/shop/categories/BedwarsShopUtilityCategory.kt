@@ -38,7 +38,7 @@ object BedwarsShopUtilityCategory
                 description = listOf("lmao"),
                 itemCreator = {
                     ItemBuilder
-                        .of(Material.RAW_FISH)
+                        .of(Material.SNOW_BALL)
                         .build()
                 }
             ),

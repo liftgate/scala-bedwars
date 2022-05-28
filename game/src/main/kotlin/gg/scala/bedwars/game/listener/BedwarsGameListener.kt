@@ -27,6 +27,7 @@ import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Fireball
 import org.bukkit.entity.Player
+import org.bukkit.entity.Silverfish
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
@@ -435,6 +436,14 @@ object BedwarsGameListener : Listener
         {
             stack.removeEnchantment(Enchantment.DAMAGE_ALL)
         }
+    }
+
+    @EventHandler
+    fun onProjectileLand(event: ProjectileHitEvent) {
+        val silverfish = event.entity.location.world.spawnEntity(event.entity.location, EntityType.SILVERFISH) as Silverfish
+        silverfish.isCustomNameVisible = true
+        silverfish.customName = "${(event.entity.shooter as Player).displayName}'s Bedbug"
+        // add custom AI here for silverfish to not target team
     }
 
     private val lastThrown = mutableMapOf<UUID, Long>()

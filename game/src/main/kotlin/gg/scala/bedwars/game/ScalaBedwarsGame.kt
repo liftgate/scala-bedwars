@@ -107,7 +107,8 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                 BedwarsShopRangedCategory.category,
                 BedwarsShopArmorCategory.category,
                 BedwarsShopPotionCategory.category,
-                BedwarsShopUtilityCategory.category
+                BedwarsShopUtilityCategory.category,
+                BedwarsShopToolsCategory.category
             )
 
         DefaultChatChannel
