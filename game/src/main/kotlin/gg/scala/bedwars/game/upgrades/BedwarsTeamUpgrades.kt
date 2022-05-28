@@ -1,7 +1,9 @@
 package gg.scala.bedwars.game.upgrades
 
 import com.cryptomorin.xseries.XMaterial
+import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
+import org.bukkit.entity.Player
 
 enum class BedwarsTeamUpgrades(
     val item: XMaterial,
@@ -9,7 +11,7 @@ enum class BedwarsTeamUpgrades(
     val position: Int,
     val names: Map<Int, String>,
     val costs: Map<String, Map<Int, Int>>,
-    val context: (BedwarsCgsGameTeam) -> Unit = {}
+    val context: (Player) -> Unit = {}
 )
 {
     SHARPNESS(
@@ -43,7 +45,10 @@ enum class BedwarsTeamUpgrades(
                 3 to 20,
                 4 to 30
             )
-        )
+        ),
+        context = {
+            BedwarsArmorService.applyArmor(it)
+        }
     ),
     HASTE(
         XMaterial.GOLDEN_PICKAXE,

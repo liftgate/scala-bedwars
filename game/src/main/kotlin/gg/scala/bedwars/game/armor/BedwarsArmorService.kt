@@ -2,11 +2,15 @@ package gg.scala.bedwars.game.armor
 
 import com.cryptomorin.xseries.XMaterial
 import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgrades
+import gg.scala.bedwars.game.upgrades.Tracker
 import net.evilblock.cubed.util.bukkit.ColorUtil
 import net.evilblock.cubed.util.bukkit.ItemBuilder
 import org.bukkit.ChatColor
 import org.bukkit.Color
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
+import org.bukkit.inventory.ItemFlag
 import org.bukkit.inventory.meta.LeatherArmorMeta
 import java.util.UUID
 
@@ -61,9 +65,25 @@ object BedwarsArmorService
                 )
             }
             .map {
-                // TODO: 5/27/2022 add enchants bla bla bla
                 it
                     .setUnbreakable(true)
+                    .apply {
+                        val tracker = Tracker.of(team)
+
+                        val protection = tracker
+                            .upgrades[BedwarsTeamUpgrades.PROTECTION]
+
+                        if (protection != null)
+                        {
+                            enchant(
+                                Enchantment.PROTECTION_ENVIRONMENTAL,
+                                protection
+                            )
+                        }
+                    }
+                    .addFlags(
+                        ItemFlag.HIDE_UNBREAKABLE
+                    )
                     .build()
                     .apply {
                         if (itemMeta is LeatherArmorMeta)

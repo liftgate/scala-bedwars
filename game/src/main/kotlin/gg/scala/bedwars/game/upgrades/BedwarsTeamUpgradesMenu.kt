@@ -10,6 +10,7 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
@@ -208,6 +209,17 @@ class BedwarsTeamUpgradesMenu : Menu(
 
                     BedwarsShopCurrency.DIAMOND.removeFrom
                         .invoke(player, price)
+
+                    team.participants
+                        .mapNotNull {
+                            Bukkit.getPlayer(it)
+                        }
+                        .filter {
+                            !it.hasMetadata("spectator")
+                        }
+                        .forEach {
+                            upgrade.context.invoke(it)
+                        }
 
                     player.sendMessage("${CC.GREEN}You purchased ${CC.YELLOW}${
                         upgrade.display

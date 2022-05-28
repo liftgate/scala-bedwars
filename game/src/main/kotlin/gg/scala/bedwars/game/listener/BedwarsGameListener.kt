@@ -22,6 +22,7 @@ import net.kyori.adventure.title.Title
 import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.Sound
+import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.ArmorStand
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Fireball
@@ -333,15 +334,11 @@ object BedwarsGameListener : Listener
         event: InventoryMoveItemEvent
     )
     {
-        plugin.logger.info("Moved item?")
-
         if (event.item.type == Material.WOOD_SWORD)
         {
             event.isCancelled = true
             return
         }
-
-        plugin.logger.info("Not wooden sword?")
 
         val player =
             event.destination
@@ -387,6 +384,9 @@ object BedwarsGameListener : Listener
         {
             event.player.inventory.remove(Material.WOOD_SWORD)
         }
+
+        BedwarsLoadoutService
+            .affectItem(event.player, stack)
     }
 
     @EventHandler
@@ -395,6 +395,7 @@ object BedwarsGameListener : Listener
     )
     {
         val stack = event.itemDrop.itemStack
+        stack.removeEnchantment(Enchantment.DAMAGE_ALL)
 
         if (
             stack != null
