@@ -42,6 +42,8 @@ class BedwarsRespawnRunnable(
         val audience = CgsGameEngine.INSTANCE
             .audience.player(this.player)
 
+        BedwarsToolService.decreaseType(this.player.uniqueId)
+
         when (this.tick)
         {
             6 ->
@@ -110,7 +112,6 @@ class BedwarsRespawnRunnable(
                     )
                 )
 
-                BedwarsToolService.decreaseType(this.player.uniqueId)
                 BedwarsArmorService.applyArmor(this.player)
                 BedwarsLoadoutService.applyLoadout(this.player)
                 BedwarsToolService.applyTools(this.player)

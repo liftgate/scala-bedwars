@@ -26,12 +26,12 @@ enum class BedwarsPickaxeType(
     );
 
     fun previous() : BedwarsPickaxeType? {
-        if (ordinal == WOOD.ordinal) return null
+        if (this == WOOD) return null
         return values()[this.ordinal - 1]
     }
 
     fun next() : BedwarsPickaxeType? {
-        if (ordinal == DIAMOND.ordinal) return null
+        if (this == DIAMOND) return null
         return values()[this.ordinal + 1]
     }
 }

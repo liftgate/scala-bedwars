@@ -28,12 +28,12 @@ enum class BedwarsAxeType(
 
 
     fun previous() : BedwarsAxeType? {
-        if (ordinal == WOOD.ordinal) return null
+        if (this == WOOD) return null
         return values()[this.ordinal - 1]
     }
 
     fun next() : BedwarsAxeType? {
-        if (ordinal == DIAMOND.ordinal) return null
+        if (this == DIAMOND) return null
         return values()[this.ordinal + 1]
     }
 }
