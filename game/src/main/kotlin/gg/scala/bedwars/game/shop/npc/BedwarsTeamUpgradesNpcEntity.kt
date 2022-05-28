@@ -22,6 +22,7 @@ class BedwarsTeamUpgradesNpcEntity(
 {
     override fun onRightClick(player: Player)
     {
+        if (player.hasMetadata("spectator")) return
         BedwarsTeamUpgradesMenu().openMenu(player)
     }
 }

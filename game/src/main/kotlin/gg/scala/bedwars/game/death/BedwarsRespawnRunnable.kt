@@ -1,5 +1,6 @@
 package gg.scala.bedwars.game.death
 
+import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
@@ -11,6 +12,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
 import net.kyori.adventure.title.TitlePart
 import org.bukkit.entity.Player
+import org.bukkit.metadata.FixedMetadataValue
 import org.bukkit.scheduler.BukkitRunnable
 import java.time.Duration
 
@@ -22,6 +24,11 @@ class BedwarsRespawnRunnable(
     private val player: Player
 ) : BukkitRunnable()
 {
+    init {
+        if (player.hasMetadata("respawning")) cancel()
+        else player.setMetadata("respawning", FixedMetadataValue(CgsGameEngine.INSTANCE.plugin, "true"))
+    }
+
     private var tick = 6
 
     override fun run()
@@ -106,6 +113,7 @@ class BedwarsRespawnRunnable(
                 BedwarsArmorService.applyArmor(this.player)
                 BedwarsLoadoutService.applyLoadout(this.player)
 
+                this.player.removeMetadata("respawning", CgsGameEngine.INSTANCE.plugin)
                 this.player.sendMessage("${CC.GREEN}You have respawned!")
 
                 this.cancel()

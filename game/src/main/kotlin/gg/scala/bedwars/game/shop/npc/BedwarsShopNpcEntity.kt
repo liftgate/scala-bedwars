@@ -22,6 +22,7 @@ class BedwarsShopNpcEntity(
 {
     override fun onRightClick(player: Player)
     {
+        if (player.hasMetadata("spectator")) return
         BedwarsShopMenu().openMenu(player)
     }
 }
