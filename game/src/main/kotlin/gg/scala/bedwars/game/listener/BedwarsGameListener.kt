@@ -297,23 +297,11 @@ object BedwarsGameListener : Listener
         event: PlayerMoveEvent
     )
     {
-        if (event.player.location.y <= 0)
+        if (
+            event.player.location.y <= 0
+        )
         {
-            val team = event.player.team()!!
-
-            if (team.bedDestroyed)
-            {
-                CgsGameDisqualificationHandler
-                    .disqualifyPlayer(
-                        event.player,
-                        setSpectator = true,
-                        broadcastNotification = true
-                    )
-                return
-            }
-
-            BedwarsRespawnRunnable(event.player)
-                .runTaskTimer(this.plugin, 0L, 20L)
+            event.player.health = 0.0
         }
     }
 
