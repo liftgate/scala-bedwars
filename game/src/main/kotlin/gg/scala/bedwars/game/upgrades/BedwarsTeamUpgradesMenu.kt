@@ -26,8 +26,8 @@ class BedwarsTeamUpgradesMenu : Menu(
         placeholdBorders = true
     }
 
-    val mode = CgsGameEngine.INSTANCE.gameMode
-    val gameMode = if (isDuosOrSolos()) "eight" else "four"
+    private val mode = CgsGameEngine.INSTANCE.gameMode
+    private val gameMode = if (isDuosOrSolos()) "eight" else "four"
 
     private fun isDuosOrSolos(): Boolean
     {
@@ -83,6 +83,9 @@ class BedwarsTeamUpgradesMenu : Menu(
                     if (price == 1) "" else "s"
                 }"
             }
+
+            description += ""
+            description += "${CC.GREEN}Click to upgrade."
 
             buttons[upgrade.position] = ItemBuilder
                 .of(upgrade.item)

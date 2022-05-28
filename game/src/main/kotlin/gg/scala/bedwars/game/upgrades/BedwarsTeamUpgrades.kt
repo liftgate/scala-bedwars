@@ -109,24 +109,36 @@ enum class BedwarsTeamUpgrades(
         XMaterial.TRIPWIRE_HOOK,
         "Blindness Trap", 14,
         mapOf(1 to "It's a trap!"),
-        emptyMap()
+        mapOf(
+            "eight" to mapOf(1 to 1),
+            "four" to mapOf(1 to 3)
+        )
     ),
     COUNTER_TRAP(
         XMaterial.FEATHER, "Counter-Offensive Trap", 15,
         mapOf(1 to "Counter-Offensive Trap"),
-        emptyMap()
+        mapOf(
+            "eight" to mapOf(1 to 1),
+            "four" to mapOf(1 to 3)
+        )
     ),
     ALARM_TRAP(
         XMaterial.REDSTONE_TORCH,
         "Alarm Trap", 16,
         mapOf(1 to "Alarm Trap"),
-        emptyMap()
+        mapOf(
+            "eight" to mapOf(1 to 1),
+            "four" to mapOf(1 to 3)
+        )
     ),
     FATIGUE_TRAP(
         XMaterial.IRON_PICKAXE,
         "Miner Fatigue", 24,
         mapOf(1 to "Miner Fatigue Trap"),
-        emptyMap()
+        mapOf(
+            "eight" to mapOf(1 to 1),
+            "four" to mapOf(1 to 3)
+        )
     );
 
     val maxLevel = names.size
