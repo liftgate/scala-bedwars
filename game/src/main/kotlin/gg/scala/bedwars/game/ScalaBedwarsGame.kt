@@ -20,6 +20,7 @@ import me.lucko.helper.Schedulers
 import me.lucko.helper.plugin.ap.Plugin
 import me.lucko.helper.plugin.ap.PluginDependency
 import net.evilblock.cubed.entity.EntityHandler
+import net.evilblock.cubed.util.CC
 import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import org.bukkit.entity.Player
@@ -116,8 +117,8 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                 LegacyComponentSerializer.legacySection()
                     .deserialize(
                         "${team.color}[${
-                            it.name.uppercase()
-                        }]"
+                            team.name
+                        }] ${CC.WHITE}"
                     )
             }
 
