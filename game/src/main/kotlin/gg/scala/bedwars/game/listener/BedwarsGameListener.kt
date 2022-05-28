@@ -4,6 +4,7 @@ import gg.scala.bedwars.game.ScalaBedwarsGame
 import gg.scala.bedwars.game.death.BedwarsRespawnRunnable
 import gg.scala.bedwars.game.event.BedwarsBedDestroyEvent
 import gg.scala.bedwars.game.shop.BedwarsShopCurrency
+import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
@@ -298,6 +299,19 @@ object BedwarsGameListener : Listener
     {
         if (event.player.location.y <= 0)
         {
+            val team = event.player.team()!!
+
+            if (team.bedDestroyed)
+            {
+                CgsGameDisqualificationHandler
+                    .disqualifyPlayer(
+                        event.player,
+                        setSpectator = true,
+                        broadcastNotification = true
+                    )
+                return
+            }
+
             BedwarsRespawnRunnable(event.player)
                 .runTaskTimer(this.plugin, 0L, 20L)
         }
