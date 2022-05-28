@@ -17,6 +17,7 @@ import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.information.arena.CgsGameArenaHandler
 import gg.scala.cgs.common.player.handler.CgsPlayerHandler
+import gg.scala.cgs.common.states.CgsGameState
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
@@ -57,11 +58,13 @@ object BedwarsStartListener : Listener
                     .compose()
                     .override(5000) {
                         it.team()!!.id == team.id && !CgsGameEngine
-                            .INSTANCE.gameMode.isSoloGame()
+                            .INSTANCE.gameMode.isSoloGame() && CgsGameEngine
+                            .INSTANCE.gameState == CgsGameState.STARTED
                     }
                     .allowOnlyIf {
                         it.team()!!.id == team.id && !CgsGameEngine
-                            .INSTANCE.gameMode.isSoloGame()
+                            .INSTANCE.gameMode.isSoloGame() && CgsGameEngine
+                            .INSTANCE.gameState == CgsGameState.STARTED
                     }
                     .monitor()
 
