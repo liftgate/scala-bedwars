@@ -2,6 +2,7 @@ package gg.scala.bedwars.game.shop.contextual.providers
 
 import gg.scala.bedwars.game.armor.BedwarsArmorService
 import gg.scala.bedwars.game.armor.BedwarsArmorType
+import gg.scala.bedwars.game.loadout.BedwarsLoadoutService
 import gg.scala.bedwars.game.shop.BedwarsShopItem
 import gg.scala.bedwars.game.shop.contextual.BedwarsShopItemContextualProvider
 import net.evilblock.cubed.util.CC
