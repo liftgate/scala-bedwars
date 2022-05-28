@@ -108,8 +108,8 @@ class BedwarsTeamUpgradesMenu : Menu(
 
                     description += " ${CC.WHITE}- ${
                         if (tier >= entry.key)
-                            CC.GREEN else CC.WHITE
-                    }${entry.value}: ${CC.AQUA}$price Diamond${
+                            CC.GREEN else CC.GRAY
+                    }${entry.value}${CC.WHITE}: $price Diamond${
                         if (price == 1) "" else "s"
                     }"
                 }
@@ -120,7 +120,7 @@ class BedwarsTeamUpgradesMenu : Menu(
             {
                 "${CC.GREEN}${
                     if (upgrade.names.size == 1) "You already own this!" else "Already at max level!"
-                }."
+                }"
             } else
             {
                 if (upgrade.names.size == 1)
@@ -163,6 +163,12 @@ class BedwarsTeamUpgradesMenu : Menu(
                 )
                 .setLore(description)
                 .toButton { _, _ ->
+                    if (tier == upgrade.maxLevel)
+                    {
+                        player.sendMessage("${CC.RED}You cannot upgrade this any further!")
+                        return@toButton
+                    }
+
                     val price = if (upgrade.names.size == 1)
                     {
                         upgrade
@@ -172,12 +178,6 @@ class BedwarsTeamUpgradesMenu : Menu(
                     {
                         upgrade
                             .costs[this.gameMode]!![tier + 1]!!
-                    }
-
-                    if (tier == upgrade.maxLevel)
-                    {
-                        player.sendMessage("${CC.RED}You cannot upgrade this any further!")
-                        return@toButton
                     }
 
                     if (upgrade.names.size == 1)
