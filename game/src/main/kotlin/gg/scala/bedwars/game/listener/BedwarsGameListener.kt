@@ -37,6 +37,7 @@ import org.bukkit.event.entity.EntityExplodeEvent
 import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
+import org.bukkit.event.inventory.InventoryMoveItemEvent
 import org.bukkit.event.inventory.InventoryType
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
@@ -320,6 +321,46 @@ object BedwarsGameListener : Listener
 
             player.health = 0.0
             lastUpdated[player.uniqueId] = System.currentTimeMillis()
+        }
+    }
+
+    @EventHandler
+    fun onMoveItem(
+        event: InventoryMoveItemEvent
+    )
+    {
+        if (event.item.type == Material.WOOD_SWORD)
+        {
+            event.isCancelled = true
+            return
+        }
+
+        val player =
+            event.destination
+                .viewers.first() as Player
+
+        val swords = player.inventory
+            .contents.filter {
+                it != null && it.type.name.contains("SWORD")
+            }
+
+        if (swords.isEmpty())
+        {
+            Tasks.delayed(1L) {
+                BedwarsLoadoutService
+                    .applyLoadout(player)
+            }
+        } else
+        {
+            val woodSwords = swords
+                .filter {
+                    it.type != Material.WOOD_SWORD
+                }
+
+            if (woodSwords.isNotEmpty())
+            {
+                player.inventory.remove(Material.WOOD_SWORD)
+            }
         }
     }
 
