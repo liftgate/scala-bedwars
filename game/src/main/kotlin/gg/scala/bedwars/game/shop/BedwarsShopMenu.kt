@@ -208,7 +208,7 @@ class BedwarsShopMenu : PaginatedMenu()
                         }
                 }
 
-                this[40] = ItemBuilder(Material.NETHER_STAR)
+                this[49] = ItemBuilder(Material.NETHER_STAR)
                     .name("${CC.YELLOW}Quick Buy")
                     .addToLore(
                         "${CC.GRAY}View all somethings.",
