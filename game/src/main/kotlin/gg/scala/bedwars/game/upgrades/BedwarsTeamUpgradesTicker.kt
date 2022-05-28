@@ -1,6 +1,8 @@
 package gg.scala.bedwars.game.upgrades
 
 import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
+import gg.scala.cgs.common.CgsGameEngine
+import gg.scala.cgs.common.states.CgsGameState
 import org.bukkit.Bukkit
 import org.bukkit.potion.PotionEffect
 import org.bukkit.potion.PotionEffectType

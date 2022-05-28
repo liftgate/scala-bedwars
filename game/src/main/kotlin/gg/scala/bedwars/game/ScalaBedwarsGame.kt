@@ -136,11 +136,6 @@ class ScalaBedwarsGame : ExtendedScalaPlugin()
                     )
             }
 
-        BedwarsTeamUpgradesTicker
-            .runTaskTimer(
-                this, 0L, 20L
-            )
-
         BedwarsItemGeneratorTierIncrementer
             .runTaskTimerAsynchronously(
                 this, 0L, 20L

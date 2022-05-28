@@ -10,6 +10,7 @@ import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.game.shop.npc.BedwarsShopNpcEntity
 import gg.scala.bedwars.game.shop.npc.BedwarsTeamUpgradesNpcEntity
 import gg.scala.bedwars.game.team.BedwarsTeamChatChannelComposite
+import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTicker
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTracker
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgradesTrackerService
 import gg.scala.bedwars.shared.arena.BedwarsArena
@@ -180,5 +181,10 @@ object BedwarsStartListener : Listener
                     }
                 }
             }
+
+        BedwarsTeamUpgradesTicker
+            .runTaskTimer(
+                plugin, 0L, 20L
+            )
     }
 }
