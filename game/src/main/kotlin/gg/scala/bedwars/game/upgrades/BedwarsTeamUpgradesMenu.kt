@@ -9,6 +9,7 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.inventory.ItemFlag
 
@@ -69,6 +70,16 @@ class BedwarsTeamUpgradesMenu : Menu(
                 .toButton()
         }
 
+        val diamonds = player
+            .inventory.contents
+            .filterNotNull()
+            .filter {
+                it.type == Material.DIAMOND
+            }
+            .sumOf {
+                it.amount
+            }
+
         for (upgrade in BedwarsTeamUpgrades.values())
         {
             val description = mutableListOf<String>()
@@ -111,9 +122,32 @@ class BedwarsTeamUpgradesMenu : Menu(
                 }."
             } else
             {
-                "${CC.GREEN}Click to ${
-                    if (upgrade.names.size == 1) "purchase" else "upgrade"
-                }."
+                if (upgrade.names.size == 1)
+                {
+                    val price = upgrade
+                        .costs[this.gameMode]!!
+                        .values.first()
+
+                    if (diamonds < price)
+                    {
+                        "${CC.RED}You cannot afford this!"
+                    } else
+                    {
+                        "${CC.GREEN}Click to purchase."
+                    }
+                } else
+                {
+                    val price = upgrade
+                        .costs[this.gameMode]!![tier + 1]!!
+
+                    if (diamonds < price)
+                    {
+                        "${CC.RED}You cannot afford this!"
+                    } else
+                    {
+                        "${CC.GREEN}Click to upgrade."
+                    }
+                }
             }
 
             buttons[upgrade.position] = ItemBuilder
@@ -127,7 +161,9 @@ class BedwarsTeamUpgradesMenu : Menu(
                     ItemFlag.HIDE_PLACED_ON
                 )
                 .setLore(description)
-                .toButton()
+                .toButton { _, _ ->
+
+                }
         }
 
         return buttons
