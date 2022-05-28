@@ -11,6 +11,7 @@ import net.evilblock.cubed.menu.pagination.PaginatedMenu
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import net.evilblock.cubed.util.bukkit.Tasks
 import org.bukkit.entity.Player
 import org.bukkit.event.inventory.ClickType
 import org.bukkit.inventory.InventoryView
@@ -35,6 +36,18 @@ class BedwarsQuickBuyConfigMenu(
             10, 11, 12, 13, 14, 15, 16,
             19, 20, 21, 22, 23, 24, 25
         )
+
+    override fun size(buttons: Map<Int, Button>) = 36
+
+    override fun onClose(player: Player, manualClose: Boolean)
+    {
+        if (manualClose)
+        {
+            Tasks.delayed(1L) {
+                BedwarsShopMenu().openMenu(player)
+            }
+        }
+    }
 
     override fun getAllPagesButtons(player: Player): Map<Int, Button>
     {
