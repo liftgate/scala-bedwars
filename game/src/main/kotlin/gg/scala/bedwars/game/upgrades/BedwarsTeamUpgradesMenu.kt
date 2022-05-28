@@ -97,6 +97,7 @@ class BedwarsTeamUpgradesMenu : Menu(
                     ItemFlag.HIDE_UNBREAKABLE,
                     ItemFlag.HIDE_PLACED_ON
                 )
+                .setLore(description)
                 .toButton()
         }
 
