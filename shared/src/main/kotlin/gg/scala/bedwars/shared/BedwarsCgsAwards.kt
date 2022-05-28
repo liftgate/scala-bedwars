@@ -7,5 +7,5 @@ import gg.scala.cgs.common.information.CgsGameAwardInfo
  * @since 12/3/2021
  */
 object BedwarsCgsAwards : CgsGameAwardInfo(
-    true, 100..125, 10..25
+    true, 350..500, 10..25
 )

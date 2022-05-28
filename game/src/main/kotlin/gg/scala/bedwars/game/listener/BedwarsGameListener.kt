@@ -95,8 +95,14 @@ object BedwarsGameListener : Listener
 
         if (event.destroyer != null)
         {
-            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).bedsBroken++
-            (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics).gameBedsBroken++
+            val stats = (CgsGameEngine.INSTANCE.getStatistics(CgsPlayerHandler.find(event.destroyer)!!) as BedwarsCgsStatistics)
+
+            stats.bedsBroken++
+            stats.gameBedsBroken++
+
+            CgsGameEngine.INSTANCE.giveCoins(
+                event.destroyer, ((100..125).random() to "Breaking a Bed")
+            )
         }
 
         CgsGameEngine.INSTANCE.sendMessage("")
@@ -534,7 +540,15 @@ object BedwarsGameListener : Listener
 
                     stats.finalKills++
                     stats.gameFinalKills++
+
+                    CgsGameEngine.INSTANCE.giveCoins(
+                        cause.damager as Player, ((25..50).random() to "Getting a Final Kill")
+                    )
                 }
+
+                CgsGameEngine.INSTANCE.giveCoins(
+                    cause.damager as Player, ((5..15).random() to "Getting a Kill")
+                )
             }
         }
 
