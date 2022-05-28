@@ -33,10 +33,12 @@ import org.bukkit.event.entity.ItemSpawnEvent
 import org.bukkit.event.entity.PlayerDeathEvent
 import org.bukkit.event.inventory.InventoryClickEvent
 import org.bukkit.event.inventory.InventoryType
+import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerInteractAtEntityEvent
 import org.bukkit.event.player.PlayerInteractEvent
 import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.event.player.PlayerQuitEvent
+import org.bukkit.inventory.ItemStack
 import org.bukkit.metadata.FixedMetadataValue
 import java.util.UUID
 
@@ -282,6 +284,22 @@ object BedwarsGameListener : Listener
         {
             BedwarsRespawnRunnable(event.player)
                 .runTaskTimer(this.plugin, 0L, 20L)
+        }
+    }
+
+    @EventHandler
+    fun onDrop(
+        event: PlayerDropItemEvent
+    )
+    {
+        if (event.itemDrop is ItemStack)
+        {
+            val stack = event.itemDrop as ItemStack
+
+            if (stack.type == Material.WOOD_SWORD)
+            {
+                event.isCancelled = true
+            }
         }
     }
 
