@@ -1,6 +1,7 @@
 package gg.scala.bedwars.game.upgrades
 
 import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
+import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import net.evilblock.cubed.menu.Button
 import net.evilblock.cubed.menu.Menu
@@ -23,6 +24,14 @@ class BedwarsTeamUpgradesMenu : Menu(
     {
         updateAfterClick = true
         placeholdBorders = true
+    }
+
+    val mode = CgsGameEngine.INSTANCE.gameMode
+    val gameMode = if (isDuosOrSolos()) "eight" else "four"
+
+    private fun isDuosOrSolos(): Boolean
+    {
+        return this.mode.isSoloGame() || this.mode.getTeamSize() == 2
     }
 
     override fun size(
@@ -62,6 +71,19 @@ class BedwarsTeamUpgradesMenu : Menu(
 
         for (upgrade in BedwarsTeamUpgrades.values())
         {
+            val description = mutableListOf<String>()
+            description += "${CC.GRAY}Viewing tiers:"
+
+            for (entry in upgrade.names)
+            {
+                val price = upgrade
+                    .costs[this.gameMode]!![entry.key]
+
+                description += " ${CC.WHITE}- ${entry.value}: ${CC.AQUA}$price Diamond${
+                    if (price == 1) "" else "s"
+                }"
+            }
+
             buttons[upgrade.position] = ItemBuilder
                 .of(upgrade.item)
                 .name("${CC.YELLOW}${upgrade.display}")
