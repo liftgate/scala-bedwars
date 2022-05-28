@@ -73,6 +73,9 @@ class BedwarsTeamUpgradesMenu : Menu(
         {
             val description = mutableListOf<String>()
 
+            val tier = tracker
+                .upgrades[upgrade] ?: 0
+
             if (upgrade.names.size == 1)
             {
                 val price = upgrade
@@ -91,17 +94,16 @@ class BedwarsTeamUpgradesMenu : Menu(
                     val price = upgrade
                         .costs[this.gameMode]!![entry.key]
 
-                    description += " ${CC.WHITE}- ${entry.value}: ${CC.AQUA}$price Diamond${
+                    description += " ${CC.WHITE}- ${
+                        if (tier >= entry.key)
+                            CC.GREEN else CC.WHITE
+                    }${entry.value}: ${CC.AQUA}$price Diamond${
                         if (price == 1) "" else "s"
                     }"
                 }
             }
 
             description += ""
-
-            val tier = tracker
-                .upgrades[upgrade] ?: 0
-
             description += if (tier == upgrade.maxLevel)
             {
                 "${CC.GREEN}${
