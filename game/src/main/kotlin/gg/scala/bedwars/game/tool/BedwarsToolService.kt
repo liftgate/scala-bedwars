@@ -81,12 +81,17 @@ object BedwarsToolService
         if (uniqueId in pickaxes) {
             val tool = pickaxes[uniqueId]!!
             player.inventory.remove(tool.previous().tool.build())
-            player.inventory.addItem(tool.tool.build())
+
+            if (!player.inventory.contains(tool.tool.build())) {
+                player.inventory.addItem(tool.tool.build())
+            }
         }
         if (uniqueId in axes) {
             val tool = axes[uniqueId]!!
             player.inventory.remove(tool.previous().tool.build())
-            player.inventory.addItem(tool.tool.build())
+            if (!player.inventory.contains(tool.tool.build())) {
+                player.inventory.addItem(tool.tool.build())
+            }
         }
         if (uniqueId in shears && !player.inventory.any { it.type == Material.SHEARS }) {
             player.inventory.addItem(ItemBuilder.of(XMaterial.SHEARS).build())
