@@ -1,7 +1,9 @@
 package gg.scala.bedwars.game.shop
 
+import gg.scala.bedwars.game.quickbuy.BedwarsQuickBuyConfigMenu
 import gg.scala.bedwars.game.shop.categories.BedwarsShopCategories
 import gg.scala.bedwars.shared.BedwarsCgsStatistics
+import gg.scala.bedwars.shared.quickbuy.BedwarsQuickBuyData
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.handler.CgsPlayerHandler
 import net.evilblock.cubed.menu.Button
@@ -236,9 +238,18 @@ class BedwarsShopMenu : PaginatedMenu()
                                     {
                                         add("${CC.GREEN}Click to purchase.")
                                     }
+
+                                    add("${CC.D_GRAY}Shift-Click to edit quick-buy.")
                                 }
                         )
-                        .toButton { player, _ ->
+                        .toButton { player, type ->
+                            if (type!!.isShiftClick)
+                            {
+                                BedwarsQuickBuyConfigMenu(item.name)
+                                    .openMenu(player!!)
+                                return@toButton
+                            }
+
                             if (
                                 System.currentTimeMillis() - lastPurchased < 100L
                             )
