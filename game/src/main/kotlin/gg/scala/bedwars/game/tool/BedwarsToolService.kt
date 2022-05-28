@@ -5,6 +5,7 @@ import gg.scala.bedwars.game.shop.categories.BedwarsShopBlockCategory.team
 import gg.scala.bedwars.game.upgrades.BedwarsTeamUpgrades
 import gg.scala.bedwars.game.upgrades.Tracker
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.enchantments.Enchantment
 import org.bukkit.entity.Player
@@ -69,8 +70,9 @@ object BedwarsToolService
     }
 
     fun decreaseType(uuid: UUID) {
-        if (uuid in pickaxes && pickaxes[uuid] != BedwarsPickaxeType.WOOD) pickaxes[uuid] = pickaxes[uuid]!!.previous()!!
-        if (uuid in axes && axes[uuid] != BedwarsAxeType.WOOD) axes[uuid] = axes[uuid]!!.previous()!!
+        if (uuid in pickaxes && pickaxes[uuid] != BedwarsPickaxeType.WOOD) updatePickaxe(uuid, pickaxes[uuid]!!.previous()!!)
+        if (uuid in axes && axes[uuid] != BedwarsAxeType.WOOD) updateAxe(uuid, axes[uuid]!!.previous()!!)
+
     }
 
     fun applyTools(
