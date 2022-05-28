@@ -299,25 +299,7 @@ object BedwarsGameListener : Listener
     fun onMove(event: PlayerMoveEvent) {
         if (event.to.y < 0) {
             if (!event.player.hasMetadata("respawning")) {
-                val team = event.player.team() ?: return
-
-                if (team.bedDestroyed)
-                {
-                    CgsGameDisqualificationHandler.disqualifyPlayer(
-                        player = event.player, broadcastNotification = true, setSpectator = true
-                    )
-
-                    if (team.alive.isEmpty())
-                    {
-                        team.broadcastElimination()
-                    }
-                } else
-                {
-                    BedwarsRespawnRunnable(event.player)
-                        .runTaskTimer(
-                            this.plugin, 1L, 20L
-                        )
-                }
+                onDeath(PlayerDeathEvent(event.player, event.player.inventory.contents.toList(), 0, null))
             }
         }
     }
