@@ -34,10 +34,11 @@ class BedwarsQuickBuyConfigMenu(
     override fun getAllPagesButtonSlots() =
         listOf(
             10, 11, 12, 13, 14, 15, 16,
-            19, 20, 21, 22, 23, 24, 25
+            19, 20, 21, 22, 23, 24, 25,
+            28, 29, 30, 31, 32, 33, 34
         )
 
-    override fun size(buttons: Map<Int, Button>) = 36
+    override fun size(buttons: Map<Int, Button>) = 45
 
     override fun onClose(player: Player, manualClose: Boolean)
     {
