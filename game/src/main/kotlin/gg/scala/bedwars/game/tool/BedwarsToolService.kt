@@ -69,8 +69,8 @@ object BedwarsToolService
     }
 
     fun decreaseType(uuid: UUID) {
-        if (uuid in pickaxes && pickaxes[uuid] != BedwarsPickaxeType.WOOD) pickaxes[uuid] = pickaxes[uuid]!!.previous()
-        if (uuid in axes && axes[uuid] != BedwarsAxeType.WOOD) axes[uuid] = axes[uuid]!!.previous()
+        if (uuid in pickaxes && pickaxes[uuid] != BedwarsPickaxeType.WOOD) pickaxes[uuid] = pickaxes[uuid]!!.previous()!!
+        if (uuid in axes && axes[uuid] != BedwarsAxeType.WOOD) axes[uuid] = axes[uuid]!!.previous()!!
     }
 
     fun applyTools(
@@ -80,7 +80,7 @@ object BedwarsToolService
         val uniqueId = player.uniqueId
         if (uniqueId in pickaxes) {
             val tool = pickaxes[uniqueId]!!
-            player.inventory.remove(tool.previous().tool.build())
+            if (tool.previous() != null) player.inventory.remove(tool.previous()!!.tool.build())
 
             if (!player.inventory.contains(tool.tool.build())) {
                 player.inventory.addItem(tool.tool.build())
@@ -88,7 +88,7 @@ object BedwarsToolService
         }
         if (uniqueId in axes) {
             val tool = axes[uniqueId]!!
-            player.inventory.remove(tool.previous().tool.build())
+            if (tool.previous() != null) player.inventory.remove(tool.previous()!!.tool.build())
             if (!player.inventory.contains(tool.tool.build())) {
                 player.inventory.addItem(tool.tool.build())
             }

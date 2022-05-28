@@ -25,11 +25,13 @@ enum class BedwarsPickaxeType(
         ItemBuilder.of(XMaterial.DIAMOND_PICKAXE)
     );
 
-    fun previous() : BedwarsPickaxeType {
+    fun previous() : BedwarsPickaxeType? {
+        if (ordinal == WOOD.ordinal) return null
         return values()[this.ordinal - 1]
     }
 
-    fun next() : BedwarsPickaxeType {
+    fun next() : BedwarsPickaxeType? {
+        if (ordinal == DIAMOND.ordinal) return null
         return values()[this.ordinal + 1]
     }
 }
