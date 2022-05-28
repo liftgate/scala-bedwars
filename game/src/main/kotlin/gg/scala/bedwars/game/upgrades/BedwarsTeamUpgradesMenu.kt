@@ -98,7 +98,21 @@ class BedwarsTeamUpgradesMenu : Menu(
             }
 
             description += ""
-            description += "${CC.GREEN}Click to upgrade."
+
+            val tier = tracker
+                .upgrades[upgrade] ?: 0
+
+            description += if (tier == upgrade.maxLevel)
+            {
+                "${CC.GREEN}${
+                    if (upgrade.names.size == 1) "You already own this!" else "Already at max level!"
+                }."
+            } else
+            {
+                "${CC.GREEN}Click to ${
+                    if (upgrade.names.size == 1) "purchase" else "upgrade"
+                }."
+            }
 
             buttons[upgrade.position] = ItemBuilder
                 .of(upgrade.item)
