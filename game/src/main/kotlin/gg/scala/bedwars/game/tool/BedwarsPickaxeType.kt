@@ -2,6 +2,7 @@ package gg.scala.bedwars.game.tool
 
 import com.cryptomorin.xseries.XMaterial
 import net.evilblock.cubed.util.bukkit.ItemBuilder
+import org.bukkit.Bukkit
 import org.bukkit.Material
 
 /**
@@ -26,6 +27,7 @@ enum class BedwarsPickaxeType(
     );
 
     fun previous() : BedwarsPickaxeType? {
+        Bukkit.broadcastMessage(this.name)
         if (this == WOOD) return null
         return values()[this.ordinal - 1]
     }

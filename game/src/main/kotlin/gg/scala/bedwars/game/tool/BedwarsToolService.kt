@@ -70,8 +70,8 @@ object BedwarsToolService
     }
 
     fun decreaseType(uuid: UUID) {
-        if (uuid in pickaxes && pickaxes[uuid] != BedwarsPickaxeType.WOOD) updatePickaxe(uuid, pickaxes[uuid]!!.previous()!!)
-        if (uuid in axes && axes[uuid] != BedwarsAxeType.WOOD) updateAxe(uuid, axes[uuid]!!.previous()!!)
+        if (pickaxes.containsKey(uuid) && pickaxes[uuid] != BedwarsPickaxeType.WOOD) updatePickaxe(uuid, pickaxes[uuid]!!.previous()!!)
+        if (axes.containsKey(uuid) && axes[uuid] != BedwarsAxeType.WOOD) updateAxe(uuid, axes[uuid]!!.previous()!!)
 
     }
 

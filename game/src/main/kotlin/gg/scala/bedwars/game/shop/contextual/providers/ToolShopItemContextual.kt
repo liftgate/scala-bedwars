@@ -10,6 +10,7 @@ import gg.scala.bedwars.game.tool.BedwarsToolService
 import net.evilblock.cubed.util.CC
 import org.bukkit.Material
 import org.bukkit.entity.Player
+import org.bukkit.material.Bed
 
 /**
  * @author GrowlyX
@@ -59,6 +60,7 @@ object ToolShopItemContextual : BedwarsShopItemContextualProvider
                 return (axe.next() ?: false) == tool
             }
 
+            null -> return !BedwarsToolService.shears.contains(player.uniqueId)
             else -> return !BedwarsToolService.shears.contains(player.uniqueId)
         }
     }
