@@ -8,6 +8,7 @@ import gg.scala.bedwars.game.tool.BedwarsAxeType
 import gg.scala.bedwars.game.tool.BedwarsPickaxeType
 import gg.scala.bedwars.game.tool.BedwarsToolService
 import net.evilblock.cubed.util.CC
+import org.bukkit.Bukkit
 import org.bukkit.Material
 import org.bukkit.entity.Player
 import org.bukkit.material.Bed
@@ -51,16 +52,20 @@ object ToolShopItemContextual : BedwarsShopItemContextualProvider
     {
         when (val tool = mappings[item.name]) {
             is BedwarsPickaxeType -> {
+
+                Bukkit.broadcastMessage(tool.name)
                 val pickaxe = BedwarsToolService.pickaxes[player.uniqueId] ?: return tool == BedwarsPickaxeType.WOOD
                 return (pickaxe.next() ?: false) == tool
             }
 
             is BedwarsAxeType -> {
+
+                Bukkit.broadcastMessage(tool.name)
+
                 val axe = BedwarsToolService.axes[player.uniqueId] ?: return tool == BedwarsAxeType.WOOD
                 return (axe.next() ?: false) == tool
             }
 
-            null -> return !BedwarsToolService.shears.contains(player.uniqueId)
             else -> return !BedwarsToolService.shears.contains(player.uniqueId)
         }
     }

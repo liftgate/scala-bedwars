@@ -11,11 +11,13 @@ import gg.scala.bedwars.shared.team.BedwarsCgsGameTeam
 import gg.scala.cgs.common.CgsGameEngine
 import gg.scala.cgs.common.player.handler.CgsGameDisqualificationHandler
 import gg.scala.cgs.common.player.handler.CgsPlayerHandler
+import gg.scala.cgs.common.player.handler.CgsSpectatorHandler
 import gg.scala.cgs.common.teams.CgsGameTeamService
 import gg.scala.commons.annotations.Listeners
 import gg.scala.flavor.inject.Inject
 import net.evilblock.cubed.util.CC
 import net.evilblock.cubed.util.bukkit.Constants
+import net.evilblock.cubed.util.bukkit.ItemBuilder
 import net.evilblock.cubed.util.bukkit.Tasks
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer
 import net.kyori.adventure.title.Title
@@ -192,7 +194,7 @@ object BedwarsGameListener : Listener
                 BedwarsBedDestroyEvent(
                     CgsGameTeamService.teams[meta[0].asInt()] as BedwarsCgsGameTeam,
                     event.player
-                ).callEvent()
+                ).callNow()
             } else
             {
                 event.isCancelled = true
@@ -472,8 +474,8 @@ object BedwarsGameListener : Listener
             }
 
             event.player.inventory
-                .removeAmount(
-                    Material.FIREBALL, 1
+                .remove(
+                    ItemBuilder.of(Material.FIREBALL).amount(1).build()
                 )
             event.player.updateInventory()
 
@@ -576,6 +578,7 @@ object BedwarsGameListener : Listener
             CgsGameDisqualificationHandler.disqualifyPlayer(
                 player = event.entity, broadcastNotification = true, setSpectator = true
             )
+            event.keepLevel
 
             if (team.alive.isEmpty())
             {
